@@ -1,0 +1,16 @@
+# Aegis config — REAL airport camera data (GMR Hyderabad POD project)
+# Data exported from the POD project's EWS feed (not committed — see export_data.py)
+name: pod_airport
+target_trust: 97
+max_iterations: 5
+sources:
+  - name: entry
+    kind: csv
+    path: data/entry.csv
+    columns: {datetime: DateTime, entity: Zone, value: Throughput}
+    links: [pesc]                 # measured r=0.72 in the POD project
+  - name: pesc
+    kind: csv
+    path: data/pesc.csv
+    columns: {datetime: DateTime, entity: Zone, value: Throughput}
+    links: [entry]

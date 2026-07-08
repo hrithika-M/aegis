@@ -1,0 +1,52 @@
+<!DOCTYPE html><html><head><meta charset="utf-8">
+<title>Aegis Report — pod_airport</title><style>
+ body{font-family:'Segoe UI',Arial,sans-serif;margin:0;background:#F4F6FA;color:#222}
+ header{background:#1F3864;color:#fff;padding:20px 40px}
+ header h1{margin:0;font-size:22px} header p{margin:5px 0 0;opacity:.85;font-size:13px}
+ .wrap{max-width:960px;margin:22px auto;padding:0 20px}
+ .badge{display:inline-block;border-radius:14px;padding:6px 16px;font-weight:700;font-size:14px}
+ .good{background:#E8F0E3;color:#2E7D32} .bad{background:#FBEAEA;color:#C0392B}
+ .cards{display:flex;gap:12px;flex-wrap:wrap;margin:18px 0}
+ .card{flex:1;min-width:150px;background:#fff;border-radius:10px;padding:14px 16px;
+        box-shadow:0 1px 4px rgba(0,0,0,.08);border-top:4px solid #2E75B6}
+ .card .n{font-size:22px;font-weight:700;color:#1F3864} .card .l{font-size:11.5px;color:#666;margin-top:3px}
+ section{background:#fff;border-radius:10px;padding:18px 22px;margin-bottom:18px;
+          box-shadow:0 1px 4px rgba(0,0,0,.08)}
+ h2{color:#1F3864;font-size:16px;margin:0 0 10px} .sub{font-size:12px;color:#777}
+ table{border-collapse:collapse;width:100%;font-size:12.5px;overflow-x:auto;display:block}
+ th{background:#1F3864;color:#fff;padding:6px 9px;text-align:left;white-space:nowrap}
+ td{padding:6px 9px;border-bottom:1px solid #e4e7ee;white-space:nowrap}
+ footer{text-align:center;color:#999;font-size:12px;margin:26px 0}
+</style></head><body>
+<header><h1>Aegis — Self-Healing Report</h1>
+<p>run: pod_airport · v0.1.0 · 2026-07-08T18:11:50</p></header>
+<div class="wrap">
+<p style="margin-top:18px"><span class="badge bad">TARGET NOT MET — 95.53% &lt; 97.0% (reported honestly)</span></p>
+<div class="cards">
+ <div class="card"><div class="n">2</div><div class="l">sources</div></div>
+ <div class="card"><div class="n">170,757</div><div class="l">buckets judged</div></div>
+ <div class="card"><div class="n">9,351</div><div class="l">cells healed (audited)</div></div>
+ <div class="card"><div class="n">9,336</div><div class="l">HIGH-confidence fixes</div></div>
+ <div class="card"><div class="n">7,637</div><div class="l">escalated to a human</div></div>
+</div>
+
+<section><h2>Trust per source (before → after)</h2>
+<table><tr><th>source</th><th>rows used</th><th>initial trust</th><th>final trust</th></tr>
+<tr><td>entry</td><td>985,748</td><td>93.22%</td><td><b>97.05%</b></td></tr><tr><td>pesc</td><td>1,004,356</td><td>86.92%</td><td><b>94.02%</b></td></tr></table></section>
+
+<section><h2>Self-healing iterations</h2>
+<table><tr><th>iteration</th><th>cells upgraded</th><th>overall trust</th></tr>
+<tr><td>1</td><td>4509</td><td>95.53%</td></tr><tr><td>2</td><td>0</td><td>95.53%</td></tr></table>
+<p class="sub">The loop stops when the target is met, nothing more can be
+confidently improved, or the iteration cap is reached.</p></section>
+
+<section><h2>Biggest repairs (full ledger in audit.csv)</h2>
+<table><tr><th>source</th><th>date</th><th>time_bucket</th><th>entity</th><th>flag</th><th>actual</th><th>expected</th><th>value_adj</th><th>repair_method</th><th>confidence</th><th>healed_by</th></tr><tr><td>entry</td><td>2026-01-20</td><td>4</td><td>Gate 06</td><td>SPIKE</td><td>1091</td><td>257.0</td><td>324.0</td><td>reconciled_from_links</td><td>HIGH</td><td>pesc(r=0.73)</td></tr><tr><td>pesc</td><td>2026-01-20</td><td>5</td><td>ATRS 13 - 14</td><td>SPIKE</td><td>1023</td><td>331.0</td><td>366.0</td><td>reconciled_from_links</td><td>HIGH</td><td>entry(r=0.72)</td></tr><tr><td>entry</td><td>2026-01-20</td><td>7</td><td>Gate 06</td><td>SPIKE</td><td>1025</td><td>272.0</td><td>377.0</td><td>reconciled_from_links</td><td>HIGH</td><td>pesc(r=0.73)</td></tr><tr><td>entry</td><td>2026-01-20</td><td>12</td><td>Gate 06</td><td>SPIKE</td><td>938</td><td>199.0</td><td>291.0</td><td>reconciled_from_links</td><td>HIGH</td><td>pesc(r=0.73)</td></tr><tr><td>entry</td><td>2025-11-29</td><td>5</td><td>Gate 05</td><td>LOW</td><td>5</td><td>429.0</td><td>614.0</td><td>reconciled_from_links</td><td>HIGH</td><td>pesc(r=0.73)</td></tr><tr><td>entry</td><td>2025-12-23</td><td>8</td><td>Gate 06</td><td>SPIKE</td><td>918</td><td>224.0</td><td>314.0</td><td>reconciled_from_links</td><td>HIGH</td><td>pesc(r=0.73)</td></tr><tr><td>entry</td><td>2025-11-29</td><td>7</td><td>Gate 05</td><td>LOW</td><td>4</td><td>389.0</td><td>603.0</td><td>reconciled_from_links</td><td>HIGH</td><td>pesc(r=0.73)</td></tr><tr><td>entry</td><td>2025-11-29</td><td>6</td><td>Gate 05</td><td>LOW</td><td>2</td><td>436.0</td><td>585.0</td><td>reconciled_from_links</td><td>HIGH</td><td>pesc(r=0.73)</td></tr><tr><td>entry</td><td>2025-11-09</td><td>5</td><td>Gate 05</td><td>LOW</td><td>8</td><td>429.0</td><td>581.0</td><td>reconciled_from_links</td><td>HIGH</td><td>pesc(r=0.73)</td></tr><tr><td>entry</td><td>2026-01-30</td><td>5</td><td>Gate 05</td><td>LOW</td><td>2</td><td>438.0</td><td>575.0</td><td>reconciled_from_links</td><td>HIGH</td><td>pesc(r=0.73)</td></tr></table></section>
+
+<section><h2>Escalations — needs a human or more data (escalations.csv)</h2>
+<table><tr><th>source</th><th>date</th><th>time_bucket</th><th>entity</th><th>flag</th><th>actual</th><th>expected</th><th>value_adj</th><th>confidence</th><th>repair_method</th></tr><tr><td>entry</td><td>2025-04-06</td><td>0</td><td>Gate 04</td><td>DRIFT</td><td>112</td><td>91.5</td><td>112.0</td><td></td><td>watchlist_no_autocorrect</td></tr><tr><td>entry</td><td>2025-04-06</td><td>0</td><td>Gate 11</td><td>DRIFT</td><td>242</td><td>187.5</td><td>242.0</td><td></td><td>watchlist_no_autocorrect</td></tr><tr><td>entry</td><td>2025-04-06</td><td>1</td><td>Gate 04</td><td>DRIFT</td><td>83</td><td>88.0</td><td>83.0</td><td></td><td>watchlist_no_autocorrect</td></tr><tr><td>entry</td><td>2025-04-06</td><td>1</td><td>Gate 11</td><td>DRIFT</td><td>214</td><td>167.0</td><td>214.0</td><td></td><td>watchlist_no_autocorrect</td></tr><tr><td>entry</td><td>2025-04-06</td><td>2</td><td>Gate 04</td><td>DRIFT</td><td>139</td><td>74.5</td><td>139.0</td><td></td><td>watchlist_no_autocorrect</td></tr><tr><td>entry</td><td>2025-04-06</td><td>2</td><td>Gate 11</td><td>DRIFT</td><td>137</td><td>72.0</td><td>137.0</td><td></td><td>watchlist_no_autocorrect</td></tr><tr><td>entry</td><td>2025-04-06</td><td>3</td><td>Gate 04</td><td>DRIFT</td><td>173</td><td>177.0</td><td>173.0</td><td></td><td>watchlist_no_autocorrect</td></tr><tr><td>entry</td><td>2025-04-06</td><td>3</td><td>Gate 11</td><td>DRIFT</td><td>73</td><td>54.0</td><td>73.0</td><td></td><td>watchlist_no_autocorrect</td></tr><tr><td>entry</td><td>2025-04-06</td><td>4</td><td>Gate 04</td><td>DRIFT</td><td>331</td><td>312.0</td><td>331.0</td><td></td><td>watchlist_no_autocorrect</td></tr><tr><td>entry</td><td>2025-04-06</td><td>4</td><td>Gate 11</td><td>DRIFT</td><td>111</td><td>71.0</td><td>111.0</td><td></td><td>watchlist_no_autocorrect</td></tr><tr><td>entry</td><td>2025-04-06</td><td>5</td><td>Gate 04</td><td>DRIFT</td><td>297</td><td>335.5</td><td>297.0</td><td></td><td>watchlist_no_autocorrect</td></tr><tr><td>entry</td><td>2025-04-06</td><td>5</td><td>Gate 11</td><td>DRIFT</td><td>139</td><td>66.0</td><td>139.0</td><td></td><td>watchlist_no_autocorrect</td></tr><tr><td>entry</td><td>2025-04-06</td><td>6</td><td>Gate 04</td><td>DRIFT</td><td>298</td><td>338.0</td><td>298.0</td><td></td><td>watchlist_no_autocorrect</td></tr><tr><td>entry</td><td>2025-04-06</td><td>6</td><td>Gate 11</td><td>DRIFT</td><td>144</td><td>66.5</td><td>144.0</td><td></td><td>watchlist_no_autocorrect</td></tr><tr><td>entry</td><td>2025-04-06</td><td>7</td><td>Gate 04</td><td>DRIFT</td><td>214</td><td>315.0</td><td>214.0</td><td></td><td>watchlist_no_autocorrect</td></tr></table><p class="sub">… and 7,622 more (see CSV)</p>
+<p class="sub">Aegis never fabricates: cells without confident evidence are
+listed here instead of being silently filled.</p></section>
+
+<footer>Aegis v0.1.0 · github.com/hrithika-M/aegis</footer>
+</div></body></html>
