@@ -38,6 +38,17 @@ def repair(trust, physical_max=None):
     value_adj (the repaired series), was_corrected, repair_method, confidence.
     """
     t = trust.copy()
+    # idempotent under the heal loop: drop our own helper columns from a prior
+    # pass, and remember cells reconcile already healed — they must NOT be
+    # clobbered back to a single-source guess.
+    t = t.drop(columns=['factor', 'n_healthy'], errors='ignore')
+    preserved = None
+    if 'repair_method' in t.columns:
+        keep = t['repair_method'].eq('reconciled_from_links')
+        if keep.any():
+            preserved = t.loc[keep, ['value_adj', 'confidence', 'repair_method']].copy()
+            if 'healed_by' in t.columns:
+                preserved['healed_by'] = t.loc[keep, 'healed_by']
     healthy = t['flag'] == 'OK'
     # INFORMATIVE healthy hours only: a silent night hour (expected ~ 0) is
     # trivially 'OK' but says nothing about how busy the day was — it must not
@@ -89,6 +100,9 @@ def repair(trust, physical_max=None):
     t['was_corrected'] = fixed
     t['repair_method'] = method
     t['confidence'] = conf
+    if preserved is not None:                 # restore reconcile's better fixes
+        for col in preserved.columns:
+            t.loc[preserved.index, col] = preserved[col]
     return t
 
 
