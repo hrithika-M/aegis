@@ -23,15 +23,17 @@ Everything in one place, committed for reproducibility. Timeline anchor is the
 | `hyderabad_weather.csv` | Real hourly weather at RGIA (temp, humidity, precip, wind, gusts, pressure, weather_code) | Open-Meteo ERA5 archive | 8,616 |
 | `ews_weather_hourly.csv` | EWS hourly demand joined with weather + calendar features | derived (`join_weather.py`) | ~8,611 |
 | `hyderabad_routes.csv` | HYD flight route network (airline, origin/dest, direction) | OpenFlights | 147 routes |
+| `hyderabad_holidays.csv` | India + Telangana holidays/festivals (with scope) | `holidays` lib | 20 |
 
 ## Acquisition scripts (reproducible)
 
 | Script | Produces | Notes |
 |---|---|---|
-| `export_data.py` | `entry.csv`, `pesc.csv` | run from the POD project (`DATA_POD/`); needs its data layer |
+| `export_data.py` | all 6 EWS `<tp>.csv` | run from the POD project (`DATA_POD/`); needs its data layer |
 | `fetch_weather.py` | `hyderabad_weather.csv` | Open-Meteo, free, no key — pulls the exact EWS window |
 | `join_weather.py` | `ews_weather_hourly.csv` | joins EWS hourly demand + weather + calendar |
 | `fetch_flights.py` | `hyderabad_routes.csv` | OpenFlights routes filtered to HYD |
+| `fetch_holidays.py` | `hyderabad_holidays.csv` | `holidays` lib — India + Telangana festivals |
 
 ## Honest notes on each stream
 - **EWS (entry/pesc)** — real airport camera data; the core signal. Contains
