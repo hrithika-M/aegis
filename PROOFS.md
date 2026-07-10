@@ -2,7 +2,7 @@
 
 Two complete runs of the identical engine, zero code changes between them —
 different domains, different connectors, different data shapes. This is the
-generality claim, demonstrated. Committed reports: `examples/*/report.html`.
+generality claim, demonstrated. Committed reports: `data_pipeline/examples/*/report.html`.
 
 ---
 

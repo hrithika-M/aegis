@@ -1,51 +1,40 @@
 # Aegis
 
-**A general self-healing data engine.** Point it at any data source — a CSV/Excel
-file or a database (Postgres, MySQL, SQLite…) — and it:
+Our POD (Plan of the Day) data-science work — a self-contained repository with
+the data, the data pipeline, and the model experiments, organised into three
+top-level folders.
 
-1. **learns** what "normal" looks like for that data (median + MAD bands — measured, never configured),
-2. **detects** anomalies per cell: `BLACKOUT / SPIKE / LOW / DRIFT / OK`,
-3. **repairs** them scaled to the day's real activity (not flat averages),
-4. **reconciles** doubtful values from related tables + ground-truth references (MICE-style, bounded by physical limits),
-5. **iterates** — confidence-gated — until the data-trust score converges,
-6. **reports honestly**: healed data + audit trail of every change + an escalation list for what it could *not* confidently fix. It never fabricates.
-
-Design lineage: HoloClean's signal unification · Soda's config/connector pattern ·
-MICE cross-column imputation · the 2026 self-healing confidence-gate rule.
-See [docs/RESEARCH_AND_PLAN.md](docs/RESEARCH_AND_PLAN.md) and
-[docs/WORKFLOW.md](docs/WORKFLOW.md) (diagram: `docs/workflow.png`).
-
-## Quick start
-
-```yaml
-# run.yaml
-name: my_run
-target_trust: 97
-sources:
-  - name: scans
-    kind: csv                      # csv | excel | database
-    path: data/scans.csv
-    # kind: database
-    # url: postgresql://user:pass@host:5432/mydb
-    # query: SELECT * FROM scans
-    columns: {datetime: scan_time, entity: gate, value: scan_count}
+```
+aegis/
+├── data/            all datasets + acquisition scripts (EWS, weather, flights)
+├── data_pipeline/   the Aegis self-healing data engine (the pipeline we built)
+├── trial_models/    forecasting model experiments (foundation models, trials)
+├── docs/            research, workflow, design docs
+└── PROOFS.md        end-to-end proofs of the pipeline on two domains
 ```
 
-```bash
-python -m aegis.scan run.yaml      # understand: profile + detect + trust score
-python -m aegis.tests.test_phase1  # test suite
-```
+## The three parts
 
-## Status
+### 📁 `data/` — [README](data/README.md)
+All datasets in one place (committed for reproducibility), on the EWS timeline
+**2025-04-01 → 2026-03-25**: EWS camera counts (`entry.csv`, `pesc.csv`), real
+hourly weather (`hyderabad_weather.csv`), the joined table, and the HYD flight
+route network (`hyderabad_routes.csv`) — plus the scripts that fetch/build each.
 
-| Phase | Scope | Status |
-|---|---|---|
-| 1 · Foundation | config · connectors (file+DB) · profile · detect · scan CLI | ✅ built, tests passing |
-| 2 · Self-healing | repair · reconcile (MICE + refs) · confidence-gated heal loop · trust score | ⏳ next |
-| 3 · Proof & polish | report/HTML · audit trail · proof on two unrelated real datasets | ⏳ |
+### 🔧 `data_pipeline/` — [README](data_pipeline/README.md)
+**Aegis** — a general self-healing data engine. Point it at any file or database;
+it learns the normal (median/MAD), detects `BLACKOUT/SPIKE/LOW/DRIFT`, repairs
+scaled to the day's real activity, reconciles doubtful values from linked sources
+(MICE-style), and iterates — confidence-gated — until the trust score converges.
+Never fabricates: what it can't fix confidently is escalated. Built, tested, and
+proven on two domains (see `PROOFS.md`).
 
-## Honesty contract
+### 🧪 `trial_models/` — [README](trial_models/README.md)
+Forecasting experiments on the real EWS demand. Each model gets its own named
+folder + a results README. So far: **Chronos** (Amazon foundation model) forecast
+our demand at **89.8% zero-shot** — beating our trained RandomForest (88.3%).
 
-Aegis heals what it has confident signal for and **escalates the rest**. The
-target trust score (e.g. 97%) is an aim; the achieved score is always reported
-truthfully, with the list of what needs a human or more data.
+## Honesty contract (applies throughout)
+Every result is reported truthfully. The pipeline heals what it has confident
+signal for and escalates the rest; the model trials report honest walk-forward
+numbers, including where a fancy model is only *within noise* of a simple one.

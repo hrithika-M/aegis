@@ -5,16 +5,19 @@ __pycache__/
 venv/
 .ipynb_checkpoints/
 
-# data & outputs never committed
-*.csv
-*.xlsx
+# generated / large binaries — NOT committed
 *.db
 *.sqlite
+*.xlsx
 out/
 *.log
 
-# OS/IDE
+# NOTE: data/ CSVs ARE committed (real EWS / weather / flight data — by choice)
+
 .DS_Store
 Thumbs.db
 .vscode/
 .idea/
+
+# leftover, Excel-locked derived file — regenerate via data/join_weather.py
+examples/

@@ -1,0 +1,17 @@
+# Aegis config — retail demo (SQL DATABASE connector, simulated data)
+name: retail_demo
+target_trust: 97
+max_iterations: 5
+sources:
+  - name: footfall
+    kind: database
+    url: sqlite:///retail.db          # swap for postgresql://user:pass@host/db
+    query: SELECT ts, store, visitors FROM footfall
+    columns: {datetime: ts, entity: store, value: visitors}
+    links: [receipts]
+  - name: receipts
+    kind: database
+    url: sqlite:///retail.db
+    query: SELECT ts, store, receipts FROM receipts
+    columns: {datetime: ts, entity: store, value: receipts}
+    links: [footfall]
