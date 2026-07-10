@@ -5,10 +5,21 @@ Everything in one place, committed for reproducibility. Timeline anchor is the
 
 ## Datasets
 
+**EWS camera data — all 6 touchpoints** (5-min rows: DateTime, Zone, Throughput):
+
+| File | Touchpoint | Rows |
+|---|---|---|
+| `entry.csv` | Entry gates | 985,748 |
+| `checkin.csv` | Check-In counters | 1,000,816 |
+| `pesc.csv` | Security (PESC) | 1,004,356 |
+| `transfers.csv` | Transfers | 297,124 |
+| `immigration.csv` | Arrival Immigration | 102,640 |
+| `emigration.csv` | Departure Emigration | 98,562 |
+
+**Other datasets:**
+
 | File | What | Source | Rows |
 |---|---|---|---|
-| `entry.csv` | EWS Entry-gate camera counts (5-min, per zone) | POD project EWS export | ~986k |
-| `pesc.csv` | EWS Security/PESC camera counts (5-min, per zone) | POD project EWS export | ~1.0M |
 | `hyderabad_weather.csv` | Real hourly weather at RGIA (temp, humidity, precip, wind, gusts, pressure, weather_code) | Open-Meteo ERA5 archive | 8,616 |
 | `ews_weather_hourly.csv` | EWS hourly demand joined with weather + calendar features | derived (`join_weather.py`) | ~8,611 |
 | `hyderabad_routes.csv` | HYD flight route network (airline, origin/dest, direction) | OpenFlights | 147 routes |
