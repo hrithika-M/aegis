@@ -1,0 +1,11 @@
+metric,value,unit,when,method
+Peak check-in demand,57,pax / 5 min,2026-03-30 07:00,max of checkin_demand
+Peak security demand,65,pax / 5 min,2026-03-29 15:40,max of security_demand
+Peak boarding demand,127,pax / 5 min,2026-03-29 08:35,max of boarding_demand
+Peak terminal occupancy,1350,passengers,2026-03-30 20:55,max of terminal_occupancy
+Peak check-in counters required,10,counters,,ceil(demand / 6 pax per 5min)
+Peak security lanes required,6,lanes,,ceil(demand / 12 pax per 5min)
+Peak aircraft on ground,4,aircraft,,max concurrent rotations on stand
+Busiest day,2026-03-30,date,,max daily boarding+belt pax
+Avg daily passengers (dep+arr),7942,pax / day,,mean of daily throughput
+Peak hour of day,07:00,clock hour,,hour with max mean check-in+security demand

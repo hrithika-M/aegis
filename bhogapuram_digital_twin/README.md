@@ -20,15 +20,23 @@ from?" and get a straight answer.
 ## Phases
 | Phase | What | Status |
 |---|---|---|
-| 1. Foundation | Master AODB, airport/aircraft masters, daily expansion | **Sprint 1 — done** |
-| 2. Passenger engine | Seats × load factor, reconciled to real monthly totals | backbone built* |
-| 3. Passenger behaviour | Show-up / check-in / security / boarding windows | next |
-| 4. EWS dataset | 5-minute operational demand (check-in/security/boarding/occupancy) | next |
-| 5. Dashboard | Power BI ops dashboard (peak hour, gates, flow, utilisation) | later |
+| 1. Foundation | Master AODB, airport/aircraft masters, daily expansion | **done** |
+| 2. Passenger engine | Seats × load factor, reconciled to real DGCA monthly totals | **done** |
+| 3. Passenger behaviour | Show-up / check-in / security / boarding windows (tunable) | **done** |
+| 4. EWS dataset | 5-minute operational demand + occupancy + counters | **done** |
+| 5. Analytics + dashboard | KPIs, peak hours (CSV) + Power-BI-ready + HTML dashboard | **done** |
 
-\* Phase-2 real inputs already exist in `../data/bhogapuram_vtz/` (route load factors,
-monthly/daily reals) and `../pax_estimation/` (hourly demand). Phase 2 here will wire
-them onto the daily flights and reconcile to the real DGCA monthly totals.
+## Run the whole pipeline
+```
+python build/build_masters.py      # Phase 1  -> master/, generated/Daily_Flights.csv
+python build/build_passengers.py   # Phase 2  -> generated/passenger_estimates.csv
+python build/build_operations.py   # Phase 3+4-> generated/passenger_5min.csv, gate_occupancy.csv
+python build/build_analytics.py    # Phase 5  -> analytics/kpis.csv, peak_hours.csv
+```
+
+## Headline results (S26 season)
+- **~7,942 passengers/day** simulated (real VTZ ~8,000 ✓), reconciled to DGCA route totals.
+- Peak hour **07:00**; peak terminal occupancy **~1,350**; peak **10 check-in counters**, **6 security lanes**, **4 aircraft on ground**.
 
 ## Sprint 1 deliverables (built)
 | File | Rows | What |
