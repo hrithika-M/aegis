@@ -27,9 +27,22 @@ VTZ is an **operating** airport, so official passenger counts exist — but only
 that is proprietary and, for Bhogapuram, starts only when it opens 2026-07-08).
 
 - `vtz_annual_traffic.csv` — full financial-year series 2014-15 → 2025-26 (AAI/DGCA).
-- `vtz_monthly_traffic.csv` — the months with published figures (Jan-2025 with
-  dom/intl + arr/dep split, Jan-2026, Feb-2026, Jan–Nov-2025 cumulative). Only
-  actually-published months are listed; no months were fabricated.
+- `vtz_monthly_traffic.csv` — airport monthly totals (news/AAI-sourced anchors).
+- **`vtz_citypair_monthly.csv`** — the granular one: **DGCA route-level monthly
+  passengers, directional (arrivals to VTZ / departures from VTZ), 126 months
+  Apr-2015 → Dec-2025, 42 routes.** Sourced from DGCA city-pair statistics (via
+  the open `Vonter/india-aviation-traffic` compilation). Columns: `Year, Month,
+  Route, PaxArr_toVTZ, PaxDep_fromVTZ, PaxTotal`. 2026 rows were still provisional
+  (empty) at fetch time, so Dec-2025 is the latest complete month.
+
+Real seasonal shape from this file (monthly totals): summer peak May-2025 262,049;
+monsoon low Jul-2025 215,442; festive peak Nov-2025 265,082. Top routes (Dec-2025):
+Hyderabad 74,060, Delhi 40,366, Bengaluru 38,896, Chennai 30,491.
+
+This is the finest **real passenger** granularity that exists publicly — **route ×
+month × direction.** It lets us compute a **real per-route load factor** (real pax
+÷ scheduled seats) instead of a flat assumption. Still not hourly (hourly PAX is
+not public for any airport), but it's real counts, per route, per direction.
 
 **These validate the schedule-derived estimate against reality:**
 | Month | Estimate (8,718/day × days) | Actual | Match |
