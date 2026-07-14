@@ -1,0 +1,5 @@
+Month,TotalPAX,Domestic,International,Arrivals,Departures,Source,Note
+2025-01,272743,261636,11107,135699,137044,AAI (via Deccan Chronicle / Hans India),arr/dep = dom(130100/131536)+intl(5599/5508)
+2026-01,271302,,,,,AAI (via Wikipedia),total only
+2026-02,230117,,,,,AAI (via Wikipedia),total only; 28-day month
+2025-Jan-to-Nov,2755635,,,,,yovizag (AAI-sourced),"11-month cumulative, +9.29% YoY vs 2,521,249 in 2024"
