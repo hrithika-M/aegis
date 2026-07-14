@@ -61,9 +61,21 @@ not public for any airport), but it's real counts, per route, per direction.
 | Jan 2025 | 270,258 | 272,743 | **99.1%** |
 | Feb 2026 | 244,104 | 230,117 | 106% (Feb is a seasonally low month) |
 
-Granularity ceiling: **monthly is the finest real count obtainable.** For the
-intra-day curve we combine real monthly totals × the schedule-derived hourly
-*shape* (`../../pax_estimation/`) — real volume, modelled distribution.
+### Daily
+VTZ-specific *daily* counts are not published either. Two files bridge that:
+- `national_daily_reference.csv` — **REAL** all-India daily traffic (MoCA, 1,276
+  days, Jul-2020 → Jul-2026): domestic & intl pax, and **per-airline daily load
+  factors** (IndiGo/Air India/Akasa/SpiceJet). This is genuine measured data, but
+  *national*, used as the daily-shape + load-factor reference.
+- `vtz_daily_estimate.csv` — **DERIVED** VTZ daily passengers for 2025 (365 days):
+  real DGCA monthly total distributed by the schedule's weekday rhythm × the real
+  national daily index (holiday/disruption effects), scaled so **each month sums
+  exactly to the real DGCA total** (verified: Jan-2025 daily sum 260,430 vs real
+  260,423). Real volume + real daily shape; not counts the airport recorded per day.
+
+Granularity ceiling: **monthly is the finest real count obtainable per airport.**
+Daily and hourly are *modelled* (real totals × real shape); only national daily is
+real at the day level.
 
 ## Note
 Different airport from the core POD work (which is GMR **Hyderabad / HYD**). Kept
