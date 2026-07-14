@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}Command Board{% endblock %}
+{% block subtitle %}Demand against capacity · domestic & international · the journey is the spine{% endblock %}
+
+{% block head %}
+<script src="{{ url_for('static', filename='js/components.js') }}"></script>
+<script src="{{ url_for('static', filename='js/scrubber.js') }}"></script>
+{% endblock %}
+
+{% block content %}
+<div id="board-root">
+  <!-- Hero + Narrator -->
+  <div class="board-hero" id="board-hero"><div class="skel" style="height:120px"></div></div>
+
+  <!-- Toolbar -->
+  <div class="board-toolbar">
+    <div class="seg" id="view-toggle">
+      <button data-v="rails" class="on">Flow Rails</button>
+      <button data-v="map">Terminal Map</button>
+    </div>
+    <div class="crumbs" id="crumbs"></div>
+  </div>
+
+  <!-- Stage (rails / map / segment focus) + alert rail -->
+  <div class="board-main">
+    <div class="board-stage" id="board-stage"></div>
+    <aside class="alert-rail" id="alert-rail"></aside>
+  </div>
+
+  <!-- Scrubber -->
+  <div id="scrubber-host"></div>
+</div>
+
+<!-- Inspector slide-over -->
+<div class="insp-scrim" id="insp-scrim"></div>
+<aside class="inspector" id="inspector"></aside>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/board.js') }}"></script>
+{% endblock %}

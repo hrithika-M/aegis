@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block title %}Wait-Time Heatmap{% endblock %}
+{% block subtitle %}Touchpoint × hour wait bands · KPI thresholds (RP-05/06){% endblock %}
+
+{% block content %}
+<div style="display:flex;gap:16px;align-items:center;margin-bottom:14px;flex-wrap:wrap">
+  <span class="st st-ok">Acceptable</span>
+  <span class="st st-wait">Medium</span>
+  <span class="st" style="background:rgba(239,68,68,.12);color:var(--rd)">High / Breach</span>
+  <span style="font-size:11px;color:var(--dim)">Bands per KPI table — Entry &lt;3m · Check-In &lt;8m · others &lt;5m acceptable</span>
+</div>
+
+<div class="card">
+  <div class="hm-wrap" id="hm-wrap"><div class="skel" style="height:260px"></div></div>
+</div>
+
+<div class="sec-title">KPI THRESHOLDS & CAPACITY (RP-03/04)</div>
+<div class="card">
+  <table class="tbl" id="kpi-tbl"><thead>
+    <tr><th>Touchpoint</th><th>Acceptable</th><th>Medium</th><th>High</th><th>Capacity</th><th>Note</th></tr>
+  </thead><tbody></tbody></table>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+async function onDateChange(){
+  const d = await api(`/api/heatmap/${POD_DATE}`);
+  const hrs = [...Array(24).keys()];
+  let html = '<table class="hm"><thead><tr><th></th>' +
+    hrs.map(h => `<th>${String(h).padStart(2,'0')}</th>`).join('') + '</tr></thead><tbody>';
+  for(const row of d.rows){
+    html += `<tr><td class="lab">${row.label}</td>` + row.cells.map(c => {
+      const cls = c.band === 'acceptable' ? 'band-acceptable' : c.band === 'medium' ? 'band-medium' : 'band-high';
+      return `<td class="cell ${cls}" title="${row.label} ${String(c.hour).padStart(2,'0')}:00 — wait ${c.wait_minutes}m · ${fmt(c.pax)} pax">${c.wait_minutes}</td>`;
+    }).join('') + '</tr>';
+  }
+  html += '</tbody></table><p style="font-size:10px;color:var(--dim);margin-top:8px">Cell value = predicted wait (minutes), from L/AvgWT prescription formulas over predicted PAX & processing time.</p>';
+  $('#hm-wrap').innerHTML = html;
+
+  const k = await api('/api/config/kpi');
+  $('#kpi-tbl tbody').innerHTML = Object.entries(k.kpi).map(([tp, v]) => `
+    <tr><td><b>${k.labels[tp]}</b></td>
+      <td><span class="st st-ok">&lt; ${v.acceptable}m</span></td>
+      <td><span class="st st-wait">${v.acceptable}–${v.high}m</span></td>
+      <td><span class="st" style="background:rgba(239,68,68,.12);color:var(--rd)">&gt; ${v.high}m</span></td>
+      <td class="mono">${v.capacity}</td><td style="color:var(--dim);font-size:11px">${v.capacity_note}</td></tr>`).join('');
+}
+</script>
+{% endblock %}

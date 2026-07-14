@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% block ptitle %}Flight Prediction Engine{% endblock %}
+{% block content %}
+
+<!-- Day schedule summary (realistic totals) -->
+<div class="grid g5" id="f-daystats" style="margin-bottom:16px"></div>
+
+<div class="panel">
+  <div class="panel-h"><h2><span class="pnum">2</span> Per-Flight Prediction <span class="sub">Bookloads → Turn-Up → Touchpoint projection</span></h2>
+    <div style="display:flex;gap:8px;align-items:center">
+      <input class="search" id="fsearch" placeholder="Flight search… e.g. EK 526" style="width:190px">
+      <select class="sel" id="fsel"></select>
+    </div>
+  </div>
+  <div class="panel-b">
+
+    <!-- flight header -->
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;flex-wrap:wrap;gap:8px">
+      <div style="display:flex;align-items:center;gap:12px">
+        <div style="font-size:20px;font-weight:800" id="f-id">EK 526</div>
+        <span class="tag t-blue" id="f-dir">Departure</span>
+        <span class="tag t-violet" id="f-dom">International</span>
+      </div>
+      <span class="tag t-green" id="f-status">On Time</span>
+    </div>
+
+    <div class="mini-lab" style="margin-bottom:6px;color:var(--dim)">FROM SCHEDULE · AODB / Data Lake — given, not predicted</div>
+    <div class="grid g5" id="f-details" style="margin-bottom:16px"></div>
+
+    <div class="mini-lab" style="margin-bottom:6px;color:var(--dim)">PREDICTED · Bookloads model (PR-03)</div>
+    <div class="grid g4" id="f-pred" style="margin-bottom:18px"></div>
+
+    <!-- Real-Time Adjustment (RT-01 / RT-02) -->
+    <div class="mini-lab" style="margin-bottom:6px;color:var(--dim)">REAL-TIME ADJUSTMENT · live flight changes re-project the prediction (RT-01 / RT-02)</div>
+    <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:10px">
+      <div class="seg" id="f-rt-seg">
+        <button class="on" data-rt="ontime">On time</button>
+        <button data-rt="d30">Delay +30</button>
+        <button data-rt="d60">Delay +60</button>
+        <button data-rt="gate">Gate change</button>
+      </div>
+      <span class="mini-sub" style="color:var(--dim)">applies a live AODB update and re-projects turn-up + touchpoints</span>
+    </div>
+    <div id="f-rt-out" style="margin-bottom:18px"></div>
+
+    <div class="grid g2">
+      <div class="panel" style="margin:0">
+        <div class="panel-h"><h2 id="f-tu-title">Turn-Up Profile <span class="sub">when local PAX arrive · PR-04</span></h2></div>
+        <div class="panel-b" id="f-turnup-body"><div class="chart" style="height:200px"><canvas id="f-turnup"></canvas></div></div>
+      </div>
+      <div class="panel" style="margin:0">
+        <div class="panel-h"><h2>Touchpoint Projection <span class="sub">load onto touchpoints · PR-05</span></h2></div>
+        <div class="panel-b">
+          <div style="overflow-x:auto"><table class="tbl" id="f-proj"></table></div>
+          <div class="fill-note" id="f-proj-note"></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+{% endblock %}
+{% block scripts %}<script src="{{ url_for('static', filename='js/page-flight.js') }}"></script>{% endblock %}

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>POD · Plan of the Day</title>
+<script>try{document.documentElement.dataset.theme=localStorage.getItem('pod-theme')||'light';}catch(e){document.documentElement.dataset.theme='light';}</script>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/app.css') }}">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+<div class="layout">
+  <!-- Sidebar -->
+  <nav class="sb">
+    <div class="sb-brand">
+      <div class="sb-logo">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 2 7l10 5 10-5-10-5Z"/><path d="m2 17 10 5 10-5"/><path d="m2 12 10 5 10-5"/></svg>
+      </div>
+      <div class="sb-brand-txt"><b>POD</b><span>Plan of the Day · Ops Console</span></div>
+    </div>
+    {% set icons = {
+      'grid':'<rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/>',
+      'plane':'<path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2Z"/>',
+      'layers':'<path d="M12 2 2 7l10 5 10-5-10-5Z"/><path d="m2 17 10 5 10-5"/><path d="m2 12 10 5 10-5"/>',
+      'sliders':'<line x1="4" y1="21" x2="4" y2="14"/><line x1="4" y1="10" x2="4" y2="3"/><line x1="12" y1="21" x2="12" y2="12"/><line x1="12" y1="8" x2="12" y2="3"/><line x1="20" y1="21" x2="20" y2="16"/><line x1="20" y1="12" x2="20" y2="3"/><line x1="1" y1="14" x2="7" y2="14"/><line x1="9" y1="8" x2="15" y2="8"/><line x1="17" y1="16" x2="23" y2="16"/>',
+      'server':'<rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/>',
+      'report':'<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/>',
+      'gear':'<circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>',
+      'dl':'<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>'
+    } %}
+    {% macro navitem(pid, label, icon) -%}
+      <li><a href="/{{ pid }}" class="{{ 'on' if active==pid }}">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">{{ icons[icon]|safe }}</svg>
+        <span>{{ label }}</span></a></li>
+    {%- endmacro %}
+    <div class="sb-sec">Operate</div>
+    <ul class="sb-nav">
+      {{ navitem('dashboard','Command Center','grid') }}
+      {{ navitem('touchpoints','Touchpoint Plans','layers') }}
+      {{ navitem('flight','Flight Prediction','plane') }}
+      {{ navitem('simulation','What-If Simulation','sliders') }}
+    </ul>
+    <div class="sb-sec">Assure</div>
+    <ul class="sb-nav">
+      {{ navitem('data','Data & Quality','server') }}
+      {{ navitem('accuracy','Accuracy & Models','report') }}
+    </ul>
+    <div class="sb-sec">Distribute</div>
+    <ul class="sb-nav">
+      <li><a href="/report" target="_blank">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">{{ icons['dl']|safe }}</svg>
+        <span>Daily Report</span></a></li>
+    </ul>
+    <div class="sb-sec">System</div>
+    <ul class="sb-nav">
+      {{ navitem('settings','Settings','gear') }}
+    </ul>
+    <div class="sb-foot">POD Ops Console v2<br>WAISL · Data Science &amp; Engineering</div>
+  </nav>
+
+  <!-- Main -->
+  <main class="main">
+    <header class="top">
+      <div class="top-title">
+        <h1>{% block ptitle %}Command Center{% endblock %}</h1>
+      </div>
+      <div class="top-right">
+        <div class="airport"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2 2 7l10 5 10-5-10-5Z"/></svg> GMR Hyderabad International Airport</div>
+        <div class="daysel" id="daysel">
+          <button class="daysel-btn" id="daysel-btn">
+            <span class="ds-dot" id="ds-dot"></span>
+            <span id="ds-label">…</span>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="daysel-list" id="daysel-list"></div>
+        </div>
+        <div class="top-clock" id="top-clock">—</div>
+        <button class="theme-btn" id="theme-toggle" title="Toggle theme"></button>
+        <div class="live-pill"><span class="live-dot"></span>Live</div>
+        <div class="dl" id="dl-menu">
+          <button class="dl-btn">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">{{ icons['dl']|safe }}</svg>
+            Download
+          </button>
+          <div class="dl-list">
+            <button id="dl-report">📄 Full-day report<span class="d">Print-ready · save as PDF · all touchpoints</span></button>
+            <button id="dl-csv">📊 Full plan (CSV)<span class="d">Hourly plan for every touchpoint</span></button>
+          </div>
+        </div>
+      </div>
+    </header>
+    <div class="page">{% block content %}{% endblock %}</div>
+  </main>
+</div>
+<script src="{{ url_for('static', filename='js/mock.js') }}"></script>
+<script src="{{ url_for('static', filename='js/plan.js') }}"></script>
+<script src="{{ url_for('static', filename='js/ui.js') }}"></script>
+{% block scripts %}{% endblock %}
+</body>
+</html>

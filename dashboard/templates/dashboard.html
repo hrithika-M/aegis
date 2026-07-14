@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% block ptitle %}Command Center{% endblock %}
+{% block content %}
+
+<!-- Hero (mode-aware; filled by JS) -->
+<div class="hero"><div class="hero-in">
+  <div style="min-width:270px">
+    <div class="hero-kicker" id="h-kicker">…</div>
+    <h1 id="h-title">…</h1>
+    <div class="hsub" id="h-sub">…</div>
+  </div>
+  <div class="hero-stats" id="hero-stats"></div>
+</div></div>
+
+<!-- Mode panel: Action Queue (plan) · Live Console (today) · Prediction-vs-Actual (history) -->
+<div id="daypanel"></div>
+
+<!-- Touchpoint board -->
+<div class="panel">
+  <div class="panel-h"><h2>Touchpoint Board <span class="sub" id="board-sub">click a card for its full plan</span></h2>
+    <span class="sub" id="board-sum"></span></div>
+  <div class="panel-b"><div class="board" id="board"></div></div>
+</div>
+
+<!-- Load + heatmap -->
+<div class="grid g2">
+  <div class="panel" style="margin:0">
+    <div class="panel-h"><h2><span class="pnum">1</span> <span id="lp-title">Load Prediction</span> <span class="sub" id="lp-sub">Entry Gates &amp; Transfers</span></h2>
+      <div class="seg" id="lp-seg"><button class="on" data-v="day">Hourly</button><button data-v="hour">30-min</button></div></div>
+    <div class="panel-b"><div class="chart" style="height:230px"><canvas id="lp-chart"></canvas></div></div>
+  </div>
+  <div class="panel" style="margin:0">
+    <div class="panel-h"><h2><span class="pnum">2</span> Wait &amp; Processing Heatmap <span class="sub">planned · vs each touchpoint's SLA</span></h2>
+      <div class="seg" id="hm-seg"><button class="on" data-v="wait">Wait Time</button><button data-v="proc">Processing Time</button></div></div>
+    <div class="panel-b">
+      <div style="overflow-x:auto"><div id="hm"></div></div>
+      <div class="hm-legend">
+        <span><i style="background:var(--green)"></i><b style="color:var(--green)">Within SLA</b></span>
+        <span><i style="background:var(--amber)"></i><b style="color:var(--amber)">&le; 1.5&times; SLA</b></span>
+        <span><i style="background:var(--red)"></i><b style="color:var(--red)">&gt; 1.5&times; SLA</b></span>
+        <span class="dim" id="hm-note" style="margin-left:auto"></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Airport pulse (predicted + actual) -->
+<div class="panel">
+  <div class="panel-h"><h2><span id="pulse-title">Airport Pulse</span> <span class="sub" id="pulse-sub">total processing demand across all touchpoints</span></h2></div>
+  <div class="panel-b"><div class="chart" style="height:250px"><canvas id="pulse"></canvas></div></div>
+</div>
+
+<!-- Staff plan + segments -->
+<div class="grid g2">
+  <div class="panel" style="margin:0">
+    <div class="panel-h"><h2><span class="pnum">3</span> Staff / Resource Plan <span class="sub">peak units × 3 shifts</span></h2>
+      <div style="display:flex;align-items:center;gap:10px">
+        <div class="mini-lab" style="text-align:right">Total staff<br><b class="mono" id="peak-staff" style="font-size:16px;color:var(--blue2)">—</b></div>
+        <button class="btn btn-ghost" id="staff-csv" style="padding:6px 12px;font-size:11px">CSV ↓</button>
+      </div></div>
+    <div class="panel-b">
+      <div style="overflow-x:auto"><table class="tbl" id="res-model"></table></div>
+      <div class="fill-note">Units to Open = planned positions at the peak hour (prescription formula, capped at capacity) · People = units × staff per unit × 3 shifts.</div>
+    </div>
+  </div>
+  <div class="panel" style="margin:0">
+    <div class="panel-h"><h2>Domestic vs International <span class="sub">passenger split &amp; hourly load</span></h2></div>
+    <div class="panel-b">
+      <div id="seg-cards" style="display:flex;gap:12px;margin-bottom:12px"></div>
+      <div class="chart" style="height:170px"><canvas id="seg-chart"></canvas></div>
+      <div class="grid g2" style="gap:10px;margin-top:12px" id="flow-split"></div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+{% block scripts %}<script src="{{ url_for('static', filename='js/page-dashboard.js') }}"></script>{% endblock %}

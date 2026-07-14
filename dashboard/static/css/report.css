@@ -1,0 +1,103 @@
+/* ═══ POD report — white, print-first document ═══ */
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --ink:#17223b; --mut:#5b6b8f; --dim:#8b9bbd; --rule:#d9e2f2; --soft:#f3f6fc;
+  --blue:#2563eb; --violet:#7c3aed; --teal:#0d9488; --green:#059669; --amber:#d97706; --red:#dc2626;
+}
+body{font-family:'Inter',system-ui,sans-serif;color:var(--ink);background:#e8edf6;font-size:12px}
+
+/* screen toolbar */
+.bar{position:sticky;top:0;z-index:10;display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 22px;background:#101a30;color:#fff}
+.bar-l{display:flex;align-items:center;gap:14px}
+.bk{color:#9fb4dd;text-decoration:none;font-size:12px;font-weight:600}
+.bk:hover{color:#fff}
+.bar-t{font-family:'Space Grotesk';font-weight:600;font-size:13px}
+.bar-r{display:flex;gap:8px}
+.b{border:none;border-radius:8px;padding:8px 16px;font:700 12px 'Inter';cursor:pointer;transition:.15s}
+.b.primary{background:linear-gradient(135deg,#2563eb,#7c3aed);color:#fff}
+.b.primary:hover{filter:brightness(1.1)}
+.b.ghost{background:rgba(255,255,255,.1);color:#dbe6fb}
+.b.ghost:hover{background:rgba(255,255,255,.2)}
+
+/* paper */
+.paper{max-width:940px;margin:26px auto 60px;background:#fff;box-shadow:0 20px 60px rgba(23,34,59,.18);border-radius:6px;padding:44px 48px}
+
+/* masthead */
+.mast{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;border-bottom:3px solid var(--ink);padding-bottom:16px}
+.mast .brand{display:flex;align-items:center;gap:12px}
+.mast .lg{width:42px;height:42px;border-radius:11px;background:linear-gradient(135deg,var(--blue),var(--violet));display:flex;align-items:center;justify-content:center;color:#fff}
+.mast h1{font-family:'Space Grotesk';font-size:21px;font-weight:700;line-height:1.15}
+.mast .sub{font-size:11px;color:var(--mut);margin-top:2px}
+.mast .meta{text-align:right;font-size:10.5px;color:var(--mut);line-height:1.7}
+.mast .meta b{color:var(--ink)}
+.datebox{margin-top:6px;display:inline-block;background:var(--soft);border:1px solid var(--rule);border-radius:8px;padding:6px 12px;font-weight:700;color:var(--ink);font-size:12px}
+
+/* sections */
+.sec{margin-top:26px}
+.sec > h2{font-family:'Space Grotesk';font-size:14px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:var(--ink);display:flex;align-items:center;gap:8px;margin-bottom:12px}
+.sec > h2::before{content:'';width:18px;height:3px;border-radius:2px;background:linear-gradient(90deg,var(--blue),var(--violet))}
+.hint{font-size:10px;color:var(--dim);font-weight:500;text-transform:none;letter-spacing:0}
+
+/* stat grid */
+.stats{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
+.stat{border:1px solid var(--rule);border-radius:10px;padding:10px 12px;background:#fff}
+.stat .l{font-size:8.5px;font-weight:700;letter-spacing:.6px;color:var(--mut);text-transform:uppercase}
+.stat .v{font-family:'JetBrains Mono';font-size:19px;font-weight:700;margin-top:3px}
+.stat .s{font-size:9.5px;color:var(--dim);margin-top:1px}
+
+/* action list */
+.ract{display:flex;gap:10px;border:1px solid var(--rule);border-left:4px solid var(--amber);border-radius:9px;padding:10px 12px;margin-bottom:8px;background:#fffdf7}
+.ract.high{border-left-color:var(--red);background:#fff8f7}
+.ract .w{font-family:'JetBrains Mono';font-size:10.5px;color:var(--mut);white-space:nowrap;padding-top:1px}
+.ract .t{font-weight:700;font-size:12px}
+.ract .m{font-size:11px;color:var(--mut);margin-top:2px;line-height:1.5}
+.ract .a{font-size:11px;color:var(--teal);font-weight:600;margin-top:3px}
+.rtag{display:inline-block;font-size:9px;font-weight:800;letter-spacing:.4px;border-radius:5px;padding:2px 7px;margin-left:6px;vertical-align:1px}
+.rtag.ceil{background:#fee2e2;color:var(--red)}
+.rtag.tight{background:#fef3c7;color:var(--amber)}
+
+/* tables */
+table{width:100%;border-collapse:collapse;font-size:10.5px}
+th{text-align:left;padding:7px 9px;font-size:8.5px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;color:var(--mut);border-bottom:2px solid var(--ink);white-space:nowrap}
+td{padding:6px 9px;border-bottom:1px solid var(--rule)}
+tr:nth-child(even) td{background:var(--soft)}
+.num{text-align:right;font-family:'JetBrains Mono'}
+.ctr{text-align:center}
+tr.hl-watch td{background:#fef8e7 !important}
+tr.hl-breach td{background:#fdecec !important}
+
+/* status pill (print-safe) */
+.pill{display:inline-block;font-size:9px;font-weight:800;border-radius:10px;padding:2px 9px}
+.p-ok{background:#d9f4e5;color:var(--green)}
+.p-watch{background:#fdeeca;color:var(--amber)}
+.p-breach{background:#fadcdc;color:var(--red)}
+.p-idle{background:#eef1f7;color:var(--dim)}
+
+/* touchpoint section */
+.tpsec{margin-top:30px;border:1px solid var(--rule);border-radius:12px;padding:18px 20px;page-break-inside:avoid}
+.tpsec.pb{page-break-before:always}
+.tphead{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:12px}
+.tphead h3{font-family:'Space Grotesk';font-size:15px;font-weight:700}
+.tphead .u{font-size:10px;color:var(--mut)}
+.tpstats{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:12px}
+.note{background:var(--soft);border:1px solid var(--rule);border-radius:9px;padding:10px 13px;font-size:10.5px;line-height:1.65;color:var(--ink);margin-top:10px}
+.note b{color:var(--blue)}
+.svgwrap{border:1px solid var(--rule);border-radius:9px;padding:8px 10px 2px;margin-bottom:12px}
+.svgcap{font-size:9px;color:var(--dim);padding:0 2px 6px}
+
+/* footer */
+.rfoot{margin-top:30px;border-top:2px solid var(--ink);padding-top:10px;display:flex;justify-content:space-between;font-size:9.5px;color:var(--mut)}
+
+.cols2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+
+@media(max-width:760px){.stats,.tpstats{grid-template-columns:repeat(2,1fr)}.cols2{grid-template-columns:1fr}.paper{padding:24px}}
+
+/* ── print ── */
+@page{size:A4;margin:11mm}
+@media print{
+  body{background:#fff}
+  .no-print{display:none !important}
+  .paper{max-width:none;margin:0;box-shadow:none;border-radius:0;padding:0}
+  .tpsec{border-color:#c9d4ea}
+  *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}

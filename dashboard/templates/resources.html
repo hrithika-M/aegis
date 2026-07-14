@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% block title %}Resources Prescription{% endblock %}
+{% block subtitle %}Hourly lanes / desks / staff required per touchpoint (RP-01/07){% endblock %}
+
+{% block content %}
+<div style="display:flex;gap:12px;align-items:center;margin-bottom:14px">
+  <select class="sel" id="tp-sel"></select>
+  <span style="font-size:11px;color:var(--dim)">Formula: L = ⌈(PAX/12) × AvgPT / ThrWT⌉ · capped at touchpoint capacity</span>
+</div>
+
+<div class="grid g4c" id="kpis"></div>
+
+<div class="sec-title">HOURLY PRESCRIPTION TABLE</div>
+<div class="card" style="overflow-x:auto">
+  <table class="tbl" id="rx-tbl"><thead>
+    <tr><th>Hour</th><th>Predicted PAX</th><th>Avg Proc Time</th><th>Lanes Required</th><th>ML-Predicted Lanes</th><th>Expected Wait</th><th>Band</th></tr>
+  </thead><tbody><tr><td colspan="7"><div class="skel" style="height:200px"></div></td></tr></tbody></table>
+</div>
+
+<div class="sec-title">LANES REQUIRED vs ML-PREDICTED · 24H</div>
+<div class="card"><canvas id="rx-chart" height="70"></canvas></div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+let TP = 'Entry', rxChart;
+const LABELS = {{ tp_labels | tojson }};
+const COLORS = {{ tp_colors | tojson }};
+
+const sel = $('#tp-sel');
+sel.innerHTML = TP_ORDER.map(t => `<option value="${t}">${LABELS[t]}</option>`).join('');
+sel.onchange = () => { TP = sel.value; onDateChange(); };
+
+async function onDateChange(){
+  const d = await api(`/api/prescription/${POD_DATE}`);
+  const v = d.touchpoints[TP];
+  if(!v){ toast('No prescription for ' + TP); return; }
+
+  const totPax = v.hours.reduce((a,h) => a + h.pax, 0);
+  const peakLanes = Math.max(...v.hours.map(h => h.lanes_needed));
+  const breaches = v.hours.filter(h => h.breach).length;
+  const atCap = v.hours.filter(h => h.at_capacity).length;
+
+  $('#kpis').innerHTML = `
+    <div class="card"><div class="stat-num cnt" data-v="${totPax}">0</div><div class="stat-lab">Predicted PAX (day)</div></div>
+    <div class="card"><div class="stat-num" style="color:var(--cy)">${peakLanes} / ${v.kpi.capacity}</div><div class="stat-lab">Peak Lanes vs Capacity</div></div>
+    <div class="card"><div class="stat-num" style="color:${breaches ? 'var(--rd)' : 'var(--gn)'}">${breaches}</div><div class="stat-lab">Breach Hours</div></div>
+    <div class="card"><div class="stat-num" style="color:${atCap ? 'var(--am)' : 'var(--gn)'}">${atCap}</div><div class="stat-lab">Hours At Capacity</div></div>`;
+  $$('.cnt').forEach(el => countUp(el, +el.dataset.v));
+
+  $('#rx-tbl tbody').innerHTML = v.hours.map((h,i) => `
+    <tr>
+      <td class="mono">${String(i).padStart(2,'0')}:00</td>
+      <td class="mono">${fmt(h.pax)}</td>
+      <td class="mono">${h.avg_proc_time}s</td>
+      <td class="mono" style="font-weight:800;color:var(--cy)">${h.lanes_needed}${h.at_capacity ? ' ⚠' : ''}</td>
+      <td class="mono" style="color:var(--vi)">${v.ml_lanes ? v.ml_lanes[i] : '—'}</td>
+      <td class="mono">${h.wait_minutes}m</td>
+      <td><span class="st ${h.band === 'acceptable' ? 'st-ok' : h.band === 'medium' ? 'st-wait' : ''}"
+        style="${h.band === 'high' ? 'background:rgba(239,68,68,.12);color:var(--rd)' : ''}">${h.band}</span></td>
+    </tr>`).join('');
+
+  if(rxChart) rxChart.destroy();
+  const hrs = [...Array(24).keys()].map(h => `${String(h).padStart(2,'0')}:00`);
+  rxChart = new Chart($('#rx-chart'), { type: 'bar',
+    data: { labels: hrs, datasets: [
+      { label: 'Formula Lanes Required', data: v.hours.map(h => h.lanes_needed), backgroundColor: COLORS[TP] + '99', borderRadius: 5 },
+      { label: 'ML-Predicted Lanes Open', data: v.ml_lanes, type: 'line', borderColor: '#a78bfa', borderWidth: 2, pointRadius: 2, tension: .4 },
+    ]},
+    options: { responsive: true, animation: { duration: 600 },
+      plugins: { legend: { position: 'top', labels: { boxWidth: 9, padding: 12, font: { size: 10.5, weight: 600 } } } },
+      scales: { x: { grid: { display: false } }, y: { beginAtZero: true, grid: { color: 'rgba(255,255,255,.04)' } } } }
+  });
+}
+</script>
+{% endblock %}

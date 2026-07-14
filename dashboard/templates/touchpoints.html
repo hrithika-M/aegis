@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block ptitle %}Touchpoint Plans{% endblock %}
+{% block content %}
+
+<!-- selector + downloads -->
+<div class="panel">
+  <div class="panel-h"><h2><span class="pnum">4</span> Touchpoint Plan <span class="sub" id="tp-date"></span></h2>
+    <div style="display:flex;gap:8px;align-items:center">
+      <button class="btn btn-ghost" id="tp-csv" style="padding:6px 13px;font-size:11px">This plan (CSV) ↓</button>
+      <button class="btn btn-primary" id="tp-report" style="padding:6px 14px;font-size:11px">Touchpoint report →</button>
+    </div>
+  </div>
+  <div class="panel-b" style="padding:12px 16px">
+    <div class="chips" id="tp-chips"></div>
+  </div>
+</div>
+
+<!-- KPI band -->
+<div class="grid g5" id="tp-kpis" style="margin-bottom:16px"></div>
+
+<!-- Load chart -->
+<div class="panel">
+  <div class="panel-h"><h2>Hourly Load — Tomorrow <span class="sub">predicted passengers per hour · reference: same weekday last week (actual)</span></h2></div>
+  <div class="panel-b"><div class="chart" style="height:240px"><canvas id="tp-load"></canvas></div></div>
+</div>
+
+<!-- Units to open -->
+<div class="panel">
+  <div class="panel-h"><h2><span id="tp-units-title">Units</span> to Open · per Hour <span class="sub" id="tp-units-sub"></span></h2></div>
+  <div class="panel-b"><div class="chart" style="height:220px"><canvas id="tp-units"></canvas></div></div>
+</div>
+
+<!-- Hourly plan table -->
+<div class="panel">
+  <div class="panel-h"><h2>Hourly Deployment Plan <span class="sub">what the ground team runs, hour by hour</span></h2>
+    <span class="sub" id="tp-tbl-sum"></span></div>
+  <div class="panel-b" style="overflow-x:auto"><table class="tbl" id="tp-tbl"></table></div>
+</div>
+
+<!-- Zones -->
+<div class="panel">
+  <div class="panel-h"><h2>Zone Allocation @ Peak <span class="sub" id="tp-zones-sub"></span></h2></div>
+  <div class="panel-b" style="overflow-x:auto">
+    <table class="tbl" id="tp-zones"></table>
+    <p class="fill-note">Zone PAX = zone share × peak-hour load · zone wait via the prescription formula <span class="mono">⌈(zonePAX/12)·PT ÷ units⌉</span> at the planned per-zone allocation.</p>
+  </div>
+</div>
+
+{% endblock %}
+{% block scripts %}<script src="{{ url_for('static', filename='js/page-touchpoints.js') }}"></script>{% endblock %}

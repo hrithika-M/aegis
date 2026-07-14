@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>POD · Plan of the Day — Report</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/report.css') }}">
+</head>
+<body>
+
+<!-- actions (screen only) -->
+<div class="bar no-print">
+  <div class="bar-l">
+    <a class="bk" href="/">← Back to console</a>
+    <span class="bar-t" id="bar-scope">Full-day report</span>
+  </div>
+  <div class="bar-r">
+    <button class="b ghost" id="b-csv">Download CSV</button>
+    <button class="b primary" id="b-print">🖨 Print / Save as PDF</button>
+  </div>
+</div>
+
+<div class="paper" id="paper">
+  <!-- populated by report.js -->
+</div>
+
+<script src="{{ url_for('static', filename='js/mock.js') }}"></script>
+<script src="{{ url_for('static', filename='js/plan.js') }}"></script>
+<script src="{{ url_for('static', filename='js/ui.js') }}"></script>
+<script src="{{ url_for('static', filename='js/report.js') }}"></script>
+</body>
+</html>

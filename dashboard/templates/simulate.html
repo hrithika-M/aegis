@@ -1,0 +1,162 @@
+{% extends "base.html" %}
+{% block title %}What-If Simulation{% endblock %}
+{% block subtitle %}Wait thresholds · resource limits · zone closures (WI-01..05){% endblock %}
+
+{% block content %}
+<div class="grid" style="grid-template-columns:300px 1fr;align-items:start">
+
+  <!-- controls -->
+  <div class="card" style="position:sticky;top:80px">
+    <div class="chart-h">SIMULATION FACTORS</div>
+
+    <div class="sim-ctl">
+      <label>Touchpoint</label>
+      <select class="sel" id="tp-sel" style="width:100%"></select>
+    </div>
+
+    <div class="sim-ctl">
+      <label>Wait-Time Threshold <b id="thr-val">5 min</b></label>
+      <input type="range" id="thr" min="1" max="20" value="5">
+    </div>
+
+    <div class="sim-ctl">
+      <label>Available Resources <b id="res-val">40</b></label>
+      <input type="range" id="res" min="1" max="60" value="40">
+    </div>
+
+    <div class="sim-ctl">
+      <label>Zone Closures <b id="cz-count">0 closed</b></label>
+      <div class="chips" id="zone-chips"><span style="font-size:11px;color:var(--dim)">Loading zones…</span></div>
+    </div>
+
+    <button class="dpill on" style="width:100%;padding:10px" id="run-btn">Run Simulation</button>
+  </div>
+
+  <!-- results -->
+  <div>
+    <div class="grid g3c" id="sum-cards">
+      <div class="card"><div class="skel" style="height:60px"></div></div>
+      <div class="card"><div class="skel" style="height:60px"></div></div>
+      <div class="card"><div class="skel" style="height:60px"></div></div>
+    </div>
+
+    <div class="sec-title">BEFORE / AFTER · PEAK-HOUR ZONE IMPACT</div>
+    <div class="ba">
+      <div class="card"><span class="ba-tag ba-base">BASELINE</span><div id="base-zones"></div></div>
+      <div class="card"><span class="ba-tag ba-sim">SIMULATED</span><div id="sim-zones"></div></div>
+    </div>
+
+    <div class="sec-title">SIMULATED WAIT TIME BY HOUR</div>
+    <div class="card"><canvas id="sim-chart" height="70"></canvas></div>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+let TP = 'Entry', closed = new Set(), zones = [], simChart;
+const LABELS = {{ tp_labels | tojson }};
+const COLORS = {{ tp_colors | tojson }};
+const KPI_DEF = {};
+
+const sel = $('#tp-sel');
+sel.innerHTML = TP_ORDER.map(t => `<option value="${t}">${LABELS[t]}</option>`).join('');
+
+$('#thr').oninput = e => $('#thr-val').textContent = e.target.value + ' min';
+$('#res').oninput = e => $('#res-val').textContent = e.target.value;
+
+sel.onchange = async () => { TP = sel.value; closed.clear(); await loadZones(); run(); };
+$('#run-btn').onclick = () => run();
+
+async function loadZones(){
+  const k = await api('/api/config/kpi');
+  Object.assign(KPI_DEF, k.kpi);
+  $('#thr').value = KPI_DEF[TP].acceptable; $('#thr-val').textContent = KPI_DEF[TP].acceptable + ' min';
+  $('#res').max = KPI_DEF[TP].capacity + 20;
+  $('#res').value = KPI_DEF[TP].capacity; $('#res-val').textContent = KPI_DEF[TP].capacity;
+
+  const zd = await api(`/api/zones/${POD_DATE}/${TP}`);
+  zones = zd.zones ? zd.zones.map(z => z.zone) : [LABELS[TP]];
+  renderChips();
+}
+
+function renderChips(){
+  $('#zone-chips').innerHTML = zones.map(z =>
+    `<span class="chip ${closed.has(z) ? 'closed' : ''}" data-z="${z}">${z}</span>`).join('');
+  $('#cz-count').textContent = closed.size + ' closed';
+  $$('#zone-chips .chip').forEach(c => c.onclick = () => {
+    const z = c.dataset.z;
+    closed.has(z) ? closed.delete(z) : closed.add(z);
+    renderChips(); run();
+  });
+}
+
+let debounce;
+['#thr', '#res'].forEach(s => $(s).addEventListener('input', () => {
+  clearTimeout(debounce); debounce = setTimeout(run, 450);
+}));
+
+async function run(){
+  const body = { tp: TP, date: POD_DATE,
+    thr_wait_minutes: +$('#thr').value,
+    available_resources: +$('#res').value,
+    closed_zones: [...closed] };
+  const r = await api('/api/simulate', { method: 'POST',
+    headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+  if(r.error){ toast(r.error); return; }
+
+  const b = r.baseline_summary, s = r.simulated_summary;
+  const dBreach = s.breach_hours - b.breach_hours;
+  $('#sum-cards').innerHTML = `
+    <div class="card"><div class="stat-num" style="color:${s.breach_hours ? 'var(--rd)' : 'var(--gn)'}">${s.breach_hours}
+      <small style="font-size:12px;color:var(--dim)">(${dBreach >= 0 ? '+' : ''}${dBreach})</small></div>
+      <div class="stat-lab">Breach Zone-Hours</div></div>
+    <div class="card"><div class="stat-num" style="color:var(--am)">${s.peak_wait_minutes}m
+      <small style="font-size:12px;color:var(--dim)">(was ${b.peak_wait_minutes}m)</small></div>
+      <div class="stat-lab">Peak Wait</div></div>
+    <div class="card"><div class="stat-num" style="color:var(--cy)">${s.peak_total_lanes}
+      <small style="font-size:12px;color:var(--dim)">(was ${b.peak_total_lanes})</small></div>
+      <div class="stat-lab">Peak Lanes Needed</div></div>`;
+
+  /* peak-hour zone impact */
+  const peakH = (zoneset) => {
+    let best = 0, bh = 0;
+    for(let h = 0; h < 24; h++){
+      const tot = Object.values(zoneset).reduce((a, z) => a + z[h].pax, 0);
+      if(tot > best){ best = tot; bh = h; }
+    }
+    return bh;
+  };
+  const ph = peakH(r.simulated);
+  const zoneRows = (set, hour) => Object.entries(set).map(([z, series]) => {
+    const p = series[hour];
+    return `<div style="display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid var(--line)">
+      <span style="font-size:11.5px;font-weight:600">${z}</span>
+      <span style="display:flex;gap:8px;align-items:center">
+        <span class="mono" style="font-size:11px;color:var(--dim)">${fmt(p.pax)} pax</span>
+        <span class="mono" style="font-size:11px;color:var(--cy)">${p.lanes_needed} lanes</span>
+        <span class="st ${p.band === 'acceptable' ? 'st-ok' : p.band === 'medium' ? 'st-wait' : ''}"
+          style="${p.band === 'high' ? 'background:rgba(239,68,68,.12);color:var(--rd)' : ''}">${p.wait_minutes}m</span>
+      </span></div>`;
+  }).join('');
+  $('#base-zones').innerHTML = `<div style="font-size:10px;color:var(--dim);margin-bottom:6px">Peak hour ${String(ph).padStart(2,'0')}:00</div>` + zoneRows(r.baseline, ph);
+  $('#sim-zones').innerHTML = `<div style="font-size:10px;color:var(--dim);margin-bottom:6px">Peak hour ${String(ph).padStart(2,'0')}:00 · ${r.factors.closed_zones.length ? 'closed: ' + r.factors.closed_zones.join(', ') : 'no closures'}</div>` + zoneRows(r.simulated, ph);
+
+  /* wait chart: max wait across zones per hour, baseline vs simulated */
+  const maxWait = set => [...Array(24).keys()].map(h =>
+    Math.max(...Object.values(set).map(z => z[h].wait_minutes)));
+  if(simChart) simChart.destroy();
+  const ctx = $('#sim-chart').getContext('2d');
+  const hrs = [...Array(24).keys()].map(h => `${String(h).padStart(2,'0')}:00`);
+  simChart = lineChart(ctx, hrs, [
+    { label: 'Baseline max wait (m)', data: maxWait(r.baseline), borderColor: '#7c8db0',
+      borderWidth: 2, borderDash: [6,4], fill: false, tension: .4, pointRadius: 0 },
+    dsPred(maxWait(r.simulated), '#22d3ee', ctx, 'Simulated max wait (m)'),
+    { label: 'Threshold', data: Array(24).fill(r.factors.thr_wait_minutes), borderColor: '#ef4444',
+      borderWidth: 1.4, borderDash: [3,3], fill: false, pointRadius: 0 },
+  ]);
+}
+
+async function onDateChange(){ await loadZones(); run(); }
+</script>
+{% endblock %}

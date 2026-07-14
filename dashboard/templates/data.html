@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% block ptitle %}Data Sources & Quality{% endblock %}
+{% block content %}
+
+<!-- top-line data-health KPIs -->
+<div class="grid g5" id="d-kpis" style="margin-bottom:16px"></div>
+
+<!-- A) Integrated Data Sources (DR-01..08) -->
+<div class="panel">
+  <div class="panel-h"><h2><span class="pnum">1</span> Integrated Data Sources <span class="sub">eight feeds powering the POD engine · DR-01…08</span></h2>
+    <span class="bdg b-med" id="d-src-summary" style="padding:3px 12px">— connected</span>
+  </div>
+  <div class="panel-b">
+    <div style="overflow-x:auto"><table class="tbl ds-tbl" id="d-sources"></table></div>
+    <div class="fill-note">Schedule feeds (AODB, Data Lake, LDM+PTM) are awaiting connection; live operational scan/sensor feeds are connected. "Acc vs Actual" = scan completeness measured against LDM actual bookloads.</div>
+  </div>
+</div>
+
+<!-- B) Data Quality Monitoring (DQ-01..06) -->
+<div class="grid g2">
+
+  <!-- DQ-01 & DQ-02 : scan-accuracy gauges vs 90% target -->
+  <div class="panel" style="margin:0">
+    <div class="panel-h"><h2><span class="pnum">2</span> Scan Accuracy vs Actual Load <span class="sub">DQ-01 / DQ-02 · target 90%</span></h2>
+      <span class="tag t-amber">2 below target</span>
+    </div>
+    <div class="panel-b">
+      <div id="d-gauges"></div>
+      <div class="fill-note">Bars show scan completeness vs LDM actual bookloads. The dashed line marks the <b>90% target</b>; bars below it render red. Below-target feeds are excluded from accuracy scoring until reconciled.</div>
+    </div>
+  </div>
+
+  <!-- DQ-03 + DQ-06 stacked -->
+  <div class="panel" style="margin:0">
+    <div class="panel-h"><h2><span class="pnum">3</span> Reconciliation Flags <span class="sub">DQ-03 / DQ-06</span></h2></div>
+    <div class="panel-b">
+      <div class="grid" id="d-variance" style="margin-bottom:14px"></div>
+      <div class="mini-lab" style="margin-bottom:8px;color:var(--dim)">CHECK-IN ACTUALS LOGIC · DQ-06</div>
+      <div id="d-freeze"></div>
+    </div>
+  </div>
+</div>
+
+<div class="grid g2">
+  <!-- DQ-04 : Outage Log -->
+  <div class="panel" style="margin:0">
+    <div class="panel-h"><h2><span class="pnum">4</span> Outage Log <span class="sub">DQ-04 · windows excluded from accuracy</span></h2>
+      <span class="tag t-violet" id="d-outage-cnt">— windows</span>
+    </div>
+    <div class="panel-b">
+      <div style="overflow-x:auto"><table class="tbl" id="d-outages"></table></div>
+      <div class="fill-note">Known feed outages are excluded from accuracy scoring so degraded windows do not penalise model evaluation.</div>
+    </div>
+  </div>
+
+  <!-- DQ-05 : Ingestion Quarantine -->
+  <div class="panel" style="margin:0">
+    <div class="panel-h"><h2><span class="pnum">5</span> Ingestion Quarantine <span class="sub">DQ-05 · sanity-rule rejections</span></h2>
+      <span class="bdg b-high" id="d-quar-cnt" style="padding:3px 12px">— quarantined today</span>
+    </div>
+    <div class="panel-b">
+      <div id="d-quar-rules"></div>
+      <div class="fill-note">Records failing any rule are quarantined before ingestion and surfaced here for manual review.</div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+{% block scripts %}<script src="{{ url_for('static', filename='js/page-data.js') }}"></script>{% endblock %}

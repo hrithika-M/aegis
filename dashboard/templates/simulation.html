@@ -1,0 +1,127 @@
+{% extends "base.html" %}
+{% block ptitle %}What-If Simulation{% endblock %}
+{% block content %}
+
+<div class="panel">
+  <div class="panel-h"><h2><span class="pnum">5</span> What-If Simulation <span class="sub">stress-test the plan — real-world scenarios or fine-grained factors</span></h2>
+    <div class="seg" id="sim-view">
+      <button class="on" data-v="studio">🌩 Scenario Studio</button>
+      <button data-v="factors">Factor Simulation · WI-01…05</button>
+    </div>
+  </div>
+
+  <!-- ═══════════ SCENARIO STUDIO (advanced) ═══════════ -->
+  <div class="panel-b" id="view-studio">
+    <div class="grid" style="grid-template-columns:340px 1fr;align-items:start;gap:16px">
+
+      <!-- scenario library -->
+      <div>
+        <div class="mini-lab" style="margin-bottom:8px">SCENARIO LIBRARY <span class="dim" style="font-weight:400;text-transform:none">· toggle to apply · stack multiple</span></div>
+        <div id="scn-list"></div>
+
+        <div class="mini-lab" style="margin:16px 0 8px">CUSTOM SCENARIO <span class="dim" style="font-weight:400;text-transform:none">· build your own</span></div>
+        <div class="scn" id="scn-custom-card">
+          <div class="scn-h" style="cursor:pointer" id="scn-custom-toggle">
+            <span class="scn-ic" style="background:rgba(77,141,255,.14);color:var(--blue2)">＋</span>
+            <div class="scn-t"><b>Create a scenario</b><span>demand · timing · processing · capacity</span></div>
+          </div>
+          <div class="scn-body" id="scn-custom-body" style="display:none">
+            <input class="search" id="cs-name" placeholder="Scenario name — e.g. Metro strike" style="width:100%;margin-bottom:10px">
+            <div class="sl-row"><label>Touchpoints <b id="cs-tps-v">All</b></label><select class="sel" id="cs-tps" style="width:100%"></select></div>
+            <div class="grid g2" style="gap:8px">
+              <div class="sl-row"><label>From <b id="cs-from-v">06:00</b></label><input type="range" id="cs-from" min="0" max="23" value="6"></div>
+              <div class="sl-row"><label>To <b id="cs-to-v">22:00</b></label><input type="range" id="cs-to" min="0" max="23" value="22"></div>
+            </div>
+            <div class="sl-row"><label>Demand uplift <b id="cs-up-v">+15%</b></label><input type="range" id="cs-up" min="-40" max="60" value="15"></div>
+            <div class="sl-row"><label>Arrival shift <b id="cs-sh-v">0 min</b></label><input type="range" id="cs-sh" min="-120" max="120" step="15" value="0"></div>
+            <div class="sl-row"><label>Processing time <b id="cs-pr-v">+0%</b></label><input type="range" id="cs-pr" min="0" max="60" value="0"></div>
+            <div class="sl-row"><label>Capacity loss <b id="cs-cap-v">0%</b></label><input type="range" id="cs-cap" min="0" max="50" value="0"></div>
+            <div style="display:flex;gap:8px">
+              <button class="btn btn-primary" id="cs-apply" style="flex:1;justify-content:center">Apply</button>
+              <button class="btn btn-ghost" id="cs-save" style="flex:1;justify-content:center">Save to library</button>
+            </div>
+          </div>
+        </div>
+        <div id="scn-saved"></div>
+
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-top:14px">
+          <span class="mini-sub" id="scn-count">No scenarios active</span>
+          <button class="btn btn-ghost" id="scn-clear" style="padding:6px 12px;font-size:11px">Clear all</button>
+        </div>
+      </div>
+
+      <!-- impact -->
+      <div>
+        <div class="grid g4" id="st-kpis" style="margin-bottom:14px"></div>
+
+        <div class="panel" style="margin:0 0 14px">
+          <div class="panel-h"><h2>Demand — Baseline vs Scenario <span class="sub" id="st-chart-sub"></span></h2>
+            <select class="sel" id="st-tp"></select></div>
+          <div class="panel-b"><div class="chart" style="height:230px"><canvas id="st-chart"></canvas></div></div>
+        </div>
+
+        <div class="panel" style="margin:0 0 14px">
+          <div class="panel-h"><h2>Impact by Touchpoint <span class="sub">peak wait · breach hours · units @ peak — before → after</span></h2>
+            <button class="btn btn-ghost" id="st-csv" style="padding:6px 12px;font-size:11px">Scenario CSV ↓</button></div>
+          <div class="panel-b" style="overflow-x:auto"><table class="tbl" id="st-tbl"></table></div>
+        </div>
+
+        <div class="panel" style="margin:0">
+          <div class="panel-h"><h2>Recommended Actions <span class="sub">auto-generated from the scenario impact</span></h2></div>
+          <div class="panel-b"><div class="acts" id="st-recs"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════ FACTOR SIMULATION (WI-01…05, original) ═══════════ -->
+  <div class="panel-b" id="view-factors" style="display:none">
+    <div style="display:flex;justify-content:flex-end;margin-bottom:10px"><select class="sel" id="s-tp"></select></div>
+    <div class="grid" style="grid-template-columns:300px 1fr;align-items:start;gap:16px">
+
+      <!-- factors -->
+      <div class="panel" style="margin:0">
+        <div class="panel-h"><h2>Simulation Factors</h2></div>
+        <div class="panel-b">
+          <div class="sl-row"><label>① Hour of Day <b id="s-hour-v">—</b></label><input type="range" id="s-hour" min="0" max="23" value="19"></div>
+          <div class="sl-row"><label>② Avg Wait-Time Threshold <b id="s-thr-v">—</b></label><input type="range" id="s-thr" min="1" max="30" value="10"></div>
+          <div class="sl-row"><label>③ Available <span id="s-res-unit">Lanes</span> <b id="s-res-v">—</b></label><input type="range" id="s-res" min="0" max="46" value="46"></div>
+          <div id="s-area-label" style="font-size:11px;color:var(--mut);margin:14px 0 8px;font-weight:700">④ Zone Closures</div>
+          <div id="s-zones"></div>
+          <button class="btn btn-ghost" id="s-reset" style="width:100%;margin-top:12px">Reset to defaults</button>
+          <div class="fill-note" style="margin-top:10px">L = ⌈(PAX/12)·AvgPT ÷ Threshold⌉ · Wait = ⌈(PAX/12)·AvgPT ÷ Open⌉</div>
+        </div>
+      </div>
+
+      <!-- results -->
+      <div>
+        <div class="panel" style="margin:0 0 16px">
+          <div class="panel-h"><h2>Simulation Result <span class="sub" id="s-tp-label"></span></h2><span class="bdg" id="s-status" style="padding:3px 12px">—</span></div>
+          <div class="panel-b"><div class="grid g4" id="s-results"></div></div>
+        </div>
+        <div class="panel" style="margin:0">
+          <div class="panel-h"><h2>Wait — Before vs After <span class="sub" id="s-chart-sub">by zone</span></h2></div>
+          <div class="panel-b"><div class="chart" style="height:220px"><canvas id="s-chart"></canvas></div></div>
+        </div>
+        <div class="fill-note">Closing a zone removes it and redistributes its load equally across the open zones, then re-runs the prescription. Threshold breaches are highlighted in red.</div>
+
+        <div class="panel" style="margin:16px 0 0">
+          <div class="panel-h"><h2>24-Hour Map <span class="sub" id="s-hourmap-sub">predicted wait per zone, every hour · selected hour outlined</span></h2>
+            <div class="seg" id="s-map-view"><button class="on" data-v="wait">Wait Time</button><button data-v="proc">Processing Time</button></div></div>
+          <div class="panel-b">
+            <div style="overflow-x:auto"><div id="s-hourmap"></div></div>
+            <div class="hm-legend">
+              <span><i style="background:var(--green)"></i>≤ SLA</span>
+              <span><i style="background:var(--amber)"></i>≤ 1.5× SLA</span>
+              <span><i style="background:var(--red)"></i>&gt; 1.5× SLA</span>
+              <span><i style="background:var(--panel3)"></i>closed</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+{% block scripts %}<script src="{{ url_for('static', filename='js/page-simulation.js') }}"></script>{% endblock %}

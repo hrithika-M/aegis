@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+{% block title %}Flight Operations{% endblock %}
+{% block subtitle %}Flight-aware predictions · turn-up profiles (PR-03..05 · RT-01/02){% endblock %}
+
+{% block content %}
+<div class="await" id="await-box">
+  <h3>⚡ Flight-Aware Pipeline — Awaiting Data Connection</h3>
+  <p>This module predicts per-flight passenger loads and turn-up profiles. The complete pipeline — training scripts, prediction APIs, and this UI — is built and ready. It activates automatically once these extracts are placed under <code>data/flight/</code>:</p>
+  <p>
+    <code>bookloads.csv</code> ← AOCC_PAX_ACH_* (LDM + PTM) &nbsp;·&nbsp;
+    <code>scans.csv</code> ← E-Boarding + CUPPS timestamps
+  </p>
+  <p style="margin-top:8px">Then run: <code>python training/train_bookloads_model.py</code> · <code>python training/train_turnup_model.py</code></p>
+  <div style="margin-top:14px">
+    <button class="dpill" id="demo-btn">▶ Run Demo Mode (synthetic flights)</button>
+  </div>
+</div>
+
+<div id="demo-area" style="display:none">
+  <div class="sec-title">DEMO · PER-FLIGHT PREDICTIONS <span class="st st-part" style="margin-left:8px">Synthetic data</span></div>
+  <div class="card" style="overflow-x:auto">
+    <table class="tbl"><thead>
+      <tr><th>Flight</th><th>Dep</th><th>Airline</th><th>Dest</th><th>Local PAX</th><th>Transfer PAX</th><th>Turn-up Profile (6h → 0h before dep)</th></tr>
+    </thead><tbody id="fl-tbody"></tbody></table>
+  </div>
+
+  <div class="sec-title">DEMO · AGGREGATED 30-MIN TURN-UP LOAD AT ENTRY</div>
+  <div class="card"><canvas id="turnup-chart" height="70"></canvas></div>
+</div>
+
+<div class="sec-title">REQUIRED DATA SOURCES & STATUS (DR-01..05)</div>
+<div class="grid g2c" id="src-cards"></div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+let tuChart;
+
+$('#demo-btn').onclick = async () => {
+  const d = await api(`/api/flights/${POD_DATE}?demo=1`);
+  $('#demo-area').style.display = 'block';
+  toast('Demo mode — synthetic flights loaded');
+
+  $('#fl-tbody').innerHTML = d.demo.flights.map(f => {
+    const maxR = Math.max(...f.turnup_profile_30min, 1);
+    const bars = f.turnup_profile_30min.map(v =>
+      `<span style="display:inline-block;width:9px;height:${4 + (v / maxR) * 22}px;background:linear-gradient(180deg,var(--cy),var(--p));border-radius:2px;margin-right:2px;vertical-align:bottom"></span>`).join('');
+    return `<tr>
+      <td class="mono" style="font-weight:700;color:var(--pl)">${f.flight_no}</td>
+      <td class="mono">${f.sched_dep}</td><td>${f.airline}</td><td>${f.destination}</td>
+      <td class="mono">${f.predicted_local_pax}</td>
+      <td class="mono" style="color:var(--or)">${f.predicted_transfer_pax}</td>
+      <td>${bars}</td></tr>`;
+  }).join('');
+
+  /* aggregate turn-up across flights into 48 slots */
+  const slots = Array(48).fill(0);
+  d.demo.flights.forEach(f => {
+    const [h, m] = f.sched_dep.split(':').map(Number);
+    const depSlot = h * 2 + (m >= 30 ? 1 : 0);
+    f.turnup_profile_30min.forEach((v, i) => {
+      const s = depSlot - i;
+      if(s >= 0 && s < 48) slots[s] += v;
+    });
+  });
+  if(tuChart) tuChart.destroy();
+  const ctx = $('#turnup-chart').getContext('2d');
+  const labels = [...Array(48).keys()].map(s => `${String(Math.floor(s/2)).padStart(2,'0')}:${s % 2 ? '30' : '00'}`);
+  tuChart = lineChart(ctx, labels, [dsPred(slots, '#22d3ee', ctx, 'Projected turn-up load (demo)')], { maxTicks: 16 });
+};
+
+async function onDateChange(){
+  const k = await api('/api/config/kpi');
+  const flightSrcs = ['AODB', 'DataLake', 'Bookloads', 'CUPPS', 'EBoarding'];
+  $('#src-cards').innerHTML = flightSrcs.map(s => {
+    const v = k.data_sources[s];
+    const st = v.status === 'connected' ? 'st-ok' : v.status === 'partial' ? 'st-part' : 'st-wait';
+    const lab = v.status === 'connected' ? 'Connected' : v.status === 'partial' ? 'Partial' : 'Awaiting data';
+    return `<div class="card"><div style="display:flex;justify-content:space-between;align-items:center">
+      <b style="font-size:13px">${v.label}</b><span class="st ${st}">${lab}</span></div>
+      <p style="font-size:11px;color:var(--dim);margin-top:6px">${v.detail}</p></div>`;
+  }).join('');
+}
+</script>
+{% endblock %}

@@ -1,0 +1,104 @@
+{
+  "Entry": {
+    "algorithm": "RandomForest",
+    "artifact": "entry_randomforest.pkl",
+    "walk_forward_accuracy": 87.6,
+    "features": [
+      "DayOfWeek",
+      "Month",
+      "IsWeekend",
+      "WeekOfYear",
+      "Hour",
+      "IsHoliday",
+      "HolidayImpact"
+    ],
+    "target": "adj",
+    "trained_on_rows": 7270,
+    "size_mb": 10.79
+  },
+  "CheckIn": {
+    "algorithm": "LightGBM",
+    "artifact": "checkin_lightgbm.pkl",
+    "walk_forward_accuracy": 88.3,
+    "features": [
+      "DayOfWeek",
+      "Month",
+      "IsWeekend",
+      "WeekOfYear",
+      "Hour",
+      "IsHoliday",
+      "HolidayImpact"
+    ],
+    "target": "adj",
+    "trained_on_rows": 8611,
+    "size_mb": 0.25
+  },
+  "Emigration": {
+    "algorithm": "LightGBM",
+    "artifact": "emigration_lightgbm.pkl",
+    "walk_forward_accuracy": 80.1,
+    "features": [
+      "DayOfWeek",
+      "Month",
+      "IsWeekend",
+      "WeekOfYear",
+      "Hour",
+      "IsHoliday",
+      "HolidayImpact"
+    ],
+    "target": "adj",
+    "trained_on_rows": 8228,
+    "size_mb": 0.25
+  },
+  "Immigration": {
+    "algorithm": "XGBoost",
+    "artifact": "immigration_xgboost.pkl",
+    "walk_forward_accuracy": 67.1,
+    "features": [
+      "DayOfWeek",
+      "Month",
+      "IsWeekend",
+      "WeekOfYear",
+      "Hour",
+      "IsHoliday",
+      "HolidayImpact"
+    ],
+    "target": "adj",
+    "trained_on_rows": 8612,
+    "size_mb": 0.35
+  },
+  "PESC": {
+    "algorithm": "LightGBM",
+    "artifact": "pesc_lightgbm.pkl",
+    "walk_forward_accuracy": 90.9,
+    "features": [
+      "DayOfWeek",
+      "Month",
+      "IsWeekend",
+      "WeekOfYear",
+      "Hour",
+      "IsHoliday",
+      "HolidayImpact"
+    ],
+    "target": "adj",
+    "trained_on_rows": 8611,
+    "size_mb": 0.25
+  },
+  "Transfers": {
+    "algorithm": "LightGBM",
+    "artifact": "transfers_lightgbm.pkl",
+    "walk_forward_accuracy": 77.8,
+    "features": [
+      "DayOfWeek",
+      "Month",
+      "IsWeekend",
+      "WeekOfYear",
+      "Hour",
+      "IsHoliday",
+      "HolidayImpact"
+    ],
+    "target": "adj",
+    "trained_on_rows": 8349,
+    "size_mb": 0.25
+  }
+}

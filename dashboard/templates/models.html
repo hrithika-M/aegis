@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% block title %}ML Model Registry{% endblock %}
+{% block subtitle %}35 trained models · data-gated stubs · per-stage accuracy (AC-01..03){% endblock %}
+
+{% block content %}
+<div class="grid g4c" id="reg-stats"></div>
+
+<div class="sec-title">TRAINED MODELS</div>
+<div class="card" style="overflow-x:auto">
+  <table class="tbl"><thead>
+    <tr><th>Model</th><th>Target</th><th>Algorithm</th><th>Train Rows</th><th>Holdout</th><th>Trained At</th></tr>
+  </thead><tbody id="trained-tbody"><tr><td colspan="6"><div class="skel" style="height:160px"></div></td></tr></tbody></table>
+</div>
+
+<div class="sec-title">DATA-GATED MODELS · ACTIVATE WHEN EXTRACTS ARRIVE</div>
+<div class="grid g3c" id="await-cards"></div>
+
+<div class="sec-title">TRAINING SCRIPTS</div>
+<div class="card">
+  <table class="tbl"><thead><tr><th>Script</th><th>Trains</th></tr></thead><tbody>
+    <tr><td class="mono" style="color:var(--cy)">training/train_all.py</td><td>Orchestrator — all models + accuracy report</td></tr>
+    <tr><td class="mono">training/train_daily_models.py</td><td>Airport total + 6 per-touchpoint daily models</td></tr>
+    <tr><td class="mono">training/train_interval_models.py</td><td>30-min interval + hourly models (PR-02)</td></tr>
+    <tr><td class="mono">training/train_lanes_models.py</td><td>Lanes / desks open models</td></tr>
+    <tr><td class="mono">training/train_zone_models.py</td><td>Zone-wise hourly PAX models (PR-06)</td></tr>
+    <tr><td class="mono">training/train_processing_time_models.py</td><td>Avg processing-time models (PR-07)</td></tr>
+    <tr><td class="mono" style="color:var(--am)">training/train_bookloads_model.py</td><td>Per-flight PAX — activates on LDM/PTM data (PR-03)</td></tr>
+    <tr><td class="mono" style="color:var(--am)">training/train_turnup_model.py</td><td>13-bucket turn-up profiles — activates on scan data, DQ-gated (PR-04)</td></tr>
+  </tbody></table>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+async function onDateChange(){
+  const d = await api('/api/models');
+  const accs = d.trained.map(m => m.holdout_accuracy).filter(a => a != null);
+  const avg = accs.length ? (accs.reduce((a,b) => a+b, 0) / accs.length).toFixed(1) : '—';
+  const best = accs.length ? Math.max(...accs) : '—';
+
+  $('#reg-stats').innerHTML = `
+    <div class="card"><div class="stat-num cnt" data-v="${d.trained.length}">0</div><div class="stat-lab">Trained Models</div></div>
+    <div class="card"><div class="stat-num" style="color:var(--am)">${d.awaiting_data.length}</div><div class="stat-lab">Data-Gated Stubs</div></div>
+    <div class="card"><div class="stat-num" style="color:var(--gn)">${avg}%</div><div class="stat-lab">Avg Holdout Accuracy</div></div>
+    <div class="card"><div class="stat-num" style="color:var(--cy)">${best}%</div><div class="stat-lab">Best Model</div></div>`;
+  $$('.cnt').forEach(el => countUp(el, +el.dataset.v));
+
+  $('#trained-tbody').innerHTML = d.trained.map(m => `
+    <tr><td class="mono" style="font-weight:700;color:var(--pl);font-size:11px">${m.name}</td>
+      <td style="font-size:11px;color:var(--mut)">${m.target || '—'}</td>
+      <td style="font-size:11px">${m.algorithm}</td>
+      <td class="mono">${fmt(m.train_rows)}</td>
+      <td class="mono" style="font-weight:800;color:${m.holdout_accuracy >= 90 ? 'var(--gn)' : m.holdout_accuracy >= 75 ? 'var(--am)' : 'var(--rd)'}">${m.holdout_accuracy ?? '—'}%</td>
+      <td class="mono" style="font-size:10px;color:var(--dim)">${m.trained_at || '—'}</td></tr>`).join('');
+
+  $('#await-cards').innerHTML = d.awaiting_data.map(m => `
+    <div class="card" style="border-style:dashed;border-color:rgba(245,158,11,.35)">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+        <b class="mono" style="font-size:12px;color:var(--am)">${m.name}</b>
+        <span class="st st-wait">Awaiting data</span></div>
+      <p style="font-size:11px;color:var(--mut);line-height:1.6">${m.purpose}</p>
+      <p style="font-size:10.5px;color:var(--dim);margin-top:6px"><b>Needs:</b> ${m.needs}</p>
+      <p style="font-size:10.5px;color:var(--dim)"><b>Trainer:</b> <span class="mono">${m.trainer}</span></p>
+    </div>`).join('');
+}
+</script>
+{% endblock %}

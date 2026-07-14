@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+{% block ptitle %}Settings{% endblock %}
+{% block content %}
+<div class="grid g2">
+  <div class="panel" style="margin:0">
+    <div class="panel-h"><h2>Service-Level Thresholds <span class="sub">real airport SLA · wait-time &amp; processing-time</span></h2></div>
+    <div class="panel-b" style="overflow-x:auto">
+      <table class="tbl">
+        <thead><tr><th>Touch Point</th><th class="num">Wait-Time SLA</th><th class="num">Processing-Time SLA</th><th class="num">Capacity</th></tr></thead>
+        <tbody>
+          {% set kpi = [
+            ['Entry Gates','240 sec · 4 min','20 sec','40 lanes'],
+            ['Check-In','600 sec · 10 min','150 sec','30 / airline'],
+            ['Security (PESC)','600 sec · 10 min','30 sec','46 DFMDs'],
+            ['Emigration','600 sec · 10 min','60 sec','44 desks'],
+            ['Immigration','600 sec · 10 min','60 sec','40 desks'],
+            ['Transfers','600 sec · 10 min','30 sec','11 desks'],
+            ['Customs','— not provided','—','4 lanes'],
+          ] %}
+          {% for r in kpi %}<tr><td><b>{{r[0]}}</b></td><td class="num">{{r[1]}}</td><td class="num">{{r[2]}}</td><td class="num">{{r[3]}}</td></tr>{% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="panel" style="margin:0">
+    <div class="panel-h"><h2>Preferences</h2></div>
+    <div class="panel-b">
+      {% set prefs = [['Default View','Command Center'],['Plan Horizon','Tomorrow (D+1) · auto-rolls at midnight'],['Theme','Dark · Ops Console v2'],['Refresh Interval','Real-time (live)'],['Prediction Model','LGBM / RandomForest ensemble'],['Holiday Calendar','India 2025-26']] %}
+      {% for l,v in prefs %}
+      <div style="display:flex;justify-content:space-between;padding:11px 0;border-bottom:1px solid var(--line)">
+        <span class="muted" style="font-size:12px">{{l}}</span><span style="font-size:12px;font-weight:600">{{v}}</span>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+<div class="panel" style="margin:14px 0 0">
+  <div class="panel-h"><h2>Reports &amp; Distribution <span class="sub">how the daily plan reaches the ground team</span></h2></div>
+  <div class="panel-b">
+    {% set reps = [
+      ['Daily report generation','18:00 (D-1) — evening before the operating day'],
+      ['Default format','Print-ready PDF (via browser print) + CSV data'],
+      ['Report scopes','Full day (all touchpoints) · per-touchpoint'],
+      ['Contents','Summary · action queue · SLA reference · hourly plan · zone allocation · ground-team notes'],
+      ['Distribution','Operations team → rostered ground-team leads'],
+      ['Classification','Commercial-in-Confidence']
+    ] %}
+    {% for l,v in reps %}
+    <div style="display:flex;justify-content:space-between;gap:14px;padding:11px 0;border-bottom:1px solid var(--line)">
+      <span class="muted" style="font-size:12px;white-space:nowrap">{{l}}</span><span style="font-size:12px;font-weight:600;text-align:right">{{v}}</span>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+<div class="panel" style="margin:14px 0 0">
+  <div class="panel-h"><h2>Holiday Mapping (DR-08) <span class="sub">India · Apr 2025 – Mar 2026 · impact flags drive demand uplift</span></h2></div>
+  <div class="panel-b" style="overflow-x:auto">
+    <table class="tbl">
+      <thead><tr><th>Date</th><th>Holiday</th><th>Impact</th></tr></thead>
+      <tbody>
+        {% set holidays = [
+          ['2025-08-15','Independence Day','High'],
+          ['2025-09-05','Eid-e-Milad','Generic'],
+          ['2025-10-02','Dussehra','High'],
+          ['2025-10-20','Diwali','High'],
+          ['2025-11-05','Guru Nanak Jayanti','Generic'],
+          ['2025-12-25','Christmas','High'],
+          ['2026-01-01','New Year','High'],
+          ['2026-01-14','Sankranti / Pongal','High'],
+          ['2026-01-26','Republic Day','High'],
+          ['2026-03-04','Holi','High'],
+          ['2026-03-21','Eid-ul-Fitr','High'],
+        ] %}
+        {% for d,name,impact in holidays %}
+        <tr>
+          <td class="mono dim">{{d}}</td>
+          <td><b>{{name}}</b></td>
+          <td>
+            {% if impact == 'High' %}<span class="bdg b-high">High-impact</span> <span class="tag t-amber">major</span>{% else %}<span class="bdg b-low">Generic</span>{% endif %}
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

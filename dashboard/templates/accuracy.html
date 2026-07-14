@@ -1,0 +1,139 @@
+{% extends "base.html" %}
+{% block ptitle %}Accuracy & Models{% endblock %}
+{% block content %}
+
+<!-- AR-05 · single source of truth banner -->
+<div class="panel" style="margin-bottom:16px;background:linear-gradient(135deg,rgba(34,197,94,.10),rgba(59,130,246,.05));border-color:rgba(34,197,94,.22)">
+  <div class="panel-b" style="display:flex;align-items:center;gap:12px;padding:13px 16px">
+    <div style="width:30px;height:30px;border-radius:8px;background:rgba(34,197,94,.16);display:flex;align-items:center;justify-content:center;color:var(--green);flex-shrink:0">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+    </div>
+    <div>
+      <div style="font-size:12.5px;font-weight:700;color:var(--txt)">Single source of truth <span class="tag t-green" style="margin-left:6px">AR-05</span></div>
+      <div style="font-size:11px;color:var(--mut);margin-top:2px">Every accuracy figure on this page comes from one validated pipeline — the same held-out validation that scores production predictions.</div>
+    </div>
+  </div>
+</div>
+
+<!-- KPI strip -->
+<div class="grid g4" id="a-kpis" style="margin-bottom:16px"></div>
+
+<!-- A · Prediction Accuracy (AR-01 / AR-03 / AR-04) -->
+<div class="panel">
+  <div class="panel-h">
+    <h2><span class="pnum">A</span> Prediction Accuracy <span class="sub">monthly hourly-accuracy per touchpoint · AR-01 / AR-04</span></h2>
+    <span class="tag t-blue">held-out last-5-days validation · AR-03</span>
+  </div>
+  <div class="panel-b">
+    <div class="chart" style="height:260px"><canvas id="a-trend"></canvas></div>
+    <div class="fill-note">Hourly accuracy is the <b>primary</b> measure (AR-04) — daily totals can match while the intra-day shape is wrong, so hourly is what drives staffing.</div>
+
+    <div style="overflow-x:auto;margin-top:16px">
+      <table class="tbl" id="a-acc-tbl">
+        <thead><tr><th>Touchpoint</th><th class="num">Daily %</th><th class="num">Hourly %</th><th class="ctr">Primary</th><th>Validation Method</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- B · Variance Tolerance (AR-02) -->
+<div class="panel">
+  <div class="panel-h"><h2><span class="pnum">B</span> Variance Tolerance <span class="sub">an hour "counts" as accurate when predicted is within ± tolerance of actual · AR-02</span></h2></div>
+  <div class="panel-b">
+    <div class="grid g2" style="align-items:start">
+      <div>
+        <div class="sl-row">
+          <label>Tolerance band <b><span id="a-tol-v">±20%</span></b></label>
+          <input type="range" id="a-tol" min="5" max="40" value="20" step="1" oninput="window.__accTol && window.__accTol(+this.value)">
+          <div style="display:flex;justify-content:space-between;font-size:9.5px;color:var(--dim);margin-top:6px"><span>±5% (strict)</span><span>±40% (loose)</span></div>
+        </div>
+        <div class="grid g2" id="a-tol-cards" style="gap:10px"></div>
+      </div>
+      <div style="overflow-x:auto">
+        <table class="tbl" id="a-tol-tbl">
+          <thead><tr><th>Touchpoint</th><th class="num">Hrs / day in tolerance</th><th class="num">of 24</th><th class="ctr">Status</th></tr></thead>
+          <tbody></tbody>
+        </table>
+        <div class="fill-note">Loosening the band lets more hours pass — operations tune this against their SLA appetite. Default ±20%.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- C · Model Registry (AC-01 / AC-02 / AC-04 / AC-05 / PR-10) -->
+<div class="panel">
+  <div class="panel-h">
+    <h2><span class="pnum">C</span> Model Registry <span class="sub">hybrid: direct queue models + flight-aware chained models · AC-01 / PR-10</span></h2>
+    <div class="seg" id="a-reg-seg">
+      <button class="on" data-f="all">All</button>
+      <button data-f="direct">Direct</button>
+      <button data-f="chained">Flight-aware</button>
+    </div>
+  </div>
+  <div class="panel-b">
+    <div style="overflow-x:auto">
+      <table class="tbl" id="a-reg-tbl">
+        <thead><tr><th>Model</th><th>Type</th><th>Target</th><th>Algorithm</th><th class="ctr">Winner</th><th class="num">Stage Accuracy</th><th class="ctr">Status</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+    <div class="fill-note">
+      <b>AC-04</b> — every model is a benchmark of RandomForest vs LGBM; the "Winner" column is the algorithm promoted to production for that target.
+      <b>AC-02</b> — each row reports its <i>own</i> stage accuracy, not a single blended number.
+    </div>
+  </div>
+</div>
+
+<!-- C2 · Model Fallback Status (AC-03) -->
+<div class="panel">
+  <div class="panel-h">
+    <h2><span class="pnum">C2</span> Model Fallback Status <span class="sub">scan-data quality per feed vs the 90% gate — drives flight-aware → direct fallback · AC-03</span></h2>
+    <span class="tag t-amber" id="a-fb-track">—</span>
+  </div>
+  <div class="panel-b">
+    <div class="grid g4" id="a-fb-kpis" style="margin-bottom:14px"></div>
+    <div style="overflow-x:auto">
+      <table class="tbl" id="a-fb-tbl">
+        <thead><tr><th>Scan Feed</th><th class="num">Data Quality</th><th>Quality vs 90% threshold</th><th class="ctr">Active Track</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+    <div class="fill-note">Each feed's scan-data quality is checked against the <b>90%</b> gate. At ≥ 90% the chained <b>flight-aware models</b> run; below 90% that feed gracefully falls back to the <b>direct queue models</b> so predictions keep flowing.</div>
+  </div>
+</div>
+
+<!-- C3 · Automated Retraining (AC-05) -->
+<div class="panel">
+  <div class="panel-h">
+    <h2><span class="pnum">C3</span> Automated Retraining <span class="sub">monthly auto-retrain with a regression gate — candidate ships only if it beats the incumbent · AC-05</span></h2>
+    <span class="tag t-blue">cadence: Monthly</span>
+  </div>
+  <div class="panel-b">
+    <div class="grid g4" id="a-rt-kpis" style="margin-bottom:14px"></div>
+    <div style="overflow-x:auto">
+      <table class="tbl" id="a-rt-tbl">
+        <thead><tr><th>Target</th><th class="num">Incumbent hourly %</th><th class="num">Candidate hourly %</th><th class="num">Δ</th><th class="ctr">Regression Gate</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+    <div class="fill-note">The <b>regression gate</b> compares the candidate against the live incumbent on the <b>same held-out hourly accuracy</b> (AR-03). A candidate is promoted to production only when it <b>passes</b> (beats the incumbent); otherwise the incumbent stays and the candidate is held.</div>
+  </div>
+</div>
+
+<!-- D · Prediction API (RT-03) -->
+<div class="panel">
+  <div class="panel-h"><h2><span class="pnum">D</span> Prediction API <span class="sub">REST endpoints serving predictions, prescriptions & accuracy · RT-03</span></h2></div>
+  <div class="panel-b">
+    <div style="overflow-x:auto">
+      <table class="tbl" id="a-api-tbl">
+        <thead><tr><th class="ctr">Method</th><th>Endpoint</th><th>Returns</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+    <div class="fill-note">All endpoints return JSON. Predictions and accuracy are served from the same validated pipeline backing this page (AR-05).</div>
+  </div>
+</div>
+
+{% endblock %}
+{% block scripts %}<script src="{{ url_for('static', filename='js/page-accuracy.js') }}"></script>{% endblock %}

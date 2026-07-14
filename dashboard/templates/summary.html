@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block title %}Plan of the Day{% endblock %}
+{% block subtitle %}Data-driven planning · predict flows · optimize resources{% endblock %}
+
+{% block content %}
+<div id="sum-root">
+
+  <!-- KPI strip -->
+  <div class="kpi-strip" id="kpi-strip">
+    <div class="skel" style="height:96px"></div>
+  </div>
+
+  <div class="sec-title">SUMMARY OVERVIEW</div>
+
+  <!-- top row: Load Prediction + Today at a Glance -->
+  <div class="sum-toprow">
+    <div class="card sum-card">
+      <div class="sum-card-head">
+        <div><span class="card-num">1</span> Load Prediction <small>· 30-min interval · Entry Gates & Transfers</small></div>
+        <div class="seg" id="lp-toggle"><button data-v="day" class="on">Day</button><button data-v="hour">Hour</button></div>
+      </div>
+      <canvas id="lp-chart" height="96"></canvas>
+    </div>
+    <div class="card glance-card">
+      <div class="wi-head">Today at a Glance</div>
+      <div class="glance-row">
+        <div class="glance-gauge" id="glance-gauge"></div>
+        <div class="glance-items" id="glance-items"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Card 2: Wait Time Heatmap -->
+  <div class="card sum-card">
+    <div class="sum-card-head"><div><span class="card-num">2</span> Touch-point-wise Hourly Wait Time <small>· minutes</small></div></div>
+    <div id="hm-host" class="hm-host"></div>
+    <div class="hm-legend">
+      <span class="hl"><i style="background:var(--gn)"></i>0-10</span>
+      <span class="hl"><i style="background:#a3c948"></i>10-20</span>
+      <span class="hl"><i style="background:var(--am)"></i>20-30</span>
+      <span class="hl"><i style="background:#f87171"></i>30-45</span>
+      <span class="hl"><i style="background:#dc2626"></i>&gt;45</span>
+    </div>
+  </div>
+
+  <!-- Card 3: Resource table -->
+  <div class="card sum-card">
+    <div class="sum-card-head"><div><span class="card-num">3</span> Touch-point-wise Hourly Staff / Lanes Prescription</div></div>
+    <div class="res-wrap"><table class="res-tbl" id="res-tbl"></table></div>
+    <div class="res-foot">All counts = staff / lanes required per hour. Formula: ⌈(PAX/12) × proc-time / threshold⌉, capped at capacity.</div>
+  </div>
+
+  <!-- Integrated data sources -->
+  <div class="ds-bar" id="ds-bar"></div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/summary.js') }}"></script>
+{% endblock %}

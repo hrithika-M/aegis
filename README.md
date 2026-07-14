@@ -8,7 +8,9 @@ top-level folders.
 aegis/
 ├── data/            all datasets + acquisition scripts (EWS, weather, flights)
 ├── data_pipeline/   the Aegis self-healing data engine (the pipeline we built)
+├── models/          best forecasting model per touchpoint (+ selection evidence)
 ├── trial_models/    forecasting model experiments (foundation models, trials)
+├── dashboard/       Naveen's POD Plan-of-the-Day UI (Flask front-end)
 ├── docs/            research, workflow, design docs
 └── PROOFS.md        end-to-end proofs of the pipeline on two domains
 ```
