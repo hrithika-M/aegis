@@ -1,0 +1,12 @@
+Route,Airlines,AircraftTypes,WeeklyMovements,WeeklySeats,MonthlySeats_est,RealPax_Dec2025,ImpliedLoadFactor_pct,Note
+Hyderabad,"Air India Express (IX), IndiGo (6E)","A320, A320N, A321, B737",126,25452,110588,74060,67.0,
+Delhi,"Air India (AI), IndiGo (6E)","A320, A320N, A321",56,10920,47447,40366,85.1,
+Bengaluru,"Air India Express (IX), IndiGo (6E)","A321, B737",50,10654,46291,38896,84.0,
+Chennai,IndiGo (6E),"A320, A320N, A321",42,8456,36741,30491,83.0,
+Mumbai,IndiGo (6E),A321,14,3248,14112,12144,86.1,
+Vijayawada,"Air India Express (IX), IndiGo (6E)","ATR-72, B737",28,3738,16241,11053,68.1,
+Kolkata,IndiGo (6E),A321,14,3248,14112,9179,65.0,
+Bhubaneswar,IndiGo (6E),ATR-72,4,312,1355,4374,322.7,schedule under-captures this route (LF>100 impossible)
+Tirupati,IndiGo (6E),ATR-72,14,1092,4744,4070,85.8,
+Kurnool,IndiGo (6E),ATR-72,6,468,2033,471,23.2,
+Jeypore,Alliance/regional (I7),C 2088,14,126,547,316,57.7,

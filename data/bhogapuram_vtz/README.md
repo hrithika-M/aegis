@@ -44,6 +44,16 @@ month × direction.** It lets us compute a **real per-route load factor** (real 
 ÷ scheduled seats) instead of a flat assumption. Still not hourly (hourly PAX is
 not public for any airport), but it's real counts, per route, per direction.
 
+- **`vtz_route_profile.csv`** — the join: each current route + **airline(s) + aircraft
+  type(s)** (from the schedule) + real Dec-2025 passengers (DGCA) + **real implied load
+  factor**. Built by `../../pax_estimation/route_profile.py`. Most routes land at a
+  believable **65–86%** LF (independent validation of the seat capacities). Two flags:
+  *Bhubaneswar shows LF>100% (impossible)* — the schedule under-captures that route
+  (its arrival leg had a bad origin code `881`); *Kurnool 23%* is a genuinely thin ATR
+  route. Note: per-route-per-**airline** passenger counts are NOT public (DGCA carrier
+  data is national totals), so the airline/aircraft here come from the schedule, not
+  from measured per-airline pax.
+
 **These validate the schedule-derived estimate against reality:**
 | Month | Estimate (8,718/day × days) | Actual | Match |
 |---|---|---|---|
