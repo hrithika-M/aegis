@@ -1,0 +1,7 @@
+aircraft,icao_code,nominal_seats,cruise_speed_kmh,typical_turnaround_min,body_type,schedule_labels
+A320ceo,A320,180,828,40,Narrow-body jet,A320
+A320neo,A20N,186,833,40,Narrow-body jet,A320N/A32N
+A321neo,A21N,222,833,45,Narrow-body jet,A321
+ATR 72-600,AT76,78,509,30,Turboprop,ATR-72
+B737-800,B738,189,842,40,Narrow-body jet,B737
+Cessna 208B,C208,9,344,20,Utility turboprop,C 2088

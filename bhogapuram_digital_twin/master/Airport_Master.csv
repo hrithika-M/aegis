@@ -1,0 +1,17 @@
+airport_code,airport_name,city,state_country,latitude,longitude,scope
+AUH,Abu Dhabi International,Abu Dhabi,United Arab Emirates,24.433,54.651,International
+BBI,Biju Patnaik International,Bhubaneswar,Odisha,20.244,85.818,International
+BLR,Kempegowda International,Bengaluru,Karnataka,13.199,77.71,International
+BOM,Chhatrapati Shivaji Maharaj Intl,Mumbai,Maharashtra,19.089,72.868,International
+CCU,Netaji Subhas Chandra Bose Intl,Kolkata,West Bengal,22.655,88.446,International
+DEL,Indira Gandhi International,New Delhi,Delhi,28.556,77.1,International
+HYD,Rajiv Gandhi International,Hyderabad,Telangana,17.231,78.429,International
+KJB,Kurnool (Orvakal),Kurnool,Andhra Pradesh,15.771,78.061,Domestic
+MAA,Chennai International,Chennai,Tamil Nadu,12.994,80.17,International
+NMI,Navi Mumbai International,Navi Mumbai,Maharashtra,18.994,73.07,International
+PYB,Jeypore,Jeypore,Odisha,18.88,82.552,Domestic
+SIN,Singapore Changi,Singapore,Singapore,1.364,103.991,International
+TIR,Tirupati International,Tirupati,Andhra Pradesh,13.632,79.543,Domestic
+UNK,UNKNOWN (data-quality flag),,,,,
+VGA,Vijayawada International,Vijayawada,Andhra Pradesh,16.53,80.797,International
+VTZ,Visakhapatnam (current) / Bhogapuram,Visakhapatnam,Andhra Pradesh,17.721,83.224,Domestic
