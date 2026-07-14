@@ -73,6 +73,16 @@ VTZ-specific *daily* counts are not published either. Two files bridge that:
   exactly to the real DGCA total** (verified: Jan-2025 daily sum 260,430 vs real
   260,423). Real volume + real daily shape; not counts the airport recorded per day.
 
+### Hourly (the end-to-end curve)
+- `vtz_hourly.csv` — the calibrated typical-week hourly demand grid (day-of-week ×
+  hour → departing / arriving / total PAX). Built by `../../pax_estimation/build_hourly.py`
+  by distributing each route's **real DGCA monthly passengers** across that route's
+  actual flight instances in the schedule (which flight, what hour, what days). So
+  each route's weekly total × 4.345 = its real monthly count — no flat load-factor
+  guess; the implied LF is each route's real one. Implied monthly total 248,247 vs
+  real 2025 avg ~240,000 (within 3.4%). Peaks: departures ~08:00, arrivals ~20:00.
+  Only international routes (AUH/SIN) use a seats × 0.82 fallback (no DGCA data).
+
 Granularity ceiling: **monthly is the finest real count obtainable per airport.**
 Daily and hourly are *modelled* (real totals × real shape); only national daily is
 real at the day level.
