@@ -1,0 +1,5 @@
+Touchpoint,RandomForest,ExtraTrees,HistGradientBoosting,LightGBM,XGBoost,Naive-7d,BEST
+CheckIn,97.5,95.1,93.2,94.1,95.8,98.1,Naive-7d
+Security,98.0,96.2,94.3,94.9,97.2,98.0,RandomForest
+Boarding,98.0,97.0,92.7,94.0,96.5,97.9,RandomForest
+Belt,98.3,97.8,90.4,91.6,94.9,97.8,RandomForest
