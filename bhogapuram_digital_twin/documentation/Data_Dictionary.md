@@ -59,4 +59,4 @@ FREQ. Purely deterministic calendar expansion — no assumptions, no random numb
 ---
 
 ## Cleaning log (Module 1)
-- row 20: origin '881' not a known airport code -> set UNK
+- row 22 (SL 20): ORG '881' unknown airport -> flagged UNK
