@@ -2,23 +2,24 @@
 """Per-touchpoint model selection for Bhogapuram (VTZ) — READY FOR REAL DATA.
 
 Same methodology as the HYD POD work: a model zoo compared with expanding-window
-walk-forward backtesting on the project's symmetric min/max accuracy metric, one
-winner picked per touchpoint.
+walk-forward backtesting, one winner per touchpoint. Reports a FULL metric panel,
+not a single number:
+
+  Regression:      Accuracy (symmetric min/max), RMSE, MAE, MAPE, R2
+  Classification:  Peak-hour detection precision / recall / F1
+                   (peak = actual demand >= 80th percentile -> the busy hours you
+                    must staff for; recall = share of real peaks the model caught)
 
 >>> THE ONE THING THAT CHANGES WHEN REAL DATA ARRIVES <<<
-Only `load_touchpoint_hourly()` below. Today it reads the SIMULATED twin
-(generated/passenger_5min.csv). When Bhogapuram opens (2026-07-08) and real sensor
-counts start flowing, point that function at the real EWS export instead — the
-model zoo, features, metric, walk-forward and selection all stay identical, and the
-accuracies it prints become REAL accuracies.
+Only `load_touchpoint_hourly()`. Today it reads the SIMULATED twin
+(generated/passenger_5min.csv). Point it at the real EWS export when Bhogapuram
+opens (2026-07-08) — the zoo, features, metrics, walk-forward and selection stay
+identical, and the numbers become REAL.
 
-HONEST NOTE: run on the twin, the numbers will be optimistically high (~95%+) — the
-data is model-generated, so the models partly relearn our own assumptions. Treat
-today's output as a pipeline/template check, not a real accuracy claim.
+HONEST NOTE: on the twin the data is deterministic, so scores are optimistic and the
+naive baseline ties the ML models. Treat today's output as a pipeline/template check.
 
-VTZ touchpoints (what a domestic point-to-point airport actually has):
-  CheckIn, Security, Boarding (departures) + Belt (arrivals).
-(HYD's Emigration/Immigration/Transfers don't meaningfully exist at VTZ.)
+VTZ touchpoints: CheckIn, Security, Boarding (departures) + Belt (arrivals).
 
 Run:  python train_touchpoints.py
 """
@@ -26,34 +27,31 @@ import csv, os, warnings
 warnings.simplefilter('ignore')
 os.environ['PYTHONWARNINGS'] = 'ignore'
 from collections import defaultdict
+import datetime as dt
 import numpy as np
+from sklearn.metrics import r2_score, precision_score, recall_score, f1_score
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
 FIVE = os.path.join(ROOT, 'generated', 'passenger_5min.csv')
 OUT = os.path.join(ROOT, 'analytics', 'model_selection_twin.csv')
 
-# touchpoint -> column in the 5-min dataset (swap the SOURCE, keep the mapping)
 TOUCHPOINTS = {'CheckIn': 'checkin_demand', 'Security': 'security_demand',
                'Boarding': 'boarding_demand', 'Belt': 'belt_demand'}
 FEATURES = ['DayOfWeek', 'Month', 'IsWeekend', 'WeekOfYear', 'Hour']
 WARMUP, STEP = 45, 7
+PEAK_PCTL = 80          # "peak hour" = demand at/above this percentile
 
 
 # ------------------------------------------------------------------ DATA SOURCE
 def load_touchpoint_hourly(touchpoint):
-    """Return list of dict rows {Date, Hour, + features, demand} for one touchpoint.
-
-    *** SWAP THIS FUNCTION FOR REAL SENSOR DATA LATER — nothing else changes. ***
-    Today: aggregates the simulated 5-min twin to hourly demand.
-    """
-    import datetime as dt
+    """{Date,Hour,features,demand} rows for one touchpoint.
+    *** SWAP THIS FUNCTION FOR REAL SENSOR DATA — nothing else changes. ***"""
     col = TOUCHPOINTS[touchpoint]
     agg = defaultdict(float)
     with open(FIVE, encoding='utf-8') as fh:
         for r in csv.DictReader(fh):
-            ts = r['timestamp']
-            d = dt.date.fromisoformat(ts[:10]); h = int(ts[11:13])
+            d = dt.date.fromisoformat(r['timestamp'][:10]); h = int(r['timestamp'][11:13])
             agg[(d, h)] += float(r[col])
     rows = []
     for (d, h), v in sorted(agg.items()):
@@ -67,11 +65,9 @@ def load_touchpoint_hourly(touchpoint):
 def zoo():
     from sklearn.ensemble import (RandomForestRegressor, ExtraTreesRegressor,
                                   HistGradientBoostingRegressor)
-    z = {
-        'RandomForest': lambda: RandomForestRegressor(n_estimators=100, random_state=42, n_jobs=-1),
-        'ExtraTrees': lambda: ExtraTreesRegressor(n_estimators=100, random_state=42, n_jobs=-1),
-        'HistGradientBoosting': lambda: HistGradientBoostingRegressor(random_state=42),
-    }
+    z = {'RandomForest': lambda: RandomForestRegressor(n_estimators=100, random_state=42, n_jobs=-1),
+         'ExtraTrees': lambda: ExtraTreesRegressor(n_estimators=100, random_state=42, n_jobs=-1),
+         'HistGradientBoosting': lambda: HistGradientBoostingRegressor(random_state=42)}
     try:
         from lightgbm import LGBMRegressor
         z['LightGBM'] = lambda: LGBMRegressor(n_estimators=300, learning_rate=0.05, random_state=42, verbose=-1)
@@ -85,82 +81,83 @@ def zoo():
     return z
 
 
-def acc(pred, actual):
-    pred, actual = np.asarray(pred, float), np.asarray(actual, float)
-    m = (actual > 0) & (pred > 0)
-    if m.sum() == 0:
-        return None
-    return float((np.minimum(actual[m], pred[m]) / np.maximum(actual[m], pred[m])).mean()) * 100
-
-
-def walk_forward(rows, make):
+def walk_forward_pool(rows, make):
+    """Return pooled (pred, actual) over all walk-forward test days."""
     days = sorted({r['Date'] for r in rows})
-    test_days = days[WARMUP::STEP]
-    scores = []
-    for td in test_days:
+    P, A = [], []
+    for td in days[WARMUP::STEP]:
         tr = [r for r in rows if r['Date'] < td]
         te = [r for r in rows if r['Date'] == td]
         if len(tr) < 100 or not te:
             continue
         Xtr = np.array([[r[f] for f in FEATURES] for r in tr]); ytr = [r['demand'] for r in tr]
-        Xte = np.array([[r[f] for f in FEATURES] for r in te]); yte = [r['demand'] for r in te]
+        Xte = np.array([[r[f] for f in FEATURES] for r in te])
         m = make().fit(Xtr, ytr)
-        a = acc(m.predict(Xte), yte)
-        if a is not None:
-            scores.append(a)
-    if not scores:
-        return None, None
-    return round(float(np.mean(scores)), 1), round(float(np.std(scores)), 1)
+        P.extend(m.predict(Xte)); A.extend([r['demand'] for r in te])
+    return np.array(P, float), np.array(A, float)
 
 
-def naive_seasonal(rows):
-    """7-day seasonal naive baseline, walk-forward."""
-    days = sorted({r['Date'] for r in rows})
+def naive_pool(rows):
     idx = {(r['Date'], r['Hour']): r['demand'] for r in rows}
-    import datetime as dt
-    scores = []
+    days = sorted({r['Date'] for r in rows})
+    P, A = [], []
     for td in days[WARMUP::STEP]:
-        te = [r for r in rows if r['Date'] == td]
-        p, a = [], []
-        for r in te:
+        for r in [x for x in rows if x['Date'] == td]:
             prev = idx.get((td - dt.timedelta(days=7), r['Hour']))
             if prev is not None:
-                p.append(prev); a.append(r['demand'])
-        s = acc(p, a) if p else None
-        if s is not None:
-            scores.append(s)
-    return (round(float(np.mean(scores)), 1), round(float(np.std(scores)), 1)) if scores else (None, None)
+                P.append(prev); A.append(r['demand'])
+    return np.array(P, float), np.array(A, float)
+
+
+def metrics(P, A):
+    if len(A) == 0:
+        return None
+    m = (A > 0) & (P > 0)
+    acc = float((np.minimum(A[m], P[m]) / np.maximum(A[m], P[m])).mean()) * 100 if m.sum() else 0
+    rmse = float(np.sqrt(np.mean((P - A) ** 2)))
+    mae = float(np.mean(np.abs(P - A)))
+    ma = A > 0
+    mape = float(np.mean(np.abs(P[ma] - A[ma]) / A[ma]) * 100) if ma.sum() else 0
+    r2 = float(r2_score(A, P))
+    thr = np.percentile(A[A > 0], PEAK_PCTL) if (A > 0).sum() else 0
+    yt, yp = (A >= thr).astype(int), (P >= thr).astype(int)
+    prec = float(precision_score(yt, yp, zero_division=0))
+    rec = float(recall_score(yt, yp, zero_division=0))
+    f1 = float(f1_score(yt, yp, zero_division=0))
+    return {'Accuracy': round(acc, 1), 'RMSE': round(rmse, 1), 'MAE': round(mae, 1),
+            'MAPE': round(mape, 1), 'R2': round(r2, 3),
+            'PeakPrecision': round(prec, 3), 'PeakRecall': round(rec, 3), 'PeakF1': round(f1, 3)}
 
 
 def main():
     models = zoo()
-    print("=" * 74)
+    cols = ['Accuracy', 'RMSE', 'MAE', 'MAPE', 'R2', 'PeakPrecision', 'PeakRecall', 'PeakF1']
+    print("=" * 92)
     print("VTZ PER-TOUCHPOINT MODEL SELECTION  [pipeline test on SIMULATED twin data]")
-    print("=" * 74)
-    header = ['Touchpoint'] + list(models.keys()) + ['Naive-7d', 'BEST']
-    results = {}
-    rows_out = []
+    print("Accuracy/MAPE in %, higher acc better, lower RMSE/MAE/MAPE better, R2->1, Peak* -> 1")
+    print("=" * 92)
+    out_rows = []
     for tp in TOUCHPOINTS:
         data = load_touchpoint_hourly(tp)
-        per = {}
-        for name, make in models.items():
-            mean, std = walk_forward(data, make)
-            per[name] = mean
-        nm, _ = naive_seasonal(data)
-        per['Naive-7d'] = nm
-        best = max((k for k in per if per[k] is not None), key=lambda k: per[k])
-        results[tp] = (per, best)
-        cells = [tp] + [f"{per[k]}" if per[k] is not None else "-" for k in list(models.keys()) + ['Naive-7d']] + [best]
-        rows_out.append(cells)
-        print(f"  {tp:<10} " + "  ".join(f"{k}={per[k]}" for k in models if per[k] is not None)
-              + f"  Naive={nm}  -> BEST: {best} ({per[best]})")
+        runs = {name: metrics(*walk_forward_pool(data, make)) for name, make in models.items()}
+        runs['Naive-7d'] = metrics(*naive_pool(data))
+        best = max(runs, key=lambda k: runs[k]['Accuracy'])
+        print(f"\n### {tp}   (best by accuracy: {best})")
+        print(f"  {'Model':<20}" + "".join(f"{c:>15}" for c in cols))
+        for name, mt in runs.items():
+            star = '  <=' if name == best else ''
+            print(f"  {name:<20}" + "".join(f"{str(mt[c]):>15}" for c in cols) + star)
+            out_rows.append([tp, name] + [mt[c] for c in cols] + ['BEST' if name == best else ''])
 
     with open(OUT, 'w', newline='', encoding='utf-8') as f:
-        w = csv.writer(f); w.writerow(header); w.writerows(rows_out)
-    print("-" * 74)
+        w = csv.writer(f)
+        w.writerow(['Touchpoint', 'Model'] + cols + ['Selected'])
+        w.writerows(out_rows)
+    print("\n" + "-" * 92)
     print(f"wrote {os.path.relpath(OUT, ROOT)}")
-    print("NOTE: simulated-data numbers are optimistic. Swap load_touchpoint_hourly()")
-    print("      for real EWS data (post-2026-07-08) to get REAL per-touchpoint accuracies.")
+    print("Peak = demand >= 80th percentile (the busy hours to staff for);")
+    print("PeakRecall = share of real peaks the model caught. Swap load_touchpoint_hourly()")
+    print("for real EWS data (post-2026-07-08) to get REAL metrics.")
 
 
 if __name__ == '__main__':
