@@ -1,0 +1,102 @@
+{
+  "runs": [
+    {
+      "run_id": "20260715T214915",
+      "timestamp": "2026-07-15T16:19:15Z",
+      "data_source": "twin (SIMULATED \u2014 pipeline test, not real accuracy)",
+      "data_version_sha16": "dcf1d2cbb84e15bd",
+      "simulator_version": "0.4.0",
+      "metric_primary": "accuracy (symmetric min/max), full panel recorded",
+      "touchpoints": {
+        "CheckIn": {
+          "champion": {
+            "model": "RandomForest",
+            "accuracy": 97.5,
+            "rmse": 8.2,
+            "mae": 4.2,
+            "r2": 0.996,
+            "peak_recall": 0.9,
+            "peak_f1": 0.92
+          },
+          "runner_up": {
+            "model": "XGBoost",
+            "accuracy": 95.8,
+            "rmse": 7.2,
+            "mae": 3.8,
+            "r2": 0.997,
+            "peak_recall": 0.956,
+            "peak_f1": 0.956
+          },
+          "naive_baseline_accuracy": 98.1,
+          "beats_naive_baseline": false
+        },
+        "Security": {
+          "champion": {
+            "model": "RandomForest",
+            "accuracy": 98.0,
+            "rmse": 8.5,
+            "mae": 3.7,
+            "r2": 0.997,
+            "peak_recall": 0.918,
+            "peak_f1": 0.957
+          },
+          "runner_up": {
+            "model": "XGBoost",
+            "accuracy": 97.2,
+            "rmse": 6.6,
+            "mae": 3.7,
+            "r2": 0.998,
+            "peak_recall": 0.965,
+            "peak_f1": 0.982
+          },
+          "naive_baseline_accuracy": 98.0,
+          "beats_naive_baseline": false
+        },
+        "Boarding": {
+          "champion": {
+            "model": "RandomForest",
+            "accuracy": 98.0,
+            "rmse": 8.3,
+            "mae": 2.9,
+            "r2": 0.998,
+            "peak_recall": 0.986,
+            "peak_f1": 0.973
+          },
+          "runner_up": {
+            "model": "ExtraTrees",
+            "accuracy": 97.0,
+            "rmse": 9.2,
+            "mae": 3.2,
+            "r2": 0.998,
+            "peak_recall": 1.0,
+            "peak_f1": 0.98
+          },
+          "naive_baseline_accuracy": 97.9,
+          "beats_naive_baseline": true
+        },
+        "Belt": {
+          "champion": {
+            "model": "RandomForest",
+            "accuracy": 98.3,
+            "rmse": 11.5,
+            "mae": 3.6,
+            "r2": 0.997,
+            "peak_recall": 0.986,
+            "peak_f1": 0.973
+          },
+          "runner_up": {
+            "model": "ExtraTrees",
+            "accuracy": 97.8,
+            "rmse": 12.9,
+            "mae": 4.3,
+            "r2": 0.996,
+            "peak_recall": 0.973,
+            "peak_f1": 0.966
+          },
+          "naive_baseline_accuracy": 97.8,
+          "beats_naive_baseline": true
+        }
+      }
+    }
+  ]
+}

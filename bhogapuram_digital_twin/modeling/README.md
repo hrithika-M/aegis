@@ -44,4 +44,11 @@ point-to-point, so HYD's Emigration / Immigration / Transfers don't apply here.
 ```
 pip install -r ../requirements.txt
 python train_touchpoints.py        # -> prints the panel + writes analytics/model_selection_twin.csv
+python registry.py                 # -> records the run in model_registry.json (champion/runner-up)
 ```
+
+## Model registry (`registry.py` → `model_registry.json`)
+MLflow-style governance: every selection run is recorded with its **data version**
+(hash), simulator version, timestamp, and per-touchpoint **champion + runner-up +
+whether it beat the naive baseline** — so any deployed model is traceable to the
+exact data and run that produced it. One entry per data version.
