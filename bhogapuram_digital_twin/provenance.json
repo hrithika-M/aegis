@@ -83,6 +83,12 @@
       "source": "twin vs real DGCA",
       "method": "KS / Wasserstein / PSI",
       "confidence": "HIGH"
+    },
+    {
+      "file": "analytics/scenarios.csv",
+      "source": "passenger_5min + scenario levers",
+      "method": "deterministic bucket queue, busiest day",
+      "confidence": "MEDIUM"
     }
   ]
 }

@@ -1,0 +1,17 @@
+scenario,touchpoint,servers_open,demand_multiplier,peak_queue_pax,max_wait_min,sla_min,verdict
+baseline,checkin,10,1.0,0,0.0,20,OK
+baseline,security,6,1.0,0,0.0,15,OK
+demand +20%,checkin,10,1.2,0,0.0,20,OK
+demand +20%,security,6,1.2,0,0.0,15,OK
+2 security lanes closed,checkin,10,1.0,0,0.0,20,OK
+2 security lanes closed,security,4,1.0,42,4.4,15,OK
+surge +20% & 2 lanes closed,checkin,10,1.2,0,0.0,20,OK
+surge +20% & 2 lanes closed,security,4,1.2,122,12.7,15,OK
+festival rush +40%,checkin,10,1.4,36,3.0,20,OK
+festival rush +40%,security,6,1.4,33,2.3,15,OK
+security down to 3 lanes,checkin,10,1.0,0,0.0,20,OK
+security down to 3 lanes,security,3,1.0,148,20.6,15,BREACH
+"major disruption +60%, 3 lanes",checkin,8,1.6,262,27.3,20,BREACH
+"major disruption +60%, 3 lanes",security,3,1.6,956,132.8,15,BREACH
+"worst case +80%, skeleton crew",checkin,6,1.8,1269,176.2,20,BREACH
+"worst case +80%, skeleton crew",security,3,1.8,1399,194.3,15,BREACH

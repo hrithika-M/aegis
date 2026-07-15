@@ -34,3 +34,37 @@ load-factor noise partly averages out — itself a realistic finding.
 A single deterministic peak is a point estimate that will be wrong on ~half of days.
 Percentiles turn the twin from "here's a number" into "here's the number and the risk
 around it" — which is what an airport actually staffs against.
+
+---
+
+# scenario_engine.py — what-if analysis with a queue model
+
+The base twin says "you need N counters". Planners need the inverse: **given a FIXED
+number of counters/lanes, what happens under stress?** This applies scenario levers
+(demand multiplier, servers open/closed) to the busiest day and runs a deterministic
+bucket queue to get queue length, wait time, and SLA breaches.
+
+Run: `python scenario_engine.py` → `analytics/scenarios.csv`
+
+## Queue model
+`queue[t] = max(0, queue[t-1] + arrivals[t] − capacity[t])`, capacity = servers ×
+service-rate (pax/5-min), `wait ≈ queue × 5 / capacity` minutes. SLA: check-in 20 min,
+security 15 min. Scenarios are a config list — add rows freely.
+
+## Result (busiest day)
+| Scenario | Security wait | Verdict |
+|---|---|---|
+| baseline (6 lanes) | 0 min | OK |
+| demand +20% | 0 min | OK |
+| 2 lanes closed (→4) | 4.4 min | OK |
+| surge +20% & 2 lanes closed | 12.7 min | OK |
+| festival +40% | 2.3 min | OK |
+| **3 lanes only** | **20.6 min** | **BREACH** |
+| **major disruption +60%, 3 lanes** | **132.8 min** | **BREACH** |
+
+## The planning insight
+**Security is the binding constraint** — it breaches before check-in in every stress
+case. VTZ can absorb +40% demand *or* the loss of 2 security lanes, but **not the loss
+of a 3rd lane**, and a surge combined with understaffing is a meltdown (130+ min waits).
+That's an actionable staffing rule, produced from the twin — exactly what a scenario
+engine is for.

@@ -1,6 +1,6 @@
 {
   "simulator_version": "0.4.0",
-  "built_at_utc": "2026-07-15T11:11:18Z",
+  "built_at_utc": "2026-07-15T11:22:44Z",
   "inputs": {
     "VTZ_schedule_S26.xlsx": {
       "sha256_16": "f5253cd584335ca1",
@@ -67,6 +67,10 @@
     "analytics/model_selection_twin.csv": {
       "sha256_16": "79f4097c387b8067",
       "rows": 24
+    },
+    "analytics/scenarios.csv": {
+      "sha256_16": "f5b68f9f4de72a5a",
+      "rows": 16
     }
   },
   "assumptions": {
