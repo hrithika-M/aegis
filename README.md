@@ -1,42 +1,49 @@
-# Aegis
+# Airport Operations Intelligence Platform
 
-Our POD (Plan of the Day) data-science work — a self-contained repository with
-the data, the data pipeline, and the model experiments, organised into three
-top-level folders.
+Passenger-demand forecasting and operations planning for GMR airports — **Hyderabad
+(live)** and **Bhogapuram / Visakhapatnam (opens 2026-07-08)**. This is not one
+model or one dataset; it is an end-to-end platform that goes from raw flight
+schedules + traffic statistics to a live, self-correcting operational forecast.
 
+> **Read [`ARCHITECTURE.md`](ARCHITECTURE.md) first** — it draws the full workflow
+> and the critical distinction between the parts that *generate* data, *clean* data,
+> and *forecast*.
+
+## The workflow in one line
 ```
-aegis/
-├── data/            all datasets + acquisition scripts (EWS, weather, flights)
-├── data_pipeline/   the Aegis self-healing data engine (the pipeline we built)
-├── models/          best forecasting model per touchpoint (+ selection evidence)
-├── trial_models/    forecasting model experiments (foundation models, trials)
-├── dashboard/       Naveen's POD Plan-of-the-Day UI (Flask front-end)
-├── docs/            research, workflow, design docs
-└── PROOFS.md        end-to-end proofs of the pipeline on two domains
+real/known inputs → clean (Aegis) OR simulate (Digital Twin) → forecast (models) → plan (dashboards)
 ```
+- **Live airport (HYD):** real sensor data exists → **Aegis heals it** → models forecast.
+- **Greenfield airport (Bhogapuram):** no data yet → **Digital Twin simulates it** →
+  same models forecast → swap in real data the day sensors go live.
 
-## The three parts
+Both paths feed the **same** models and dashboards through the **same interfaces**,
+so Simulation → Production is a data-source swap, not a rewrite.
 
-### 📁 `data/` — [README](data/README.md)
-All datasets in one place (committed for reproducibility), on the EWS timeline
-**2025-04-01 → 2026-03-25**: EWS camera counts (`entry.csv`, `pesc.csv`), real
-hourly weather (`hyderabad_weather.csv`), the joined table, and the HYD flight
-route network (`hyderabad_routes.csv`) — plus the scripts that fetch/build each.
+## The subsystems
+| Folder | What it is | Real or generated |
+|---|---|---|
+| [`data/`](data/) | All datasets + acquisition (EWS, weather, flights, DGCA traffic) | **real** |
+| [`data_pipeline/`](data_pipeline/) | **Aegis** — self-healing engine for real sensor data (heals faults, never fabricates). *Cleans data; does not create it.* | operates on **real** |
+| [`bhogapuram_digital_twin/`](bhogapuram_digital_twin/) | The **Digital Twin** — schedule → daily flights → passengers → 5-min operations, reconciled to real DGCA totals | **generates** simulation |
+| [`pax_estimation/`](pax_estimation/) | Schedule → demand estimators (hourly/daily), reconciled to real counts | derived |
+| [`models/`](models/) · [`trial_models/`](trial_models/) | Per-touchpoint forecasting model selection (walk-forward, full metric panel) | validated on **real** |
+| [`dashboard/`](dashboard/) · `*/analytics/` | Operational dashboards + KPIs | presentation |
+| [`PROOFS.md`](PROOFS.md) | Evidence: pipeline healing, forecasting accuracy, twin reconciliation | — |
 
-### 🔧 `data_pipeline/` — [README](data_pipeline/README.md)
-**Aegis** — a general self-healing data engine. Point it at any file or database;
-it learns the normal (median/MAD), detects `BLACKOUT/SPIKE/LOW/DRIFT`, repairs
-scaled to the day's real activity, reconciles doubtful values from linked sources
-(MICE-style), and iterates — confidence-gated — until the trust score converges.
-Never fabricates: what it can't fix confidently is escalated. Built, tested, and
-proven on two domains (see `PROOFS.md`).
-
-### 🧪 `trial_models/` — [README](trial_models/README.md)
-Forecasting experiments on the real EWS demand. Each model gets its own named
-folder + a results README. So far: **Chronos** (Amazon foundation model) forecast
-our demand at **89.8% zero-shot** — beating our trained RandomForest (88.3%).
+## What's been established (the honest scorecard)
+- **Aegis** healed **9,351 real cells** of HYD sensor data; refused to fake the rest
+  (target-not-met reported honestly — see `PROOFS.md`).
+- **Forecasting** on real HYD data: per-touchpoint winners RF/LightGBM/XGBoost at
+  **67–91%** (walk-forward); Chronos foundation model reached **89.8%** zero-shot.
+- **Digital Twin** reproduces VTZ's real throughput to within **~4%** of DGCA
+  monthly counts (~7,942 pax/day vs real ~8,000), fully reconciled per route.
+- Every forecast is judged on a **full metric panel** (accuracy, RMSE, MAE, MAPE,
+  R², peak precision/recall/F1) — never a single flattering number.
 
 ## Honesty contract (applies throughout)
-Every result is reported truthfully. The pipeline heals what it has confident
-signal for and escalates the rest; the model trials report honest walk-forward
-numbers, including where a fancy model is only *within noise* of a simple one.
+Real data and generated data are kept strictly separate and labelled. The pipeline
+heals what it has confident signal for and escalates the rest; the twin's passenger
+*volumes* are real (reconciled to DGCA) while its *flow* is simulated with documented
+assumptions; model results are honest walk-forward numbers, including where a fancy
+model only ties a simple one. Every generated value records its **Source + Method**.

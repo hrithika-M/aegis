@@ -1,10 +1,14 @@
-# Aegis — End-to-End Proofs
+# Proofs — evidence across the whole platform
 
-Two complete runs of the identical engine, zero code changes between them —
-different domains, different connectors, different data shapes. This is the
-generality claim, demonstrated. Committed reports: `data_pipeline/examples/*/report.html`.
+Concrete, reproducible evidence for **each** subsystem, not just the data engine:
+Aegis healing (Proofs 1–2), the forecasting models (Proof 3), and the digital-twin
+reconciliation (Proof 4). See [`ARCHITECTURE.md`](ARCHITECTURE.md) for how they fit.
 
 ---
+
+## Proofs 1–2 — Aegis self-healing engine
+Two runs of the identical engine, zero code changes — different domains, connectors,
+data shapes: the generality claim, demonstrated. Reports: `data_pipeline/examples/*/report.html`.
 
 ## Proof 1 — Real airport camera data (CSV connector, 2M rows)
 
@@ -57,14 +61,51 @@ point of having one.
 
 ---
 
-## What the two proofs establish
+## Proof 3 — Forecasting models (real HYD data)
 
-1. **General:** same engine, same config shape — airports and retail, CSV and SQL.
-2. **Scales:** 2M real rows end-to-end (scan → heal → report) in minutes.
-3. **Heals across sources:** 4,509 real cells rebuilt from a linked feed with
-   learned ratios and correlation-weighted confidence.
-4. **Honest:** met the target where the data allowed (99.66%), and refused to
-   fake it where it didn't (95.53% + a 7,622-row human watchlist).
+Per-touchpoint model selection on **real** Hyderabad EWS demand — expanding-window
+walk-forward, full metric panel (not a single number). The finalized winners:
+
+| Touchpoint | Best model | Accuracy (walk-forward) |
+|---|---|---|
+| PESC / Security | LightGBM | **90.9%** |
+| Check-In | LightGBM | 88.3% |
+| Entry | RandomForest | 87.6% |
+| Emigration | LightGBM | 80.1% |
+| Transfers | LightGBM | 77.8% |
+| Immigration | XGBoost | 67.1% |
+
+**Honest findings:** all capable tree/boosting models tie within ~1 pt (RF chosen as
+the robust default); a foundation model (Amazon **Chronos**) reached **89.8%
+zero-shot** on Entry, beating the trained RandomForest (88.3%). Immigration's ~67%
+ceiling is a *data* limit (arrivals need flight-arrival signal a calendar can't
+supply), not an algorithm limit. Artifacts: `models/`, `trial_models/`.
+
+## Proof 4 — Digital-twin reconciliation (Bhogapuram/VTZ)
+
+The twin generates simulated operations for a greenfield airport — but its
+passenger *volumes* are pinned to reality:
+
+| Check | Twin | Real (DGCA/AAI) | Match |
+|---|---|---|---|
+| Daily passengers | ~7,942/day | ~8,000/day | ✓ |
+| Jan-2026 monthly | 270,258 | 271,302 | **99.6%** |
+| Per-route totals | reconciled per route × month × direction | DGCA city-pair | exact (95%-capped) |
+
+The twin is honest about what it is: real volumes, *modelled* flow (documented
+show-up/service assumptions). Artifacts: `bhogapuram_digital_twin/`.
+
+---
+
+## What the proofs establish
+
+1. **Aegis is general & honest:** same engine on airports and retail, CSV and SQL;
+   2M real rows end-to-end; 4,509 cells cross-healed; met the target where the data
+   allowed (99.66%) and refused to fake it where it didn't (95.53% + watchlist).
+2. **The models are validated on real data:** per-touchpoint winners at 67–91%
+   walk-forward, judged on a full metric panel, with honest ceilings called out.
+3. **The twin is anchored to reality:** simulated operations that reconcile to real
+   DGCA passenger counts within ~4%, with real/simulated kept strictly separate.
 
 Reproduce:
 ```bash
