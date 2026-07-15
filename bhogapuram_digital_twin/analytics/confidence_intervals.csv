@@ -1,0 +1,7 @@
+metric,mean,P5,P50,P95
+daily_departing_pax,3897.1,3785.3,3898.2,4009.3
+peak_checkin_demand_5min,43.6,40.7,43.5,46.5
+peak_security_demand_5min,54.6,51.6,54.5,58.0
+peak_checkin_counters,7.8,7.0,8.0,8.0
+peak_security_lanes,5.0,5.0,5.0,5.0
+peak_terminal_occupancy,671.7,633.3,670.4,714.2
