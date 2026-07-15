@@ -1,0 +1,164 @@
+{% extends "base.html" %}
+{% block ptitle %}Bhogapuram Digital Twin{% endblock %}
+{% block content %}
+
+<!-- honesty banner -->
+<div class="panel" style="margin-bottom:16px;border-left:3px solid var(--amber)">
+  <div class="panel-b" style="display:flex;flex-wrap:wrap;gap:8px 18px;align-items:center;justify-content:space-between">
+    <div style="font-size:13px;color:var(--mut)">
+      <b style="color:var(--txt)">Simulated planning dataset</b> — passenger <b>volumes</b> are real
+      (reconciled to DGCA counts); <b>flow</b> is modelled with documented assumptions. Not historical data, not a live feed.
+    </div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <span class="tag t-teal">Opens 2026-07-08</span>
+      <span class="tag t-blue">simulator v{{ data.version }}</span>
+    </div>
+  </div>
+</div>
+
+<!-- hero -->
+<div class="hero"><div class="hero-in">
+  <div style="min-width:270px">
+    <div class="hero-kicker">Greenfield · Visakhapatnam (VTZ)</div>
+    <h1>Bhogapuram Operations Twin</h1>
+    <div class="hsub">Built from the S26 schedule + real DGCA traffic. Reconciles to the real airport within ~4%.</div>
+  </div>
+  <div class="hero-stats" id="hero-stats"></div>
+</div></div>
+
+<!-- KPI row -->
+<div class="grid" id="kpis" style="grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:16px"></div>
+
+<!-- hourly demand -->
+<div class="panel" style="margin-bottom:16px">
+  <div class="panel-h"><h2><span class="pnum">1</span> Typical-day demand by touchpoint <span class="sub">passengers per hour · simulated</span></h2></div>
+  <div class="panel-b"><div class="chart" style="height:250px"><canvas id="c-demand"></canvas></div></div>
+</div>
+
+<!-- scenarios + events -->
+<div class="grid g2">
+  <div class="panel" style="margin:0">
+    <div class="panel-h"><h2><span class="pnum">2</span> Scenario stress-test <span class="sub">security wait · SLA 15 min</span></h2></div>
+    <div class="panel-b"><div style="overflow-x:auto"><table class="tw-tbl" id="t-scen"></table></div>
+      <div style="font-size:12px;color:var(--mut);margin-top:10px">Security is the <b>binding constraint</b> — it breaches before check-in in every stress case.</div>
+    </div>
+  </div>
+  <div class="panel" style="margin:0">
+    <div class="panel-h"><h2><span class="pnum">3</span> Disruption events <span class="sub">peak terminal occupancy</span></h2></div>
+    <div class="panel-b"><div class="chart" style="height:230px"><canvas id="c-events"></canvas></div></div>
+  </div>
+</div>
+
+<!-- models + validation -->
+<div class="grid g2" style="margin-top:16px">
+  <div class="panel" style="margin:0">
+    <div class="panel-h"><h2><span class="pnum">4</span> Forecast model per touchpoint <span class="sub">pipeline-ready for real data</span></h2></div>
+    <div class="panel-b"><div style="overflow-x:auto"><table class="tw-tbl" id="t-model"></table></div>
+      <div style="font-size:12px;color:var(--mut);margin-top:10px">On simulated data these run as a template check; swap in real EWS data (post-opening) for real accuracies.</div>
+    </div>
+  </div>
+  <div class="panel" style="margin:0">
+    <div class="panel-h"><h2><span class="pnum">5</span> Synthetic-data validation <span class="sub">twin vs real DGCA</span></h2></div>
+    <div class="panel-b"><div style="overflow-x:auto"><table class="tw-tbl" id="t-val"></table></div>
+      <div style="font-size:12px;color:var(--mut);margin-top:10px">The load-factor check is flagged, not faked — the residual reflects VTZ genuinely running below the national average.</div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .tw-tbl{width:100%;border-collapse:collapse;font-size:13px}
+  .tw-tbl th{text-align:left;font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--mut);
+    font-weight:700;padding:7px 9px;border-bottom:1px solid var(--line)}
+  .tw-tbl td{padding:8px 9px;border-bottom:1px solid var(--line);font-variant-numeric:tabular-nums}
+  .tw-tbl tr:last-child td{border-bottom:none}
+</style>
+{% endblock %}
+
+{% block scripts %}
+<script>
+const D = {{ data|tojson }};
+const COL = {blue:'#2f6bff', teal:'#0d9488', amber:'#d97706', red:'#dc2626', green:'#059669', violet:'#7c3aed', mut:'#8a94a0'};
+const css = k => getComputedStyle(document.documentElement).getPropertyValue(k).trim();
+const grid = () => (document.documentElement.dataset.theme==='dark') ? 'rgba(255,255,255,.07)' : 'rgba(15,25,35,.07)';
+
+function kpiRow(){
+  const ci = {}; D.ci.forEach(r => ci[r.metric] = r);
+  const kp = {}; D.kpis.forEach(r => kp[r.metric] = r.value);
+  const cards = [
+    ['Avg passengers / day', kp['Avg daily passengers (dep+arr)'] || '—', 'real VTZ ≈ 8,000'],
+    ['Peak hour', kp['Peak hour of day'] || '—', 'check-in + security'],
+    ['Check-in counters (P95)', ci['peak_checkin_counters'] ? ci['peak_checkin_counters'].P95 : '—', 'Monte Carlo · 1000 runs'],
+    ['Security lanes (P95)', ci['peak_security_lanes'] ? ci['peak_security_lanes'].P95 : '—', 'plan for this'],
+    ['Peak occupancy (P95)', ci['peak_terminal_occupancy'] ? Math.round(ci['peak_terminal_occupancy'].P95) : '—', 'terminal seating'],
+    ['Aircraft on ground', kp['Peak aircraft on ground'] || '—', 'peak concurrent'],
+  ];
+  document.getElementById('kpis').innerHTML = cards.map((c,i) =>
+    `<div class="kpi${i===2||i===3?' accent':''}"><div class="kpi-lab">${c[0]}</div>
+     <div class="kpi-val">${c[1]}</div><div class="kpi-lab" style="margin-top:5px;opacity:.75">${c[2]}</div></div>`).join('');
+}
+
+function heroStats(){
+  const kp = {}; D.kpis.forEach(r => kp[r.metric] = r.value);
+  const s = [['~4%','reconciliation gap'],['11','invariant tests'],['14','outputs tracked']];
+  document.getElementById('hero-stats').innerHTML = s.map(x =>
+    `<div class="hero-stat"><b>${x[0]}</b><span>${x[1]}</span></div>`).join('');
+}
+
+function demandChart(){
+  const ph = D.peak_hours;
+  const labels = ph.map(r => r.hour);
+  const ds = (key,color) => ({label:key, data:ph.map(r=>+r[key]), borderColor:color,
+    backgroundColor:color+'22', borderWidth:2, tension:.35, pointRadius:0, pointHoverRadius:4, fill:false});
+  new Chart(document.getElementById('c-demand'), {type:'line',
+    data:{labels, datasets:[ds('checkin_demand',COL.blue), ds('security_demand',COL.teal), ds('boarding_demand',COL.amber)]},
+    options:{responsive:true, maintainAspectRatio:false, interaction:{mode:'index',intersect:false},
+      plugins:{legend:{labels:{boxWidth:10, font:{size:11}, color:css('--mut')}}},
+      scales:{y:{beginAtZero:true, grid:{color:grid()}, ticks:{color:css('--mut'),font:{size:11}}},
+              x:{grid:{display:false}, ticks:{color:css('--mut'),font:{size:10},maxRotation:0,autoSkip:true,maxTicksLimit:12}}}}});
+}
+
+function eventsChart(){
+  const ev = D.events;
+  const cols = ev.map(r => r.event.indexOf('ground')>=0?COL.red : r.event.indexOf('storm')>=0?COL.amber : r.event.indexOf('fog')>=0?COL.blue : COL.mut);
+  new Chart(document.getElementById('c-events'), {type:'bar',
+    data:{labels:ev.map(r=>r.event.replace(/\s*\(.*/,'')), datasets:[{data:ev.map(r=>+r.peak_occupancy),
+      backgroundColor:cols, borderRadius:4}]},
+    options:{responsive:true, maintainAspectRatio:false,
+      plugins:{legend:{display:false}, tooltip:{callbacks:{label:c=>c.parsed.y+' peak occupancy'}}},
+      scales:{y:{beginAtZero:true, grid:{color:grid()}, ticks:{color:css('--mut'),font:{size:11}}},
+              x:{grid:{display:false}, ticks:{color:css('--mut'),font:{size:10.5}}}}}});
+}
+
+function scenTable(){
+  const rows = D.scenarios.filter(r => r.touchpoint==='security');
+  const pill = v => v==='OK'
+    ? '<span class="tag t-green">OK</span>'
+    : '<span class="tag" style="background:rgba(220,38,38,.14);color:var(--red)">BREACH</span>';
+  document.getElementById('t-scen').innerHTML =
+    '<tr><th>Scenario</th><th>Lanes</th><th>Max wait</th><th></th></tr>' +
+    rows.map(r => `<tr><td>${r.scenario}</td><td>${r.servers_open}</td>
+      <td>${r.max_wait_min} min</td><td>${pill(r.verdict)}</td></tr>`).join('');
+}
+
+function modelTable(){
+  const c = D.champions;
+  const order = ['CheckIn','Security','Boarding','Belt'];
+  document.getElementById('t-model').innerHTML =
+    '<tr><th>Touchpoint</th><th>Model</th><th>Accuracy</th><th>RMSE</th><th>Peak recall</th></tr>' +
+    order.filter(t=>c[t]).map(t => `<tr><td>${t}</td><td><b>${c[t].model}</b></td>
+      <td>${c[t].acc}</td><td>${c[t].rmse}</td><td>${c[t].recall}</td></tr>`).join('');
+}
+
+function valTable(){
+  const pill = v => v.indexOf('PASS')>=0
+    ? '<span class="tag t-green">PASS</span>'
+    : '<span class="tag" style="background:rgba(217,119,6,.15);color:var(--amber)">FLAGGED</span>';
+  document.getElementById('t-val').innerHTML =
+    '<tr><th>Check</th><th>Statistic</th><th></th></tr>' +
+    D.validation.map(r => `<tr><td style="max-width:230px">${r.comparison.replace(/\s*\(.*/,'')}</td>
+      <td>${r.stat1}</td><td>${pill(r.verdict)}</td></tr>`).join('');
+}
+
+kpiRow(); heroStats(); demandChart(); eventsChart(); scenTable(); modelTable(); valTable();
+</script>
+{% endblock %}

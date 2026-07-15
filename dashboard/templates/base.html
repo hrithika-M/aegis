@@ -47,6 +47,10 @@
       {{ navitem('data','Data & Quality','server') }}
       {{ navitem('accuracy','Accuracy & Models','report') }}
     </ul>
+    <div class="sb-sec">Greenfield</div>
+    <ul class="sb-nav">
+      {{ navitem('bhogapuram','Bhogapuram Twin','plane') }}
+    </ul>
     <div class="sb-sec">Distribute</div>
     <ul class="sb-nav">
       <li><a href="/report" target="_blank">
@@ -67,7 +71,7 @@
         <h1>{% block ptitle %}Command Center{% endblock %}</h1>
       </div>
       <div class="top-right">
-        <div class="airport"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2 2 7l10 5 10-5-10-5Z"/></svg> GMR Hyderabad International Airport</div>
+        <div class="airport"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2 2 7l10 5 10-5-10-5Z"/></svg> {% if active=='bhogapuram' %}GMR Bhogapuram Intl · Visakhapatnam (VTZ){% else %}GMR Hyderabad International Airport{% endif %}</div>
         <div class="daysel" id="daysel">
           <button class="daysel-btn" id="daysel-btn">
             <span class="ds-dot" id="ds-dot"></span>
