@@ -123,5 +123,38 @@
   </div>
 </div>
 
+<!-- Bhogapuram twin stress lab — Monte Carlo + queue scenarios (real engine outputs) -->
+{% if ci %}
+<div class="grid g2" style="margin-top:16px">
+  <div class="panel" style="margin:0;border-left:3px solid var(--blue2)">
+    <div class="panel-h"><h2>Monte Carlo Sizing <span class="sub">Bhogapuram twin · 1000-run design day</span></h2>
+      <span class="tag t-blue">TWIN · P95</span></div>
+    <div class="panel-b">
+      <div style="overflow-x:auto"><table class="tw-tbl">
+        <tr><th>Metric</th><th>Mean</th><th>P50</th><th style="color:var(--blue2)">P95 — plan for this</th></tr>
+        {% for r in ci %}
+        <tr><td>{{ r.metric.replace('_',' ') }}</td><td>{{ r.mean }}</td><td>{{ r.P50 }}</td><td><b>{{ r.P95 }}</b></td></tr>
+        {% endfor %}
+      </table></div>
+      <div class="fill-note" style="margin-top:10px">Staff for the <b>P95</b>, not the average — a heavier-than-typical day shouldn't break the plan.</div>
+    </div>
+  </div>
+  <div class="panel" style="margin:0;border-left:3px solid var(--amber)">
+    <div class="panel-h"><h2>Queue Stress Scenarios <span class="sub">security · SLA 15 min · busiest day</span></h2>
+      <span class="tag" style="background:rgba(217,119,6,.15);color:var(--amber)">TWIN · QUEUE MODEL</span></div>
+    <div class="panel-b">
+      <div style="overflow-x:auto"><table class="tw-tbl">
+        <tr><th>Scenario</th><th>Lanes</th><th>Max wait</th><th></th></tr>
+        {% for r in scenarios if r.touchpoint == 'security' %}
+        <tr><td>{{ r.scenario }}</td><td>{{ r.servers_open }}</td><td>{{ r.max_wait_min }} min</td>
+          <td>{% if r.verdict == 'OK' %}<span class="tag t-green">OK</span>{% else %}<span class="tag" style="background:rgba(220,38,38,.14);color:var(--red)">BREACH</span>{% endif %}</td></tr>
+        {% endfor %}
+      </table></div>
+      <div class="fill-note" style="margin-top:10px"><b>Security is the binding constraint</b> — holds at 4 lanes even with +20% surge, breaches at 3. Evening disruptions cost most (event engine: ground stop ≈ doubles peak occupancy).</div>
+    </div>
+  </div>
+</div>
+{% endif %}
+
 {% endblock %}
 {% block scripts %}<script src="{{ url_for('static', filename='js/page-simulation.js') }}"></script>{% endblock %}

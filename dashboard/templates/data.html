@@ -65,5 +65,28 @@
   </div>
 </div>
 
+<!-- Aegis self-healing engine — REAL run on HYD EWS (source: PROOFS.md) -->
+{% if aegis %}
+<div class="panel" style="margin-top:16px;border-left:3px solid var(--teal)">
+  <div class="panel-h"><h2>Aegis Self-Healing Engine <span class="sub">real production run · HYD EWS camera data · {{ aegis.rows }}</span></h2>
+    <span class="tag t-teal">REAL · AUDITED</span></div>
+  <div class="panel-b">
+    <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-bottom:16px">
+      <div class="kpi accent"><div class="kpi-lab">Cells healed (audited)</div><div class="kpi-val">{{ '{:,}'.format(aegis.healed) }}</div></div>
+      <div class="kpi"><div class="kpi-lab">Cross-healed from linked feed</div><div class="kpi-val">{{ '{:,}'.format(aegis.cross_healed) }}</div><div class="kpi-lab" style="margin-top:5px;opacity:.75">learned entry↔pesc r={{ aegis.link_r }}</div></div>
+      <div class="kpi"><div class="kpi-lab">Escalated to humans</div><div class="kpi-val">{{ '{:,}'.format(aegis.escalations) }}</div><div class="kpi-lab" style="margin-top:5px;opacity:.75">{{ '{:,}'.format(aegis.drift_watchlist) }} = DRIFT watchlist</div></div>
+    </div>
+    {% for name, before, after in aegis.trust %}
+    <div class="trust-bar" style="margin-bottom:9px">
+      <span style="font-size:12.5px;min-width:52px;color:var(--mut)">{{ name }}</span>
+      <div class="tk"><i style="width:{{ after }}%;background:var(--teal);opacity:.35"></i><i style="width:{{ before }}%;background:var(--teal)"></i></div>
+      <span style="font-size:12.5px;font-variant-numeric:tabular-nums">{{ before }}% → <b style="color:var(--teal)">{{ after }}%</b> trust</span>
+    </div>
+    {% endfor %}
+    <div class="fill-note" style="margin-top:12px"><b>Honesty contract:</b> {{ aegis.verdict }}. The engine refuses to auto-correct sustained sensor bias — silently &ldquo;fixing&rdquo; drift would hide a real hardware problem, so it escalates instead.</div>
+  </div>
+</div>
+{% endif %}
+
 {% endblock %}
 {% block scripts %}<script src="{{ url_for('static', filename='js/page-data.js') }}"></script>{% endblock %}

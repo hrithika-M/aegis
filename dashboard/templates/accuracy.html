@@ -135,5 +135,28 @@
   </div>
 </div>
 
+<!-- Finalized champions — REAL walk-forward selection (models/best_per_touchpoint) -->
+{% if hyd_models %}
+<div class="panel" style="margin-top:16px;border-left:3px solid var(--violet)">
+  <div class="panel-h"><h2>Finalized Model per Touchpoint <span class="sub">21-model walk-forward selection · trusted actuals · symmetric accuracy</span></h2>
+    <span class="tag t-violet">REAL · HYD EWS</span></div>
+  <div class="panel-b">
+    <div style="overflow-x:auto"><table class="tw-tbl">
+      <tr><th>Touchpoint</th><th>Champion</th><th>Walk-forward acc.</th><th>Trained on</th><th>Artifact</th></tr>
+      {% for tp, m in hyd_models.items()|sort(attribute='1.walk_forward_accuracy', reverse=True) %}
+      <tr><td>{{ tp }}</td><td><b>{{ m.algorithm }}</b></td>
+        <td><b>{{ m.walk_forward_accuracy }}%</b></td>
+        <td>{{ '{:,}'.format(m.trained_on_rows) }} rows</td>
+        <td style="color:var(--mut)">{{ m.artifact }} · {{ m.size_mb }} MB</td></tr>
+      {% endfor %}
+    </table></div>
+    <div class="fill-note" style="margin-top:10px">Every winner is within ~1 pt of RandomForest (day-to-day noise) — the ceiling is the <b>data</b>, not the algorithm. Chronos (foundation model) hit 89.8% zero-shot on Entry. Features: 7 calendar fields → target: Aegis-corrected hourly throughput.</div>
+    {% if registry %}
+    <div class="fill-note" style="margin-top:6px"><b>Model registry:</b> latest run <span style="font-variant-numeric:tabular-nums">{{ registry.run_id }}</span> · data {{ registry.data_version_sha16 }} · simulator {{ registry.simulator_version }} — every deployed model traceable to the exact data + run that produced it.</div>
+    {% endif %}
+  </div>
+</div>
+{% endif %}
+
 {% endblock %}
 {% block scripts %}<script src="{{ url_for('static', filename='js/page-accuracy.js') }}"></script>{% endblock %}

@@ -385,3 +385,12 @@ input[type=range]::-webkit-slider-thumb:hover{transform:scale(1.15)}
 @media(max-width:1280px){.board{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:1200px){.g5{grid-template-columns:repeat(3,1fr)}.tps{grid-template-columns:repeat(4,1fr)}}
 @media(max-width:900px){.g2,.g3,.g4{grid-template-columns:1fr}.sb{width:58px}.sb-brand-txt,.sb-nav a span,.sb-sec,.sb-foot{display:none}.main{margin-left:58px}.board{grid-template-columns:1fr}.hero-in{flex-direction:column;align-items:flex-start}}
+
+/* twin/aegis embedded tables (shared) */
+.tw-tbl{width:100%;border-collapse:collapse;font-size:13px}
+.tw-tbl th{text-align:left;font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--mut);font-weight:700;padding:7px 9px;border-bottom:1px solid var(--line)}
+.tw-tbl td{padding:8px 9px;border-bottom:1px solid var(--line);font-variant-numeric:tabular-nums}
+.tw-tbl tr:last-child td{border-bottom:none}
+.trust-bar{display:flex;align-items:center;gap:10px}
+.trust-bar .tk{flex:1;height:9px;border-radius:5px;background:var(--panel3,rgba(128,128,128,.14));overflow:hidden;position:relative}
+.trust-bar .tk i{position:absolute;left:0;top:0;bottom:0;border-radius:5px}
