@@ -119,6 +119,22 @@ def test_occupancy_no_drift():
     assert max_occ < max(day.values()), f"occupancy {max_occ:.0f} exceeds busiest-day throughput (drift?)"
 
 
+# ---------------- provenance / versioning ----------------
+def test_manifests_present_and_cover_outputs():
+    import json
+    for name in ('version.json', 'provenance.json'):
+        assert os.path.exists(os.path.join(ROOT, name)), f"{name} missing (run build_provenance.py)"
+    v = json.load(open(os.path.join(ROOT, 'version.json'), encoding='utf-8'))
+    assert v['simulator_version'], "no simulator_version recorded"
+    assert v['assumptions']['load_factor_model']['sigma'] > 0, "assumptions not captured"
+    # every committed generated/master CSV should be fingerprinted
+    for sub in ('master', 'generated'):
+        for fn in os.listdir(os.path.join(ROOT, sub)):
+            if fn.endswith('.csv'):
+                rel = f"{sub}/{fn}"
+                assert rel in v['outputs'], f"{rel} not tracked in version.json"
+
+
 TESTS = [v for k, v in sorted(globals().items()) if k.startswith('test_') and callable(v)]
 
 if __name__ == '__main__':

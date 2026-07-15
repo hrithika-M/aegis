@@ -29,10 +29,18 @@ from?" and get a straight answer.
 ## Run the whole pipeline
 ```
 python build/build_masters.py      # Phase 1  -> master/, generated/Daily_Flights.csv
-python build/build_passengers.py   # Phase 2  -> generated/passenger_estimates.csv
+python build/build_passengers.py   # Phase 2  -> generated/passenger_estimates.csv (stochastic LF)
 python build/build_operations.py   # Phase 3+4-> generated/passenger_5min.csv, gate_occupancy.csv
 python build/build_analytics.py    # Phase 5  -> analytics/kpis.csv, peak_hours.csv
+python simulation/monte_carlo.py   # uncertainty -> analytics/confidence_intervals.csv (P95)
+python validation/validate_synthetic.py   # twin vs real -> analytics/synthetic_validation.csv
+python build/build_provenance.py   # audit -> version.json, provenance.json
+python tests/test_twin.py          # 11 invariant tests (exits non-zero on failure)
 ```
+Build masters validates the schedule first (bad input stops the build with a clear
+message). `version.json` / `provenance.json` make every output auditable: simulator
+version, input/output hashes, the exact assumptions used, and per-value Source/Method/
+Confidence. Model selection: `python modeling/train_touchpoints.py`.
 
 ## Headline results (S26 season)
 - **~7,942 passengers/day** simulated (real VTZ ~8,000 ✓), reconciled to DGCA route totals.

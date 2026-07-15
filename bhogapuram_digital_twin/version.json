@@ -1,0 +1,130 @@
+{
+  "simulator_version": "0.4.0",
+  "built_at_utc": "2026-07-15T11:11:18Z",
+  "inputs": {
+    "VTZ_schedule_S26.xlsx": {
+      "sha256_16": "f5253cd584335ca1",
+      "exists": true
+    },
+    "vtz_citypair_monthly.csv": {
+      "sha256_16": "a9028ffa7ce477ce",
+      "exists": true
+    },
+    "vtz_route_profile.csv": {
+      "sha256_16": "a49f97024012d947",
+      "exists": true
+    },
+    "national_daily_reference.csv": {
+      "sha256_16": "408018e1933b001a",
+      "exists": true
+    }
+  },
+  "outputs": {
+    "master/Airport_Master.csv": {
+      "sha256_16": "fbdc3bfddb24ce15",
+      "rows": 16
+    },
+    "master/Aircraft_Master.csv": {
+      "sha256_16": "4806c98482f626bc",
+      "rows": 6
+    },
+    "master/Flight_Master.csv": {
+      "sha256_16": "72d0f63c85df5009",
+      "rows": 30
+    },
+    "generated/Daily_Flights.csv": {
+      "sha256_16": "80afe43fed0dc2ac",
+      "rows": 5820
+    },
+    "generated/passenger_estimates.csv": {
+      "sha256_16": "fe9e2c7b5a46a3e5",
+      "rows": 11640
+    },
+    "generated/passenger_5min.csv": {
+      "sha256_16": "dcf1d2cbb84e15bd",
+      "rows": 44441
+    },
+    "generated/gate_occupancy.csv": {
+      "sha256_16": "3e96a4dd636a2ed9",
+      "rows": 30510
+    },
+    "analytics/kpis.csv": {
+      "sha256_16": "302ba47f41b48a95",
+      "rows": 10
+    },
+    "analytics/peak_hours.csv": {
+      "sha256_16": "e2e7ce5221e4b9ee",
+      "rows": 19
+    },
+    "analytics/confidence_intervals.csv": {
+      "sha256_16": "2ec0f8ad1d72ac44",
+      "rows": 6
+    },
+    "analytics/synthetic_validation.csv": {
+      "sha256_16": "6d6b7088eed74873",
+      "rows": 3
+    },
+    "analytics/model_selection_twin.csv": {
+      "sha256_16": "79f4097c387b8067",
+      "rows": 24
+    }
+  },
+  "assumptions": {
+    "load_factor_model": {
+      "distribution": "Normal(mu_route, sigma)",
+      "sigma": 0.07,
+      "default_mu": 0.8,
+      "clip": [
+        0.45,
+        0.98
+      ],
+      "reconcile_factor_bounds": [
+        0.9,
+        1.1
+      ],
+      "seed": 42
+    },
+    "behaviour_windows_min_before_STD": {
+      "checkin": [
+        -150,
+        -45,
+        -90
+      ],
+      "security": [
+        -95,
+        -25,
+        -55
+      ],
+      "boarding": [
+        -30,
+        -8,
+        -18
+      ]
+    },
+    "arrival_belt_min_after_STA": [
+      5,
+      35,
+      18
+    ],
+    "service_rates_pax_per_5min": {
+      "checkin": 6,
+      "security": 12
+    },
+    "season": [
+      "2026-03-29",
+      "2026-10-24"
+    ]
+  },
+  "kpis": {
+    "Peak check-in demand": "57",
+    "Peak security demand": "65",
+    "Peak boarding demand": "127",
+    "Peak terminal occupancy": "1350",
+    "Peak check-in counters required": "10",
+    "Peak security lanes required": "6",
+    "Peak aircraft on ground": "4",
+    "Busiest day": "2026-03-30",
+    "Avg daily passengers (dep+arr)": "7942",
+    "Peak hour of day": "07:00"
+  }
+}

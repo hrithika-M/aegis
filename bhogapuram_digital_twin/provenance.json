@@ -1,0 +1,88 @@
+{
+  "simulator_version": "0.4.0",
+  "confidence_legend": {
+    "HIGH": "real, reconciled-to-real, or deterministic derivation",
+    "MEDIUM": "simulated with documented assumptions",
+    "LOW": "depends on soft service-rate assumptions"
+  },
+  "artifacts": [
+    {
+      "file": "master/Flight_Master.csv",
+      "source": "schedule",
+      "method": "cleaned + standardized",
+      "confidence": "HIGH"
+    },
+    {
+      "file": "master/Airport_Master.csv",
+      "source": "reference",
+      "method": "lookup (geo/scope)",
+      "confidence": "HIGH"
+    },
+    {
+      "file": "master/Aircraft_Master.csv",
+      "source": "reference",
+      "method": "lookup (ICAO/seats/specs)",
+      "confidence": "HIGH"
+    },
+    {
+      "file": "generated/Daily_Flights.csv",
+      "source": "schedule",
+      "method": "deterministic FREQ expansion",
+      "confidence": "HIGH"
+    },
+    {
+      "file": "generated/passenger_estimates.csv",
+      "source": "schedule + DGCA",
+      "method": "seats x Normal(route_LF, sigma), lightly reconciled to DGCA totals",
+      "confidence": "MEDIUM",
+      "columns": {
+        "passengers": {
+          "source": "schedule+DGCA",
+          "method": "reconciled",
+          "confidence": "HIGH"
+        },
+        "load_factor_effective": {
+          "source": "drawn",
+          "method": "Normal(mu,sigma)",
+          "confidence": "MEDIUM"
+        }
+      }
+    },
+    {
+      "file": "generated/passenger_5min.csv",
+      "source": "passenger_estimates",
+      "method": "show-up/service behaviour windows -> 5-min buckets",
+      "confidence": "MEDIUM",
+      "columns": {
+        "terminal_occupancy": {
+          "source": "derived",
+          "method": "entries-exits (daily reset)",
+          "confidence": "MEDIUM"
+        },
+        "checkin_counters_req": {
+          "source": "derived",
+          "method": "ceil(demand / service_rate)",
+          "confidence": "LOW"
+        }
+      }
+    },
+    {
+      "file": "generated/gate_occupancy.csv",
+      "source": "Daily_Flights",
+      "method": "rotations on stand (STA..STD)",
+      "confidence": "MEDIUM"
+    },
+    {
+      "file": "analytics/confidence_intervals.csv",
+      "source": "Monte Carlo",
+      "method": "1000-run design day, P5/P50/P95",
+      "confidence": "MEDIUM"
+    },
+    {
+      "file": "analytics/synthetic_validation.csv",
+      "source": "twin vs real DGCA",
+      "method": "KS / Wasserstein / PSI",
+      "confidence": "HIGH"
+    }
+  ]
+}
