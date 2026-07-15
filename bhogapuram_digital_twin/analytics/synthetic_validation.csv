@@ -1,0 +1,4 @@
+comparison,type,stat1,stat2,stat3,verdict
+Route passenger shares (twin vs real DGCA),integrity,PSI=0.046,,,PASS
+Load-factor distribution (twin per-flight vs real airline PLF),realism,PSI=2.846,KS=0.545,EMD=0.125,FAIL
+Day-of-week demand shape (twin vs real national daily),realism,PSI=0.001,KS=0.009,,PASS

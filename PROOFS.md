@@ -95,6 +95,22 @@ passenger *volumes* are pinned to reality:
 The twin is honest about what it is: real volumes, *modelled* flow (documented
 show-up/service assumptions). Artifacts: `bhogapuram_digital_twin/`.
 
+## Proof 5 — Synthetic-data validation (twin vs real distributions)
+
+We validate the **simulator itself** with distribution tests (KS, Wasserstein, PSI),
+and report the failure as loudly as the passes:
+
+| Check | Verdict |
+|---|---|
+| Route passenger shares vs real DGCA | **PASS** (PSI 0.046) |
+| Day-of-week demand shape vs real national daily | **PASS** (PSI 0.001) |
+| Per-flight load-factor distribution vs real airline PLF | **FAIL** (PSI 2.85) |
+
+The structure is realistic (route mix, weekly rhythm); the per-flight load-factor
+*spread* is not (2.5× too wide — reconciling a flat LF over a sparse schedule). This
+is a real, named weakness with a known fix (per-flight LF distributions), and an
+objective target to beat (PSI 2.85 → <0.25). Artifacts: `bhogapuram_digital_twin/validation/`.
+
 ---
 
 ## What the proofs establish
