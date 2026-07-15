@@ -57,7 +57,8 @@ def main():
                'generated/passenger_5min.csv', 'generated/gate_occupancy.csv',
                'analytics/kpis.csv', 'analytics/peak_hours.csv',
                'analytics/confidence_intervals.csv', 'analytics/synthetic_validation.csv',
-               'analytics/model_selection_twin.csv', 'analytics/scenarios.csv']
+               'analytics/model_selection_twin.csv', 'analytics/scenarios.csv',
+               'analytics/events.csv']
 
     kpis = {}
     kp = os.path.join(ROOT, 'analytics', 'kpis.csv')
@@ -119,6 +120,8 @@ def main():
              'method': 'KS / Wasserstein / PSI', 'confidence': H},
             {'file': 'analytics/scenarios.csv', 'source': 'passenger_5min + scenario levers',
              'method': 'deterministic bucket queue, busiest day', 'confidence': M},
+            {'file': 'analytics/events.csv', 'source': 'Flight_Master + disruption events',
+             'method': 'delay propagation -> occupancy delta, design day', 'confidence': M},
         ],
     }
     with open(os.path.join(ROOT, 'provenance.json'), 'w', encoding='utf-8') as f:

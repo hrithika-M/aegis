@@ -34,6 +34,7 @@ python build/build_operations.py   # Phase 3+4-> generated/passenger_5min.csv, g
 python build/build_analytics.py    # Phase 5  -> analytics/kpis.csv, peak_hours.csv
 python simulation/monte_carlo.py   # uncertainty -> analytics/confidence_intervals.csv (P95)
 python simulation/scenario_engine.py  # what-if queues -> analytics/scenarios.csv (SLA breaches)
+python simulation/event_engine.py     # disruptions -> analytics/events.csv (congestion)
 python validation/validate_synthetic.py   # twin vs real -> analytics/synthetic_validation.csv
 python build/build_provenance.py   # audit -> version.json, provenance.json
 python tests/test_twin.py          # 11 invariant tests (exits non-zero on failure)

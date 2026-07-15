@@ -89,6 +89,12 @@
       "source": "passenger_5min + scenario levers",
       "method": "deterministic bucket queue, busiest day",
       "confidence": "MEDIUM"
+    },
+    {
+      "file": "analytics/events.csv",
+      "source": "Flight_Master + disruption events",
+      "method": "delay propagation -> occupancy delta, design day",
+      "confidence": "MEDIUM"
     }
   ]
 }

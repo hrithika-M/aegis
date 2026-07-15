@@ -1,0 +1,5 @@
+event,delay_min,window,peak_occupancy,delta_vs_baseline,extra_dwell_pax_min
+none (baseline),0,00-24h,663,0,0
+"morning fog (45m, 06-09h)",45,06-09h,744,81,25376
+"evening storm (60m, 18-21h)",60,18-21h,879,216,50721
+"ground stop (90m, all day)",90,00-24h,1116,453,346693

@@ -68,3 +68,28 @@ case. VTZ can absorb +40% demand *or* the loss of 2 security lanes, but **not th
 of a 3rd lane**, and a surge combined with understaffing is a meltdown (130+ min waits).
 That's an actionable staffing rule, produced from the twin — exactly what a scenario
 engine is for.
+
+---
+
+# event_engine.py — disruption propagation
+
+Scenarios test static staffing; **events test dynamic shocks.** A weather window delays
+the departures inside it; those passengers have already shown up, so they **dwell
+longer** → terminal occupancy climbs. Measures the congestion that cascades.
+
+Run: `python event_engine.py` → `analytics/events.csv`
+
+## Result (design day, departures)
+| Event | Peak occupancy | vs baseline | Extra dwell (pax-min) |
+|---|---|---|---|
+| baseline | 663 | — | — |
+| morning fog (45 m, 06–09h) | 744 | +81 | 25,376 |
+| evening storm (60 m, 18–21h) | 879 | **+216** | 50,721 |
+| ground stop (90 m, all day) | 1,116 | **+453** | 346,693 |
+
+## The planning insight
+**Evening disruptions hurt more than morning** (the evening bank is busier: +216 vs
++81 peak occupancy), and a full ground stop **nearly doubles** peak occupancy — which
+is the number the terminal's seating and holding areas must be sized for. Together with
+the scenario engine, the twin now stress-tests both *staffing* (queues) and *shocks*
+(congestion).
