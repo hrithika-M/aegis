@@ -138,9 +138,10 @@ def main():
             # write only slots with any activity to keep the file lean
             if (ci or se or boarding[i] or belt[i] or occ[i] or dep_fl[i] or arr_fl[i]):
                 ts = (SEASON_START + dt.timedelta(minutes=i * STEP)).strftime('%Y-%m-%d %H:%M')
-                w.writerow([ts, dep_fl[i], arr_fl[i], round(ci), round(se), round(boarding[i]),
-                            round(belt[i]), round(occ[i]), math.ceil(ci / CHECKIN_PER_5MIN),
-                            math.ceil(se / SECURITY_PER_5MIN)])
+                ci_r, se_r = round(ci), round(se)          # counters must derive from the SHOWN demand
+                w.writerow([ts, dep_fl[i], arr_fl[i], ci_r, se_r, round(boarding[i]),
+                            round(belt[i]), round(occ[i]), math.ceil(ci_r / CHECKIN_PER_5MIN),
+                            math.ceil(se_r / SECURITY_PER_5MIN)])
 
     with open(OUTGATE, 'w', newline='', encoding='utf-8') as f:
         w = csv.writer(f)
