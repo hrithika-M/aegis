@@ -28,7 +28,13 @@ import datetime as dt
 import numpy as np
 
 from train_touchpoints import (load_touchpoint_hourly, zoo, TOUCHPOINTS, FEATURES,
-                               WARMUP, STEP)
+                               WARMUP)
+
+# STEP override: the default STEP=7 means every ISO week has at most one test
+# day, so a "weekly" rollup would just be the daily table relabeled. STEP=1
+# (test every day) gives a real weekly average; the season is short (~210 days)
+# so this is still fast.
+STEP = 1
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)

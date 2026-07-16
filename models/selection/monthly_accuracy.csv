@@ -1,449 +1,449 @@
 touchpoint,model,year_month,mean_accuracy,std_accuracy,mean_rmse,n_days
 CheckIn,Bagging(trees),2025-05,90.4,,103.0,1
-CheckIn,Bagging(trees),2025-06,90.5,2.0,84.7,3
-CheckIn,Bagging(trees),2025-07,90.3,0.7,90.9,3
-CheckIn,Bagging(trees),2025-08,83.7,11.9,155.1,3
-CheckIn,Bagging(trees),2025-09,90.9,0.6,91.7,3
-CheckIn,Bagging(trees),2025-10,85.9,5.2,131.0,3
-CheckIn,Bagging(trees),2025-11,80.5,6.0,162.2,3
-CheckIn,Bagging(trees),2025-12,88.9,1.7,104.8,3
-CheckIn,Bagging(trees),2026-01,87.8,2.3,125.1,3
-CheckIn,Bagging(trees),2026-02,90.1,2.5,99.0,3
-CheckIn,Bagging(trees),2026-03,89.8,0.8,104.4,2
+CheckIn,Bagging(trees),2025-06,89.7,2.5,94.0,10
+CheckIn,Bagging(trees),2025-07,91.7,0.8,79.1,10
+CheckIn,Bagging(trees),2025-08,88.9,4.0,104.0,10
+CheckIn,Bagging(trees),2025-09,85.0,12.3,133.5,10
+CheckIn,Bagging(trees),2025-10,83.8,5.9,144.8,11
+CheckIn,Bagging(trees),2025-11,82.7,12.2,151.4,10
+CheckIn,Bagging(trees),2025-12,88.4,2.8,111.3,10
+CheckIn,Bagging(trees),2026-01,90.1,1.9,104.3,10
+CheckIn,Bagging(trees),2026-02,91.4,1.6,87.2,10
+CheckIn,Bagging(trees),2026-03,88.4,3.3,103.7,8
 CheckIn,ExtraTrees,2025-05,89.6,,102.5,1
-CheckIn,ExtraTrees,2025-06,88.7,3.0,97.4,3
-CheckIn,ExtraTrees,2025-07,89.9,0.8,96.5,3
-CheckIn,ExtraTrees,2025-08,84.2,11.7,152.7,3
-CheckIn,ExtraTrees,2025-09,89.8,2.0,102.6,3
-CheckIn,ExtraTrees,2025-10,85.4,5.3,134.1,3
-CheckIn,ExtraTrees,2025-11,80.6,6.6,164.3,3
-CheckIn,ExtraTrees,2025-12,87.2,1.8,122.7,3
-CheckIn,ExtraTrees,2026-01,87.5,3.1,123.5,3
-CheckIn,ExtraTrees,2026-02,90.0,2.2,99.1,3
-CheckIn,ExtraTrees,2026-03,89.4,0.1,108.6,2
+CheckIn,ExtraTrees,2025-06,88.5,2.6,103.7,10
+CheckIn,ExtraTrees,2025-07,90.6,1.3,86.8,10
+CheckIn,ExtraTrees,2025-08,87.9,4.4,112.1,10
+CheckIn,ExtraTrees,2025-09,84.2,12.0,142.1,10
+CheckIn,ExtraTrees,2025-10,83.0,5.3,153.9,11
+CheckIn,ExtraTrees,2025-11,82.9,12.5,149.5,10
+CheckIn,ExtraTrees,2025-12,87.6,3.0,124.7,10
+CheckIn,ExtraTrees,2026-01,89.5,1.8,110.4,10
+CheckIn,ExtraTrees,2026-02,91.1,1.5,93.1,10
+CheckIn,ExtraTrees,2026-03,87.4,3.5,112.7,8
 CheckIn,HistGradientBoosting,2025-05,90.7,,93.5,1
-CheckIn,HistGradientBoosting,2025-06,90.5,0.6,86.1,3
-CheckIn,HistGradientBoosting,2025-07,91.2,0.7,84.4,3
-CheckIn,HistGradientBoosting,2025-08,85.2,10.7,137.9,3
-CheckIn,HistGradientBoosting,2025-09,90.9,1.7,91.0,3
-CheckIn,HistGradientBoosting,2025-10,85.2,6.3,132.9,3
-CheckIn,HistGradientBoosting,2025-11,81.6,7.4,153.8,3
-CheckIn,HistGradientBoosting,2025-12,89.4,2.7,99.4,3
-CheckIn,HistGradientBoosting,2026-01,86.7,1.2,130.2,3
-CheckIn,HistGradientBoosting,2026-02,90.7,2.3,93.6,3
-CheckIn,HistGradientBoosting,2026-03,90.1,2.0,97.1,2
+CheckIn,HistGradientBoosting,2025-06,90.4,2.1,85.1,10
+CheckIn,HistGradientBoosting,2025-07,91.8,0.9,79.0,10
+CheckIn,HistGradientBoosting,2025-08,90.1,2.9,94.0,10
+CheckIn,HistGradientBoosting,2025-09,85.6,12.8,128.0,10
+CheckIn,HistGradientBoosting,2025-10,84.5,6.9,133.1,11
+CheckIn,HistGradientBoosting,2025-11,83.1,11.9,144.5,10
+CheckIn,HistGradientBoosting,2025-12,88.6,2.8,108.7,10
+CheckIn,HistGradientBoosting,2026-01,90.1,2.5,103.1,10
+CheckIn,HistGradientBoosting,2026-02,91.0,2.1,85.1,10
+CheckIn,HistGradientBoosting,2026-03,88.9,2.1,97.4,8
 CheckIn,LightGBM,2025-05,90.9,,91.6,1
-CheckIn,LightGBM,2025-06,90.5,1.0,86.1,3
-CheckIn,LightGBM,2025-07,91.4,0.6,82.6,3
-CheckIn,LightGBM,2025-08,84.9,11.1,141.0,3
-CheckIn,LightGBM,2025-09,90.9,1.4,90.3,3
-CheckIn,LightGBM,2025-10,85.1,6.6,133.5,3
-CheckIn,LightGBM,2025-11,81.7,7.2,154.2,3
-CheckIn,LightGBM,2025-12,90.2,2.7,95.4,3
-CheckIn,LightGBM,2026-01,87.1,2.0,128.3,3
-CheckIn,LightGBM,2026-02,90.8,2.0,91.2,3
-CheckIn,LightGBM,2026-03,90.2,2.4,95.7,2
+CheckIn,LightGBM,2025-06,90.4,2.1,85.2,10
+CheckIn,LightGBM,2025-07,91.9,0.9,77.4,10
+CheckIn,LightGBM,2025-08,90.0,3.3,93.8,10
+CheckIn,LightGBM,2025-09,85.3,12.7,129.8,10
+CheckIn,LightGBM,2025-10,84.5,6.7,133.3,11
+CheckIn,LightGBM,2025-11,83.2,12.0,143.3,10
+CheckIn,LightGBM,2025-12,88.7,2.9,109.2,10
+CheckIn,LightGBM,2026-01,90.0,2.2,102.0,10
+CheckIn,LightGBM,2026-02,91.4,1.9,83.1,10
+CheckIn,LightGBM,2026-03,89.0,2.3,96.9,8
 CheckIn,Naive-seasonal-7d,2025-05,89.9,,100.7,1
-CheckIn,Naive-seasonal-7d,2025-06,86.8,1.4,117.3,3
-CheckIn,Naive-seasonal-7d,2025-07,89.5,2.0,101.3,3
-CheckIn,Naive-seasonal-7d,2025-08,84.5,9.9,152.0,3
-CheckIn,Naive-seasonal-7d,2025-09,89.2,2.1,105.2,3
-CheckIn,Naive-seasonal-7d,2025-10,86.9,3.6,125.2,3
-CheckIn,Naive-seasonal-7d,2025-11,79.4,3.7,177.9,3
-CheckIn,Naive-seasonal-7d,2025-12,86.3,2.1,130.7,3
-CheckIn,Naive-seasonal-7d,2026-01,86.3,4.2,140.4,3
-CheckIn,Naive-seasonal-7d,2026-02,90.0,3.1,97.6,3
-CheckIn,Naive-seasonal-7d,2026-03,87.0,1.3,136.0,2
+CheckIn,Naive-seasonal-7d,2025-06,87.3,1.7,118.7,10
+CheckIn,Naive-seasonal-7d,2025-07,90.4,1.5,89.6,10
+CheckIn,Naive-seasonal-7d,2025-08,87.6,6.1,115.3,10
+CheckIn,Naive-seasonal-7d,2025-09,83.5,11.1,145.6,10
+CheckIn,Naive-seasonal-7d,2025-10,82.9,5.3,163.4,11
+CheckIn,Naive-seasonal-7d,2025-11,76.9,12.2,198.8,10
+CheckIn,Naive-seasonal-7d,2025-12,85.7,3.5,140.9,10
+CheckIn,Naive-seasonal-7d,2026-01,88.0,1.8,125.7,10
+CheckIn,Naive-seasonal-7d,2026-02,89.9,1.3,101.9,10
+CheckIn,Naive-seasonal-7d,2026-03,86.8,2.8,125.3,8
 CheckIn,RandomForest [Naveen],2025-05,90.4,,103.5,1
-CheckIn,RandomForest [Naveen],2025-06,90.3,1.9,84.9,3
-CheckIn,RandomForest [Naveen],2025-07,90.5,0.7,90.6,3
-CheckIn,RandomForest [Naveen],2025-08,83.9,11.9,153.0,3
-CheckIn,RandomForest [Naveen],2025-09,91.1,0.6,91.0,3
-CheckIn,RandomForest [Naveen],2025-10,85.9,5.1,133.2,3
-CheckIn,RandomForest [Naveen],2025-11,80.4,6.3,163.3,3
-CheckIn,RandomForest [Naveen],2025-12,88.9,1.6,105.3,3
-CheckIn,RandomForest [Naveen],2026-01,87.9,2.3,123.9,3
-CheckIn,RandomForest [Naveen],2026-02,90.1,2.4,98.0,3
-CheckIn,RandomForest [Naveen],2026-03,89.6,0.8,104.8,2
+CheckIn,RandomForest [Naveen],2025-06,89.8,2.4,92.5,10
+CheckIn,RandomForest [Naveen],2025-07,91.7,0.8,78.8,10
+CheckIn,RandomForest [Naveen],2025-08,89.0,3.9,102.7,10
+CheckIn,RandomForest [Naveen],2025-09,85.1,12.3,133.5,10
+CheckIn,RandomForest [Naveen],2025-10,83.8,5.7,145.4,11
+CheckIn,RandomForest [Naveen],2025-11,82.8,12.4,149.9,10
+CheckIn,RandomForest [Naveen],2025-12,88.5,2.8,111.2,10
+CheckIn,RandomForest [Naveen],2026-01,90.2,1.9,102.9,10
+CheckIn,RandomForest [Naveen],2026-02,91.5,1.6,86.3,10
+CheckIn,RandomForest [Naveen],2026-03,88.4,3.3,103.9,8
 CheckIn,XGBoost,2025-05,89.9,,100.7,1
-CheckIn,XGBoost,2025-06,88.9,1.8,94.2,3
-CheckIn,XGBoost,2025-07,91.5,0.3,83.6,3
-CheckIn,XGBoost,2025-08,83.0,11.7,152.7,3
-CheckIn,XGBoost,2025-09,91.1,0.9,85.4,3
-CheckIn,XGBoost,2025-10,85.8,4.9,130.8,3
-CheckIn,XGBoost,2025-11,81.2,8.2,155.4,3
-CheckIn,XGBoost,2025-12,89.6,1.9,100.8,3
-CheckIn,XGBoost,2026-01,86.4,1.9,134.6,3
-CheckIn,XGBoost,2026-02,90.3,1.8,94.0,3
-CheckIn,XGBoost,2026-03,90.0,2.1,92.2,2
+CheckIn,XGBoost,2025-06,89.2,3.1,96.0,10
+CheckIn,XGBoost,2025-07,91.2,0.7,81.4,10
+CheckIn,XGBoost,2025-08,88.6,4.7,108.2,10
+CheckIn,XGBoost,2025-09,85.5,12.7,131.4,10
+CheckIn,XGBoost,2025-10,84.3,6.3,137.0,11
+CheckIn,XGBoost,2025-11,82.7,12.9,142.7,10
+CheckIn,XGBoost,2025-12,88.7,3.3,110.3,10
+CheckIn,XGBoost,2026-01,90.1,2.2,102.6,10
+CheckIn,XGBoost,2026-02,91.4,1.4,83.3,10
+CheckIn,XGBoost,2026-03,89.6,2.1,90.5,8
 Emigration,Bagging(trees),2025-05,75.7,,106.1,1
-Emigration,Bagging(trees),2025-06,82.4,3.6,69.7,3
-Emigration,Bagging(trees),2025-07,81.4,,62.7,1
-Emigration,Bagging(trees),2025-08,82.1,2.1,69.5,3
-Emigration,Bagging(trees),2025-09,83.2,2.6,73.6,3
-Emigration,Bagging(trees),2025-10,75.9,7.6,82.5,3
-Emigration,Bagging(trees),2025-11,85.0,1.8,59.3,3
-Emigration,Bagging(trees),2025-12,79.5,2.2,73.1,3
-Emigration,Bagging(trees),2026-01,79.8,6.5,76.9,3
-Emigration,Bagging(trees),2026-02,83.3,2.1,64.8,3
-Emigration,Bagging(trees),2026-03,70.1,10.3,87.7,3
+Emigration,Bagging(trees),2025-06,78.9,4.6,78.9,10
+Emigration,Bagging(trees),2025-07,79.9,3.8,69.7,6
+Emigration,Bagging(trees),2025-08,80.9,3.8,69.7,9
+Emigration,Bagging(trees),2025-09,82.2,3.4,72.1,10
+Emigration,Bagging(trees),2025-10,71.7,14.3,93.0,10
+Emigration,Bagging(trees),2025-11,83.2,3.1,67.8,10
+Emigration,Bagging(trees),2025-12,80.1,2.0,70.0,11
+Emigration,Bagging(trees),2026-01,82.4,4.5,74.3,10
+Emigration,Bagging(trees),2026-02,83.1,1.9,59.7,9
+Emigration,Bagging(trees),2026-03,71.7,6.8,71.7,9
 Emigration,ExtraTrees,2025-05,74.4,,115.2,1
-Emigration,ExtraTrees,2025-06,80.3,1.7,72.8,3
-Emigration,ExtraTrees,2025-07,78.2,,67.9,1
-Emigration,ExtraTrees,2025-08,81.0,2.0,80.4,3
-Emigration,ExtraTrees,2025-09,80.5,3.8,81.5,3
-Emigration,ExtraTrees,2025-10,75.9,6.9,82.7,3
-Emigration,ExtraTrees,2025-11,82.1,1.3,67.7,3
-Emigration,ExtraTrees,2025-12,75.7,1.6,87.4,3
-Emigration,ExtraTrees,2026-01,78.4,6.8,88.2,3
-Emigration,ExtraTrees,2026-02,82.8,1.5,71.5,3
-Emigration,ExtraTrees,2026-03,66.8,10.0,90.9,3
+Emigration,ExtraTrees,2025-06,75.8,4.9,89.8,10
+Emigration,ExtraTrees,2025-07,78.4,3.3,73.2,6
+Emigration,ExtraTrees,2025-08,80.1,4.7,75.0,9
+Emigration,ExtraTrees,2025-09,80.2,3.3,79.9,10
+Emigration,ExtraTrees,2025-10,70.8,13.5,102.8,10
+Emigration,ExtraTrees,2025-11,81.2,3.0,73.9,10
+Emigration,ExtraTrees,2025-12,79.1,3.6,76.5,11
+Emigration,ExtraTrees,2026-01,81.5,5.0,78.9,10
+Emigration,ExtraTrees,2026-02,82.2,1.9,63.9,9
+Emigration,ExtraTrees,2026-03,70.1,7.0,75.4,9
 Emigration,HistGradientBoosting,2025-05,74.6,,94.9,1
-Emigration,HistGradientBoosting,2025-06,82.9,1.4,63.1,3
-Emigration,HistGradientBoosting,2025-07,82.7,,51.7,1
-Emigration,HistGradientBoosting,2025-08,83.4,1.7,59.6,3
-Emigration,HistGradientBoosting,2025-09,84.5,1.6,59.5,3
-Emigration,HistGradientBoosting,2025-10,71.7,12.8,86.2,3
-Emigration,HistGradientBoosting,2025-11,80.4,6.0,69.8,3
-Emigration,HistGradientBoosting,2025-12,79.0,2.7,69.6,3
-Emigration,HistGradientBoosting,2026-01,79.5,4.7,78.6,3
-Emigration,HistGradientBoosting,2026-02,83.0,4.9,63.9,3
-Emigration,HistGradientBoosting,2026-03,71.0,8.3,74.7,3
+Emigration,HistGradientBoosting,2025-06,79.6,3.1,70.0,10
+Emigration,HistGradientBoosting,2025-07,79.2,2.2,64.9,6
+Emigration,HistGradientBoosting,2025-08,80.7,4.3,64.6,9
+Emigration,HistGradientBoosting,2025-09,81.1,3.6,69.8,10
+Emigration,HistGradientBoosting,2025-10,73.8,12.0,86.4,10
+Emigration,HistGradientBoosting,2025-11,83.2,2.8,64.6,10
+Emigration,HistGradientBoosting,2025-12,80.6,2.6,60.9,11
+Emigration,HistGradientBoosting,2026-01,82.1,3.4,71.0,10
+Emigration,HistGradientBoosting,2026-02,81.9,3.3,58.6,9
+Emigration,HistGradientBoosting,2026-03,69.0,8.2,73.8,9
 Emigration,LightGBM,2025-05,74.4,,99.7,1
-Emigration,LightGBM,2025-06,83.1,1.8,63.4,3
-Emigration,LightGBM,2025-07,81.7,,53.8,1
-Emigration,LightGBM,2025-08,84.4,1.0,56.0,3
-Emigration,LightGBM,2025-09,84.7,1.3,58.3,3
-Emigration,LightGBM,2025-10,73.3,12.0,85.3,3
-Emigration,LightGBM,2025-11,81.1,5.2,67.1,3
-Emigration,LightGBM,2025-12,79.3,2.9,69.4,3
-Emigration,LightGBM,2026-01,80.1,5.3,74.3,3
-Emigration,LightGBM,2026-02,83.4,4.6,61.6,3
-Emigration,LightGBM,2026-03,72.4,6.0,76.4,3
+Emigration,LightGBM,2025-06,79.4,3.1,70.2,10
+Emigration,LightGBM,2025-07,79.5,2.1,64.6,6
+Emigration,LightGBM,2025-08,81.0,4.4,64.5,9
+Emigration,LightGBM,2025-09,81.5,3.8,69.4,10
+Emigration,LightGBM,2025-10,74.1,12.1,86.8,10
+Emigration,LightGBM,2025-11,83.4,2.3,63.0,10
+Emigration,LightGBM,2025-12,80.7,2.4,60.7,11
+Emigration,LightGBM,2026-01,82.2,4.5,69.9,10
+Emigration,LightGBM,2026-02,82.5,3.1,57.4,9
+Emigration,LightGBM,2026-03,69.6,7.9,73.1,9
 Emigration,Naive-seasonal-7d,2025-05,79.8,,123.2,1
-Emigration,Naive-seasonal-7d,2025-06,79.0,7.1,76.9,3
-Emigration,Naive-seasonal-7d,2025-07,79.2,,72.3,1
-Emigration,Naive-seasonal-7d,2025-08,81.1,1.7,80.5,3
-Emigration,Naive-seasonal-7d,2025-09,79.8,3.0,75.2,3
-Emigration,Naive-seasonal-7d,2025-10,73.0,9.6,85.3,3
-Emigration,Naive-seasonal-7d,2025-11,81.9,3.0,84.5,3
-Emigration,Naive-seasonal-7d,2025-12,77.6,2.8,83.5,3
-Emigration,Naive-seasonal-7d,2026-01,82.0,2.7,69.7,3
-Emigration,Naive-seasonal-7d,2026-02,81.8,3.3,68.7,3
-Emigration,Naive-seasonal-7d,2026-03,62.3,10.5,119.8,3
+Emigration,Naive-seasonal-7d,2025-06,76.0,5.9,92.5,10
+Emigration,Naive-seasonal-7d,2025-07,75.8,2.7,78.7,6
+Emigration,Naive-seasonal-7d,2025-08,80.1,3.0,75.0,9
+Emigration,Naive-seasonal-7d,2025-09,79.3,3.0,83.6,10
+Emigration,Naive-seasonal-7d,2025-10,64.9,15.7,135.6,10
+Emigration,Naive-seasonal-7d,2025-11,80.6,5.3,71.4,10
+Emigration,Naive-seasonal-7d,2025-12,79.1,3.7,78.1,11
+Emigration,Naive-seasonal-7d,2026-01,82.2,3.1,69.7,10
+Emigration,Naive-seasonal-7d,2026-02,81.5,2.7,70.4,9
+Emigration,Naive-seasonal-7d,2026-03,66.0,7.9,101.3,9
 Emigration,RandomForest [Naveen],2025-05,75.8,,104.6,1
-Emigration,RandomForest [Naveen],2025-06,82.9,2.9,69.2,3
-Emigration,RandomForest [Naveen],2025-07,82.0,,61.2,1
-Emigration,RandomForest [Naveen],2025-08,82.0,2.3,69.7,3
-Emigration,RandomForest [Naveen],2025-09,83.0,2.6,72.1,3
-Emigration,RandomForest [Naveen],2025-10,75.4,7.6,83.9,3
-Emigration,RandomForest [Naveen],2025-11,85.1,2.0,58.4,3
-Emigration,RandomForest [Naveen],2025-12,79.5,2.1,72.6,3
-Emigration,RandomForest [Naveen],2026-01,79.9,6.5,77.2,3
-Emigration,RandomForest [Naveen],2026-02,83.3,2.2,64.4,3
-Emigration,RandomForest [Naveen],2026-03,69.3,10.5,89.0,3
+Emigration,RandomForest [Naveen],2025-06,78.6,4.6,79.7,10
+Emigration,RandomForest [Naveen],2025-07,79.6,3.5,69.3,6
+Emigration,RandomForest [Naveen],2025-08,80.9,3.9,69.6,9
+Emigration,RandomForest [Naveen],2025-09,82.0,3.3,71.9,10
+Emigration,RandomForest [Naveen],2025-10,71.7,14.2,92.3,10
+Emigration,RandomForest [Naveen],2025-11,83.2,3.2,67.4,10
+Emigration,RandomForest [Naveen],2025-12,80.1,2.2,69.0,11
+Emigration,RandomForest [Naveen],2026-01,82.6,4.5,73.4,10
+Emigration,RandomForest [Naveen],2026-02,83.0,1.8,59.6,9
+Emigration,RandomForest [Naveen],2026-03,71.7,6.7,72.5,9
 Emigration,XGBoost,2025-05,73.0,,112.9,1
-Emigration,XGBoost,2025-06,80.4,0.9,71.3,3
-Emigration,XGBoost,2025-07,76.0,,72.6,1
-Emigration,XGBoost,2025-08,83.1,0.2,67.5,3
-Emigration,XGBoost,2025-09,83.1,0.1,74.6,3
-Emigration,XGBoost,2025-10,72.5,11.1,77.9,3
-Emigration,XGBoost,2025-11,83.7,1.7,64.2,3
-Emigration,XGBoost,2025-12,78.6,3.3,71.5,3
-Emigration,XGBoost,2026-01,81.3,4.0,67.8,3
-Emigration,XGBoost,2026-02,83.8,4.6,63.6,3
-Emigration,XGBoost,2026-03,72.3,8.1,66.8,3
+Emigration,XGBoost,2025-06,78.0,2.6,80.7,10
+Emigration,XGBoost,2025-07,79.9,2.6,65.9,6
+Emigration,XGBoost,2025-08,80.5,4.4,70.0,9
+Emigration,XGBoost,2025-09,80.6,3.9,74.0,10
+Emigration,XGBoost,2025-10,74.5,12.2,87.5,10
+Emigration,XGBoost,2025-11,82.9,2.6,65.1,10
+Emigration,XGBoost,2025-12,79.4,1.6,69.0,11
+Emigration,XGBoost,2026-01,82.4,4.8,71.9,10
+Emigration,XGBoost,2026-02,82.2,3.7,60.4,9
+Emigration,XGBoost,2026-03,70.7,7.5,69.3,9
 Entry,Bagging(trees),2025-05,92.2,,174.1,1
-Entry,Bagging(trees),2025-06,85.8,12.9,260.8,3
-Entry,Bagging(trees),2025-07,93.5,1.1,134.3,3
-Entry,Bagging(trees),2025-08,72.7,16.6,570.3,3
-Entry,Bagging(trees),2025-09,91.4,4.0,186.2,3
-Entry,Bagging(trees),2025-10,86.3,5.8,272.2,3
-Entry,Bagging(trees),2025-11,92.5,0.8,160.4,3
-Entry,Bagging(trees),2025-12,90.3,3.2,185.7,3
-Entry,Bagging(trees),2026-01,86.1,2.1,334.1,3
+Entry,Bagging(trees),2025-06,89.6,7.2,202.9,10
+Entry,Bagging(trees),2025-07,87.9,8.9,222.8,10
+Entry,Bagging(trees),2025-08,82.2,10.0,401.0,10
+Entry,Bagging(trees),2025-09,89.9,3.5,215.8,10
+Entry,Bagging(trees),2025-10,85.7,5.1,304.8,11
+Entry,Bagging(trees),2025-11,89.4,5.3,234.4,10
+Entry,Bagging(trees),2025-12,88.8,4.1,236.9,10
+Entry,Bagging(trees),2026-01,89.1,3.3,242.5,9
 Entry,ExtraTrees,2025-05,91.4,,182.1,1
-Entry,ExtraTrees,2025-06,85.3,13.3,266.6,3
-Entry,ExtraTrees,2025-07,93.4,0.5,141.5,3
-Entry,ExtraTrees,2025-08,71.0,23.3,572.8,3
-Entry,ExtraTrees,2025-09,90.9,5.1,191.4,3
-Entry,ExtraTrees,2025-10,84.6,7.7,305.8,3
-Entry,ExtraTrees,2025-11,92.4,0.8,160.2,3
-Entry,ExtraTrees,2025-12,89.3,3.7,202.4,3
-Entry,ExtraTrees,2026-01,84.3,3.6,346.1,3
+Entry,ExtraTrees,2025-06,88.8,7.7,214.0,10
+Entry,ExtraTrees,2025-07,86.8,10.5,247.8,10
+Entry,ExtraTrees,2025-08,80.1,13.6,438.8,10
+Entry,ExtraTrees,2025-09,89.7,3.9,223.8,10
+Entry,ExtraTrees,2025-10,85.2,4.1,311.8,11
+Entry,ExtraTrees,2025-11,89.2,5.1,243.4,10
+Entry,ExtraTrees,2025-12,88.0,5.3,254.1,10
+Entry,ExtraTrees,2026-01,88.0,4.1,255.5,9
 Entry,HistGradientBoosting,2025-05,90.7,,199.7,1
-Entry,HistGradientBoosting,2025-06,85.3,12.0,267.1,3
-Entry,HistGradientBoosting,2025-07,93.8,0.7,138.1,3
-Entry,HistGradientBoosting,2025-08,66.2,31.3,624.0,3
-Entry,HistGradientBoosting,2025-09,91.5,2.8,177.8,3
-Entry,HistGradientBoosting,2025-10,87.9,4.2,226.6,3
-Entry,HistGradientBoosting,2025-11,92.5,1.5,157.5,3
-Entry,HistGradientBoosting,2025-12,91.5,1.8,178.7,3
-Entry,HistGradientBoosting,2026-01,84.7,2.9,330.9,3
+Entry,HistGradientBoosting,2025-06,90.2,7.2,190.8,10
+Entry,HistGradientBoosting,2025-07,89.1,6.9,198.4,10
+Entry,HistGradientBoosting,2025-08,82.1,13.1,365.5,10
+Entry,HistGradientBoosting,2025-09,90.2,3.7,207.3,10
+Entry,HistGradientBoosting,2025-10,87.0,5.3,277.9,11
+Entry,HistGradientBoosting,2025-11,88.5,5.3,251.9,10
+Entry,HistGradientBoosting,2025-12,88.6,4.0,238.7,10
+Entry,HistGradientBoosting,2026-01,88.4,4.2,255.3,9
 Entry,LightGBM,2025-05,91.1,,188.3,1
-Entry,LightGBM,2025-06,85.6,12.6,264.7,3
-Entry,LightGBM,2025-07,93.9,0.6,140.1,3
-Entry,LightGBM,2025-08,67.2,30.1,603.7,3
-Entry,LightGBM,2025-09,91.0,3.4,181.9,3
-Entry,LightGBM,2025-10,87.6,4.3,221.1,3
-Entry,LightGBM,2025-11,92.8,1.3,149.4,3
-Entry,LightGBM,2025-12,91.8,1.9,167.4,3
-Entry,LightGBM,2026-01,84.1,3.1,336.6,3
+Entry,LightGBM,2025-06,90.2,7.4,191.8,10
+Entry,LightGBM,2025-07,88.7,7.5,205.4,10
+Entry,LightGBM,2025-08,81.9,13.7,369.7,10
+Entry,LightGBM,2025-09,89.6,4.3,216.2,10
+Entry,LightGBM,2025-10,86.7,5.5,282.1,11
+Entry,LightGBM,2025-11,88.6,5.0,250.3,10
+Entry,LightGBM,2025-12,88.7,3.8,235.3,10
+Entry,LightGBM,2026-01,88.2,4.2,255.8,9
 Entry,Naive-seasonal-7d,2025-05,92.5,,172.6,1
-Entry,Naive-seasonal-7d,2025-06,84.4,12.5,279.4,3
-Entry,Naive-seasonal-7d,2025-07,92.8,1.0,145.0,3
-Entry,Naive-seasonal-7d,2025-08,76.8,12.3,477.6,3
-Entry,Naive-seasonal-7d,2025-09,90.8,5.2,190.2,3
-Entry,Naive-seasonal-7d,2025-10,80.3,8.9,365.3,3
-Entry,Naive-seasonal-7d,2025-11,92.0,1.2,167.6,3
-Entry,Naive-seasonal-7d,2025-12,84.4,9.4,325.3,3
-Entry,Naive-seasonal-7d,2026-01,88.3,4.9,296.1,3
+Entry,Naive-seasonal-7d,2025-06,88.6,8.3,227.2,10
+Entry,Naive-seasonal-7d,2025-07,87.9,12.0,221.3,10
+Entry,Naive-seasonal-7d,2025-08,79.7,15.2,432.4,10
+Entry,Naive-seasonal-7d,2025-09,88.7,5.1,245.5,10
+Entry,Naive-seasonal-7d,2025-10,81.4,6.7,396.1,11
+Entry,Naive-seasonal-7d,2025-11,88.2,6.2,272.7,10
+Entry,Naive-seasonal-7d,2025-12,87.2,3.6,276.9,10
+Entry,Naive-seasonal-7d,2026-01,88.7,4.4,259.7,9
 Entry,RandomForest [Naveen],2025-05,92.3,,170.4,1
-Entry,RandomForest [Naveen],2025-06,85.9,12.8,258.5,3
-Entry,RandomForest [Naveen],2025-07,93.4,1.1,137.8,3
-Entry,RandomForest [Naveen],2025-08,72.8,16.3,566.2,3
-Entry,RandomForest [Naveen],2025-09,91.3,4.2,187.8,3
-Entry,RandomForest [Naveen],2025-10,86.5,5.7,266.5,3
-Entry,RandomForest [Naveen],2025-11,92.6,1.0,159.3,3
-Entry,RandomForest [Naveen],2025-12,90.5,3.0,182.8,3
-Entry,RandomForest [Naveen],2026-01,86.2,2.2,332.3,3
+Entry,RandomForest [Naveen],2025-06,89.6,7.2,201.9,10
+Entry,RandomForest [Naveen],2025-07,87.9,9.0,225.9,10
+Entry,RandomForest [Naveen],2025-08,82.1,10.2,400.8,10
+Entry,RandomForest [Naveen],2025-09,90.0,3.4,214.6,10
+Entry,RandomForest [Naveen],2025-10,85.8,5.1,300.6,11
+Entry,RandomForest [Naveen],2025-11,89.5,5.3,233.8,10
+Entry,RandomForest [Naveen],2025-12,88.9,4.0,233.3,10
+Entry,RandomForest [Naveen],2026-01,89.1,3.3,241.9,9
 Entry,XGBoost,2025-05,90.8,,189.2,1
-Entry,XGBoost,2025-06,84.7,12.5,276.8,3
-Entry,XGBoost,2025-07,93.9,1.0,138.3,3
-Entry,XGBoost,2025-08,67.1,28.3,649.4,3
-Entry,XGBoost,2025-09,91.0,4.0,183.7,3
-Entry,XGBoost,2025-10,87.2,4.2,233.5,3
-Entry,XGBoost,2025-11,93.0,1.6,147.9,3
-Entry,XGBoost,2025-12,91.1,2.7,173.3,3
-Entry,XGBoost,2026-01,84.6,2.7,336.4,3
+Entry,XGBoost,2025-06,89.1,7.7,200.9,10
+Entry,XGBoost,2025-07,85.0,13.6,260.9,10
+Entry,XGBoost,2025-08,81.1,14.2,417.3,10
+Entry,XGBoost,2025-09,89.3,4.4,227.1,10
+Entry,XGBoost,2025-10,85.2,6.1,307.2,11
+Entry,XGBoost,2025-11,89.0,5.0,239.3,10
+Entry,XGBoost,2025-12,89.0,3.4,218.8,10
+Entry,XGBoost,2026-01,89.2,3.6,235.3,9
 Immigration,Bagging(trees),2025-05,68.0,,112.0,1
-Immigration,Bagging(trees),2025-06,67.4,8.8,120.2,3
-Immigration,Bagging(trees),2025-07,65.4,2.5,116.4,3
-Immigration,Bagging(trees),2025-08,63.1,14.5,91.9,3
-Immigration,Bagging(trees),2025-09,67.9,6.1,114.8,3
-Immigration,Bagging(trees),2025-10,59.9,12.3,155.6,3
-Immigration,Bagging(trees),2025-11,73.7,6.5,109.5,3
-Immigration,Bagging(trees),2025-12,71.8,4.8,126.9,3
-Immigration,Bagging(trees),2026-01,68.6,6.4,125.2,3
-Immigration,Bagging(trees),2026-02,70.2,6.2,108.8,3
-Immigration,Bagging(trees),2026-03,57.4,4.2,136.4,2
+Immigration,Bagging(trees),2025-06,64.4,5.8,117.6,10
+Immigration,Bagging(trees),2025-07,70.9,3.8,101.4,10
+Immigration,Bagging(trees),2025-08,65.0,6.6,91.5,10
+Immigration,Bagging(trees),2025-09,71.0,3.8,99.7,10
+Immigration,Bagging(trees),2025-10,63.9,8.8,147.9,11
+Immigration,Bagging(trees),2025-11,74.0,4.0,103.0,10
+Immigration,Bagging(trees),2025-12,69.2,6.4,131.0,10
+Immigration,Bagging(trees),2026-01,70.3,5.9,117.0,10
+Immigration,Bagging(trees),2026-02,73.1,3.6,91.2,10
+Immigration,Bagging(trees),2026-03,61.8,6.2,112.0,8
 Immigration,ExtraTrees,2025-05,64.7,,122.6,1
-Immigration,ExtraTrees,2025-06,65.4,10.4,135.9,3
-Immigration,ExtraTrees,2025-07,62.5,4.6,121.8,3
-Immigration,ExtraTrees,2025-08,60.7,13.5,98.6,3
-Immigration,ExtraTrees,2025-09,65.3,6.0,129.2,3
-Immigration,ExtraTrees,2025-10,61.6,13.7,169.5,3
-Immigration,ExtraTrees,2025-11,73.8,6.4,125.9,3
-Immigration,ExtraTrees,2025-12,70.6,3.3,142.5,3
-Immigration,ExtraTrees,2026-01,68.4,7.2,136.1,3
-Immigration,ExtraTrees,2026-02,68.5,5.1,127.7,3
-Immigration,ExtraTrees,2026-03,58.6,2.5,129.9,2
+Immigration,ExtraTrees,2025-06,63.7,5.5,128.2,10
+Immigration,ExtraTrees,2025-07,69.0,5.2,110.5,10
+Immigration,ExtraTrees,2025-08,62.7,7.1,100.2,10
+Immigration,ExtraTrees,2025-09,68.2,4.2,112.9,10
+Immigration,ExtraTrees,2025-10,63.5,7.8,157.6,11
+Immigration,ExtraTrees,2025-11,71.8,4.4,116.3,10
+Immigration,ExtraTrees,2025-12,67.8,3.4,135.8,10
+Immigration,ExtraTrees,2026-01,67.5,6.5,130.2,10
+Immigration,ExtraTrees,2026-02,70.6,3.4,103.3,10
+Immigration,ExtraTrees,2026-03,61.4,7.1,118.6,8
 Immigration,HistGradientBoosting,2025-05,66.8,,113.9,1
-Immigration,HistGradientBoosting,2025-06,71.3,6.5,101.6,3
-Immigration,HistGradientBoosting,2025-07,67.1,1.8,96.7,3
-Immigration,HistGradientBoosting,2025-08,62.7,15.9,82.1,3
-Immigration,HistGradientBoosting,2025-09,70.0,7.5,111.2,3
-Immigration,HistGradientBoosting,2025-10,55.0,12.0,180.7,3
-Immigration,HistGradientBoosting,2025-11,72.1,0.5,104.3,3
-Immigration,HistGradientBoosting,2025-12,71.5,4.1,110.7,3
-Immigration,HistGradientBoosting,2026-01,65.4,2.7,119.3,3
-Immigration,HistGradientBoosting,2026-02,68.7,6.9,98.2,3
-Immigration,HistGradientBoosting,2026-03,54.6,3.7,138.1,2
+Immigration,HistGradientBoosting,2025-06,66.8,6.0,103.4,10
+Immigration,HistGradientBoosting,2025-07,71.2,4.1,89.6,10
+Immigration,HistGradientBoosting,2025-08,66.4,7.3,81.7,10
+Immigration,HistGradientBoosting,2025-09,71.5,5.2,93.3,10
+Immigration,HistGradientBoosting,2025-10,62.0,13.6,139.5,11
+Immigration,HistGradientBoosting,2025-11,74.6,4.6,101.5,10
+Immigration,HistGradientBoosting,2025-12,73.0,2.9,106.7,10
+Immigration,HistGradientBoosting,2026-01,67.4,6.9,123.5,10
+Immigration,HistGradientBoosting,2026-02,71.3,5.3,87.4,10
+Immigration,HistGradientBoosting,2026-03,59.6,4.4,114.4,8
 Immigration,LightGBM,2025-05,67.6,,113.9,1
-Immigration,LightGBM,2025-06,69.2,8.7,103.2,3
-Immigration,LightGBM,2025-07,68.2,0.8,98.4,3
-Immigration,LightGBM,2025-08,61.9,15.1,84.2,3
-Immigration,LightGBM,2025-09,70.6,7.9,109.9,3
-Immigration,LightGBM,2025-10,54.6,12.6,180.2,3
-Immigration,LightGBM,2025-11,72.3,0.8,102.7,3
-Immigration,LightGBM,2025-12,72.3,3.7,111.3,3
-Immigration,LightGBM,2026-01,66.7,3.2,118.8,3
-Immigration,LightGBM,2026-02,70.1,6.6,97.4,3
-Immigration,LightGBM,2026-03,55.2,3.0,139.1,2
+Immigration,LightGBM,2025-06,66.3,6.2,104.2,10
+Immigration,LightGBM,2025-07,70.7,3.8,92.0,10
+Immigration,LightGBM,2025-08,65.1,6.8,83.6,10
+Immigration,LightGBM,2025-09,71.4,4.5,91.8,10
+Immigration,LightGBM,2025-10,62.5,13.6,139.9,11
+Immigration,LightGBM,2025-11,74.6,4.6,99.7,10
+Immigration,LightGBM,2025-12,73.1,2.7,106.4,10
+Immigration,LightGBM,2026-01,67.7,7.2,123.4,10
+Immigration,LightGBM,2026-02,72.1,4.9,85.1,10
+Immigration,LightGBM,2026-03,60.0,4.5,112.8,8
 Immigration,Naive-seasonal-7d,2025-05,64.7,,125.6,1
-Immigration,Naive-seasonal-7d,2025-06,65.8,8.9,139.0,3
-Immigration,Naive-seasonal-7d,2025-07,64.0,5.1,129.7,3
-Immigration,Naive-seasonal-7d,2025-08,61.7,16.3,94.2,3
-Immigration,Naive-seasonal-7d,2025-09,63.1,6.6,137.0,3
-Immigration,Naive-seasonal-7d,2025-10,44.8,27.5,293.9,3
-Immigration,Naive-seasonal-7d,2025-11,73.6,6.1,107.9,3
-Immigration,Naive-seasonal-7d,2025-12,64.6,3.8,164.5,3
-Immigration,Naive-seasonal-7d,2026-01,67.8,7.6,133.7,3
-Immigration,Naive-seasonal-7d,2026-02,67.6,6.0,131.0,3
-Immigration,Naive-seasonal-7d,2026-03,53.5,2.8,160.9,2
+Immigration,Naive-seasonal-7d,2025-06,64.5,5.9,127.0,10
+Immigration,Naive-seasonal-7d,2025-07,68.4,5.5,121.9,10
+Immigration,Naive-seasonal-7d,2025-08,60.7,6.4,109.3,10
+Immigration,Naive-seasonal-7d,2025-09,66.6,4.5,118.5,10
+Immigration,Naive-seasonal-7d,2025-10,50.8,18.0,237.8,11
+Immigration,Naive-seasonal-7d,2025-11,70.2,4.7,123.7,10
+Immigration,Naive-seasonal-7d,2025-12,65.5,4.5,144.5,10
+Immigration,Naive-seasonal-7d,2026-01,66.2,5.7,147.3,10
+Immigration,Naive-seasonal-7d,2026-02,69.1,4.1,119.4,10
+Immigration,Naive-seasonal-7d,2026-03,54.6,10.2,164.5,8
 Immigration,RandomForest [Naveen],2025-05,68.1,,110.5,1
-Immigration,RandomForest [Naveen],2025-06,67.4,8.7,121.4,3
-Immigration,RandomForest [Naveen],2025-07,66.1,3.3,114.7,3
-Immigration,RandomForest [Naveen],2025-08,63.6,15.0,91.8,3
-Immigration,RandomForest [Naveen],2025-09,67.4,5.8,116.6,3
-Immigration,RandomForest [Naveen],2025-10,59.6,13.3,157.1,3
-Immigration,RandomForest [Naveen],2025-11,73.3,6.0,109.8,3
-Immigration,RandomForest [Naveen],2025-12,71.8,5.3,128.0,3
-Immigration,RandomForest [Naveen],2026-01,68.7,7.4,125.9,3
-Immigration,RandomForest [Naveen],2026-02,70.2,6.1,107.4,3
-Immigration,RandomForest [Naveen],2026-03,57.8,3.8,134.8,2
+Immigration,RandomForest [Naveen],2025-06,64.4,5.7,117.4,10
+Immigration,RandomForest [Naveen],2025-07,71.0,3.8,101.1,10
+Immigration,RandomForest [Naveen],2025-08,65.1,6.2,91.5,10
+Immigration,RandomForest [Naveen],2025-09,70.9,3.6,99.1,10
+Immigration,RandomForest [Naveen],2025-10,63.9,8.8,148.3,11
+Immigration,RandomForest [Naveen],2025-11,74.1,4.0,102.9,10
+Immigration,RandomForest [Naveen],2025-12,70.0,5.9,127.8,10
+Immigration,RandomForest [Naveen],2026-01,70.3,5.8,116.9,10
+Immigration,RandomForest [Naveen],2026-02,73.0,3.4,90.4,10
+Immigration,RandomForest [Naveen],2026-03,61.9,6.1,111.8,8
 Immigration,XGBoost,2025-05,64.8,,117.3,1
-Immigration,XGBoost,2025-06,69.5,8.9,118.6,3
-Immigration,XGBoost,2025-07,65.0,3.3,116.2,3
-Immigration,XGBoost,2025-08,63.1,15.0,102.2,3
-Immigration,XGBoost,2025-09,66.8,5.4,121.1,3
-Immigration,XGBoost,2025-10,62.0,13.1,160.1,3
-Immigration,XGBoost,2025-11,74.0,4.7,103.4,3
-Immigration,XGBoost,2025-12,73.5,2.1,120.7,3
-Immigration,XGBoost,2026-01,66.6,3.6,122.3,3
-Immigration,XGBoost,2026-02,70.7,7.5,96.4,3
-Immigration,XGBoost,2026-03,56.9,2.8,139.1,2
+Immigration,XGBoost,2025-06,65.4,6.4,114.5,10
+Immigration,XGBoost,2025-07,70.9,4.0,100.4,10
+Immigration,XGBoost,2025-08,63.6,8.4,99.0,10
+Immigration,XGBoost,2025-09,71.2,2.9,97.7,10
+Immigration,XGBoost,2025-10,64.1,10.7,140.4,11
+Immigration,XGBoost,2025-11,74.8,2.8,100.9,10
+Immigration,XGBoost,2025-12,70.4,3.9,120.6,10
+Immigration,XGBoost,2026-01,68.8,6.6,120.4,10
+Immigration,XGBoost,2026-02,73.2,4.7,84.0,10
+Immigration,XGBoost,2026-03,60.5,4.7,110.7,8
 PESC,Bagging(trees),2025-05,85.4,,224.2,1
-PESC,Bagging(trees),2025-06,93.2,0.7,105.5,3
-PESC,Bagging(trees),2025-07,92.4,1.1,123.3,3
-PESC,Bagging(trees),2025-08,88.5,4.9,181.6,3
-PESC,Bagging(trees),2025-09,91.5,0.5,160.5,3
-PESC,Bagging(trees),2025-10,85.2,9.4,285.2,3
-PESC,Bagging(trees),2025-11,93.8,0.8,141.8,3
-PESC,Bagging(trees),2025-12,88.8,3.3,239.7,3
-PESC,Bagging(trees),2026-01,89.6,3.5,241.0,3
-PESC,Bagging(trees),2026-02,93.2,1.6,141.1,3
-PESC,Bagging(trees),2026-03,91.9,0.7,158.9,2
+PESC,Bagging(trees),2025-06,92.4,1.3,117.0,10
+PESC,Bagging(trees),2025-07,92.4,2.1,119.4,10
+PESC,Bagging(trees),2025-08,91.5,1.9,132.2,10
+PESC,Bagging(trees),2025-09,90.4,4.6,175.4,10
+PESC,Bagging(trees),2025-10,88.0,4.3,248.6,11
+PESC,Bagging(trees),2025-11,93.3,1.8,155.8,10
+PESC,Bagging(trees),2025-12,90.3,4.2,209.1,10
+PESC,Bagging(trees),2026-01,90.8,2.1,209.6,10
+PESC,Bagging(trees),2026-02,94.1,1.6,133.9,10
+PESC,Bagging(trees),2026-03,91.3,2.1,183.4,8
 PESC,ExtraTrees,2025-05,84.1,,250.1,1
-PESC,ExtraTrees,2025-06,92.3,1.3,119.9,3
-PESC,ExtraTrees,2025-07,91.4,1.6,137.5,3
-PESC,ExtraTrees,2025-08,88.3,4.5,190.9,3
-PESC,ExtraTrees,2025-09,91.7,1.2,167.4,3
-PESC,ExtraTrees,2025-10,83.9,11.7,326.2,3
-PESC,ExtraTrees,2025-11,93.0,1.8,148.3,3
-PESC,ExtraTrees,2025-12,89.2,2.7,247.2,3
-PESC,ExtraTrees,2026-01,90.7,1.7,213.5,3
-PESC,ExtraTrees,2026-02,92.5,1.6,159.8,3
-PESC,ExtraTrees,2026-03,91.4,1.3,173.7,2
+PESC,ExtraTrees,2025-06,91.2,1.5,137.0,10
+PESC,ExtraTrees,2025-07,91.8,1.6,130.1,10
+PESC,ExtraTrees,2025-08,90.8,1.2,144.9,10
+PESC,ExtraTrees,2025-09,90.1,4.6,183.2,10
+PESC,ExtraTrees,2025-10,87.6,3.9,252.4,11
+PESC,ExtraTrees,2025-11,93.4,1.0,148.5,10
+PESC,ExtraTrees,2025-12,89.9,3.5,217.8,10
+PESC,ExtraTrees,2026-01,90.8,2.0,215.8,10
+PESC,ExtraTrees,2026-02,93.2,1.9,157.2,10
+PESC,ExtraTrees,2026-03,90.6,2.6,198.8,8
 PESC,HistGradientBoosting,2025-05,84.2,,242.2,1
-PESC,HistGradientBoosting,2025-06,92.5,0.2,109.3,3
-PESC,HistGradientBoosting,2025-07,93.0,0.8,108.5,3
-PESC,HistGradientBoosting,2025-08,89.7,3.7,168.7,3
-PESC,HistGradientBoosting,2025-09,91.5,1.1,158.8,3
-PESC,HistGradientBoosting,2025-10,85.8,8.6,264.5,3
-PESC,HistGradientBoosting,2025-11,93.4,0.6,156.7,3
-PESC,HistGradientBoosting,2025-12,90.8,3.0,219.3,3
-PESC,HistGradientBoosting,2026-01,89.9,2.2,222.7,3
-PESC,HistGradientBoosting,2026-02,93.0,0.7,149.2,3
-PESC,HistGradientBoosting,2026-03,90.1,1.6,193.6,2
+PESC,HistGradientBoosting,2025-06,92.9,0.7,108.5,10
+PESC,HistGradientBoosting,2025-07,92.6,1.3,115.6,10
+PESC,HistGradientBoosting,2025-08,92.5,1.2,115.2,10
+PESC,HistGradientBoosting,2025-09,90.2,4.5,178.2,10
+PESC,HistGradientBoosting,2025-10,88.3,3.4,251.2,11
+PESC,HistGradientBoosting,2025-11,93.1,2.3,166.6,10
+PESC,HistGradientBoosting,2025-12,90.0,4.4,208.3,10
+PESC,HistGradientBoosting,2026-01,89.7,3.7,233.7,10
+PESC,HistGradientBoosting,2026-02,93.4,0.7,146.1,10
+PESC,HistGradientBoosting,2026-03,91.3,1.9,171.7,8
 PESC,LightGBM,2025-05,84.0,,244.1,1
-PESC,LightGBM,2025-06,92.5,0.2,110.0,3
-PESC,LightGBM,2025-07,93.1,0.4,109.2,3
-PESC,LightGBM,2025-08,89.8,3.7,170.7,3
-PESC,LightGBM,2025-09,91.7,1.1,160.1,3
-PESC,LightGBM,2025-10,86.3,8.5,251.5,3
-PESC,LightGBM,2025-11,93.8,0.9,147.1,3
-PESC,LightGBM,2025-12,91.0,2.6,216.2,3
-PESC,LightGBM,2026-01,89.8,3.2,226.8,3
-PESC,LightGBM,2026-02,93.1,0.7,141.1,3
-PESC,LightGBM,2026-03,90.2,1.6,194.0,2
+PESC,LightGBM,2025-06,92.9,0.9,108.2,10
+PESC,LightGBM,2025-07,92.6,1.5,115.9,10
+PESC,LightGBM,2025-08,92.3,1.2,118.8,10
+PESC,LightGBM,2025-09,90.3,4.4,176.0,10
+PESC,LightGBM,2025-10,88.8,3.1,241.8,11
+PESC,LightGBM,2025-11,93.1,3.0,164.0,10
+PESC,LightGBM,2025-12,90.0,4.8,208.4,10
+PESC,LightGBM,2026-01,90.0,3.4,229.6,10
+PESC,LightGBM,2026-02,93.7,0.9,140.8,10
+PESC,LightGBM,2026-03,91.6,2.0,168.3,8
 PESC,Naive-seasonal-7d,2025-05,84.8,,245.4,1
-PESC,Naive-seasonal-7d,2025-06,91.2,0.6,140.7,3
-PESC,Naive-seasonal-7d,2025-07,91.6,1.5,134.6,3
-PESC,Naive-seasonal-7d,2025-08,88.5,2.9,189.6,3
-PESC,Naive-seasonal-7d,2025-09,84.5,8.7,318.3,3
-PESC,Naive-seasonal-7d,2025-10,77.0,13.6,478.0,3
-PESC,Naive-seasonal-7d,2025-11,92.2,3.8,174.9,3
-PESC,Naive-seasonal-7d,2025-12,81.9,7.0,411.5,3
-PESC,Naive-seasonal-7d,2026-01,90.5,3.7,253.5,3
-PESC,Naive-seasonal-7d,2026-02,92.8,1.7,148.9,3
-PESC,Naive-seasonal-7d,2026-03,90.2,1.1,221.1,2
+PESC,Naive-seasonal-7d,2025-06,90.1,1.3,157.3,10
+PESC,Naive-seasonal-7d,2025-07,91.3,1.5,137.1,10
+PESC,Naive-seasonal-7d,2025-08,90.9,1.8,143.5,10
+PESC,Naive-seasonal-7d,2025-09,86.9,7.0,246.3,10
+PESC,Naive-seasonal-7d,2025-10,80.9,8.1,414.3,11
+PESC,Naive-seasonal-7d,2025-11,90.8,3.7,212.4,10
+PESC,Naive-seasonal-7d,2025-12,85.4,6.1,335.2,10
+PESC,Naive-seasonal-7d,2026-01,88.2,3.5,279.3,10
+PESC,Naive-seasonal-7d,2026-02,92.6,1.8,169.8,10
+PESC,Naive-seasonal-7d,2026-03,87.6,3.8,255.9,8
 PESC,RandomForest [Naveen],2025-05,85.5,,223.6,1
-PESC,RandomForest [Naveen],2025-06,93.3,0.7,104.4,3
-PESC,RandomForest [Naveen],2025-07,92.3,1.2,123.5,3
-PESC,RandomForest [Naveen],2025-08,88.5,5.2,181.0,3
-PESC,RandomForest [Naveen],2025-09,91.6,0.6,157.6,3
-PESC,RandomForest [Naveen],2025-10,85.2,9.3,285.4,3
-PESC,RandomForest [Naveen],2025-11,93.9,0.5,141.6,3
-PESC,RandomForest [Naveen],2025-12,88.8,3.4,242.7,3
-PESC,RandomForest [Naveen],2026-01,89.7,3.5,237.0,3
-PESC,RandomForest [Naveen],2026-02,93.2,1.6,141.8,3
-PESC,RandomForest [Naveen],2026-03,91.9,0.8,161.6,2
+PESC,RandomForest [Naveen],2025-06,92.5,1.3,117.6,10
+PESC,RandomForest [Naveen],2025-07,92.4,2.0,119.0,10
+PESC,RandomForest [Naveen],2025-08,91.5,1.8,131.7,10
+PESC,RandomForest [Naveen],2025-09,90.5,4.5,173.5,10
+PESC,RandomForest [Naveen],2025-10,88.0,4.2,249.7,11
+PESC,RandomForest [Naveen],2025-11,93.3,1.8,155.8,10
+PESC,RandomForest [Naveen],2025-12,90.3,4.1,211.0,10
+PESC,RandomForest [Naveen],2026-01,90.8,2.1,210.0,10
+PESC,RandomForest [Naveen],2026-02,94.1,1.6,133.6,10
+PESC,RandomForest [Naveen],2026-03,91.4,2.1,179.5,8
 PESC,XGBoost,2025-05,84.0,,255.5,1
-PESC,XGBoost,2025-06,93.6,1.2,103.1,3
-PESC,XGBoost,2025-07,92.2,1.0,126.5,3
-PESC,XGBoost,2025-08,87.4,5.4,187.1,3
-PESC,XGBoost,2025-09,92.2,0.4,147.0,3
-PESC,XGBoost,2025-10,86.3,6.3,248.4,3
-PESC,XGBoost,2025-11,93.9,1.3,143.6,3
-PESC,XGBoost,2025-12,90.2,2.8,225.9,3
-PESC,XGBoost,2026-01,89.9,3.4,231.6,3
-PESC,XGBoost,2026-02,92.8,0.3,150.8,3
-PESC,XGBoost,2026-03,90.3,0.8,194.5,2
+PESC,XGBoost,2025-06,92.5,1.4,115.7,10
+PESC,XGBoost,2025-07,92.8,1.4,116.0,10
+PESC,XGBoost,2025-08,91.4,1.4,132.1,10
+PESC,XGBoost,2025-09,90.5,4.0,173.8,10
+PESC,XGBoost,2025-10,88.1,3.4,247.9,11
+PESC,XGBoost,2025-11,93.4,2.0,154.6,10
+PESC,XGBoost,2025-12,90.0,5.1,208.0,10
+PESC,XGBoost,2026-01,90.8,2.8,208.1,10
+PESC,XGBoost,2026-02,93.4,0.8,148.8,10
+PESC,XGBoost,2026-03,91.0,2.4,183.5,8
 Transfers,Bagging(trees),2025-05,85.1,,74.7,1
-Transfers,Bagging(trees),2025-06,78.4,16.5,106.2,3
-Transfers,Bagging(trees),2025-07,81.4,3.9,67.6,3
-Transfers,Bagging(trees),2025-08,78.7,7.3,76.7,3
-Transfers,Bagging(trees),2025-09,78.7,1.1,69.2,2
-Transfers,Bagging(trees),2025-10,59.0,16.3,151.6,3
-Transfers,Bagging(trees),2025-11,80.9,0.6,87.9,3
-Transfers,Bagging(trees),2025-12,71.6,13.9,110.2,3
-Transfers,Bagging(trees),2026-01,76.9,4.2,112.7,3
-Transfers,Bagging(trees),2026-02,84.9,1.7,60.3,3
-Transfers,Bagging(trees),2026-03,78.2,0.1,106.3,2
+Transfers,Bagging(trees),2025-06,79.8,7.7,95.0,10
+Transfers,Bagging(trees),2025-07,76.2,9.0,98.3,10
+Transfers,Bagging(trees),2025-08,78.8,6.8,86.6,10
+Transfers,Bagging(trees),2025-09,80.4,4.1,75.2,9
+Transfers,Bagging(trees),2025-10,71.0,10.6,103.7,9
+Transfers,Bagging(trees),2025-11,80.8,4.2,100.0,10
+Transfers,Bagging(trees),2025-12,74.2,9.1,111.8,10
+Transfers,Bagging(trees),2026-01,80.0,5.8,96.3,10
+Transfers,Bagging(trees),2026-02,81.0,3.2,74.1,10
+Transfers,Bagging(trees),2026-03,82.3,2.3,81.3,8
 Transfers,ExtraTrees,2025-05,81.8,,89.3,1
-Transfers,ExtraTrees,2025-06,75.6,18.5,115.8,3
-Transfers,ExtraTrees,2025-07,80.5,2.6,69.7,3
-Transfers,ExtraTrees,2025-08,77.6,8.4,83.9,3
-Transfers,ExtraTrees,2025-09,77.2,0.2,85.9,2
-Transfers,ExtraTrees,2025-10,55.7,12.6,147.1,3
-Transfers,ExtraTrees,2025-11,78.9,1.6,102.6,3
-Transfers,ExtraTrees,2025-12,70.9,9.6,107.8,3
-Transfers,ExtraTrees,2026-01,73.9,4.3,128.9,3
-Transfers,ExtraTrees,2026-02,83.1,1.4,66.7,3
-Transfers,ExtraTrees,2026-03,76.8,1.1,115.2,2
+Transfers,ExtraTrees,2025-06,77.4,8.3,104.7,10
+Transfers,ExtraTrees,2025-07,71.5,10.8,113.5,10
+Transfers,ExtraTrees,2025-08,76.3,8.8,95.2,10
+Transfers,ExtraTrees,2025-09,78.0,5.7,84.6,9
+Transfers,ExtraTrees,2025-10,69.1,11.4,104.0,9
+Transfers,ExtraTrees,2025-11,80.0,3.7,103.6,10
+Transfers,ExtraTrees,2025-12,74.1,7.1,114.5,10
+Transfers,ExtraTrees,2026-01,79.5,6.0,104.5,10
+Transfers,ExtraTrees,2026-02,80.0,2.7,80.0,10
+Transfers,ExtraTrees,2026-03,80.5,2.4,90.1,8
 Transfers,HistGradientBoosting,2025-05,84.4,,80.6,1
-Transfers,HistGradientBoosting,2025-06,78.4,13.0,107.1,3
-Transfers,HistGradientBoosting,2025-07,84.1,2.2,61.0,3
-Transfers,HistGradientBoosting,2025-08,78.4,5.7,74.5,3
-Transfers,HistGradientBoosting,2025-09,84.2,4.0,50.7,2
-Transfers,HistGradientBoosting,2025-10,56.0,15.6,141.3,3
-Transfers,HistGradientBoosting,2025-11,82.2,2.9,79.9,3
-Transfers,HistGradientBoosting,2025-12,73.0,7.3,103.7,3
-Transfers,HistGradientBoosting,2026-01,78.3,4.2,100.5,3
-Transfers,HistGradientBoosting,2026-02,82.9,1.9,61.7,3
-Transfers,HistGradientBoosting,2026-03,79.4,0.4,104.7,2
+Transfers,HistGradientBoosting,2025-06,81.0,6.5,89.3,10
+Transfers,HistGradientBoosting,2025-07,73.2,15.2,94.4,10
+Transfers,HistGradientBoosting,2025-08,78.3,8.1,79.2,10
+Transfers,HistGradientBoosting,2025-09,81.8,2.9,66.0,9
+Transfers,HistGradientBoosting,2025-10,71.0,13.9,96.2,9
+Transfers,HistGradientBoosting,2025-11,80.7,3.5,93.6,10
+Transfers,HistGradientBoosting,2025-12,75.4,10.4,101.2,10
+Transfers,HistGradientBoosting,2026-01,78.3,4.2,103.7,10
+Transfers,HistGradientBoosting,2026-02,80.8,2.7,70.5,10
+Transfers,HistGradientBoosting,2026-03,81.6,2.4,77.2,8
 Transfers,LightGBM,2025-05,84.7,,80.1,1
-Transfers,LightGBM,2025-06,78.1,13.6,106.7,3
-Transfers,LightGBM,2025-07,84.3,2.3,60.7,3
-Transfers,LightGBM,2025-08,78.5,6.8,73.9,3
-Transfers,LightGBM,2025-09,84.8,1.5,48.7,2
-Transfers,LightGBM,2025-10,55.7,15.0,143.1,3
-Transfers,LightGBM,2025-11,81.6,2.9,80.9,3
-Transfers,LightGBM,2025-12,74.1,6.3,102.4,3
-Transfers,LightGBM,2026-01,79.3,2.3,103.1,3
-Transfers,LightGBM,2026-02,83.2,0.7,62.5,3
-Transfers,LightGBM,2026-03,79.0,0.1,105.6,2
+Transfers,LightGBM,2025-06,80.7,6.7,89.4,10
+Transfers,LightGBM,2025-07,71.8,16.0,97.5,10
+Transfers,LightGBM,2025-08,78.1,7.1,80.2,10
+Transfers,LightGBM,2025-09,81.5,3.9,66.3,9
+Transfers,LightGBM,2025-10,71.2,13.2,94.0,9
+Transfers,LightGBM,2025-11,80.4,3.9,94.5,10
+Transfers,LightGBM,2025-12,75.6,9.8,100.6,10
+Transfers,LightGBM,2026-01,79.0,4.1,102.4,10
+Transfers,LightGBM,2026-02,81.2,2.4,69.5,10
+Transfers,LightGBM,2026-03,81.1,2.2,76.2,8
 Transfers,Naive-seasonal-7d,2025-05,79.9,,96.5,1
-Transfers,Naive-seasonal-7d,2025-06,73.6,17.3,124.9,3
-Transfers,Naive-seasonal-7d,2025-07,79.9,1.3,81.3,3
-Transfers,Naive-seasonal-7d,2025-08,76.3,9.2,86.9,3
-Transfers,Naive-seasonal-7d,2025-09,74.4,3.7,110.1,2
-Transfers,Naive-seasonal-7d,2025-10,55.1,8.1,158.0,3
-Transfers,Naive-seasonal-7d,2025-11,75.0,3.7,121.5,3
-Transfers,Naive-seasonal-7d,2025-12,69.8,13.9,133.5,3
-Transfers,Naive-seasonal-7d,2026-01,76.6,5.6,126.0,3
-Transfers,Naive-seasonal-7d,2026-02,80.4,2.3,89.8,3
-Transfers,Naive-seasonal-7d,2026-03,75.7,1.4,127.9,2
+Transfers,Naive-seasonal-7d,2025-06,76.6,8.2,110.8,10
+Transfers,Naive-seasonal-7d,2025-07,73.3,12.0,109.4,10
+Transfers,Naive-seasonal-7d,2025-08,74.0,9.6,101.7,10
+Transfers,Naive-seasonal-7d,2025-09,76.7,6.0,92.7,9
+Transfers,Naive-seasonal-7d,2025-10,57.2,19.0,175.9,9
+Transfers,Naive-seasonal-7d,2025-11,76.9,5.2,123.4,10
+Transfers,Naive-seasonal-7d,2025-12,69.4,10.5,136.8,10
+Transfers,Naive-seasonal-7d,2026-01,74.9,4.5,139.4,10
+Transfers,Naive-seasonal-7d,2026-02,77.9,3.4,96.0,10
+Transfers,Naive-seasonal-7d,2026-03,79.2,3.0,100.2,8
 Transfers,RandomForest [Naveen],2025-05,84.8,,76.3,1
-Transfers,RandomForest [Naveen],2025-06,78.4,16.5,105.9,3
-Transfers,RandomForest [Naveen],2025-07,81.4,3.6,66.2,3
-Transfers,RandomForest [Naveen],2025-08,78.4,7.8,77.1,3
-Transfers,RandomForest [Naveen],2025-09,78.7,1.1,67.7,2
-Transfers,RandomForest [Naveen],2025-10,58.6,16.5,152.0,3
-Transfers,RandomForest [Naveen],2025-11,80.8,0.4,90.3,3
-Transfers,RandomForest [Naveen],2025-12,71.6,13.4,109.3,3
-Transfers,RandomForest [Naveen],2026-01,77.2,4.1,112.3,3
-Transfers,RandomForest [Naveen],2026-02,85.6,2.1,58.2,3
-Transfers,RandomForest [Naveen],2026-03,78.2,0.3,105.8,2
+Transfers,RandomForest [Naveen],2025-06,79.9,7.7,94.6,10
+Transfers,RandomForest [Naveen],2025-07,76.2,8.9,98.5,10
+Transfers,RandomForest [Naveen],2025-08,78.8,6.7,85.8,10
+Transfers,RandomForest [Naveen],2025-09,80.4,3.9,74.7,9
+Transfers,RandomForest [Naveen],2025-10,71.0,10.8,103.2,9
+Transfers,RandomForest [Naveen],2025-11,80.7,3.8,101.1,10
+Transfers,RandomForest [Naveen],2025-12,74.3,8.9,111.4,10
+Transfers,RandomForest [Naveen],2026-01,80.4,5.9,96.1,10
+Transfers,RandomForest [Naveen],2026-02,81.1,3.2,73.4,10
+Transfers,RandomForest [Naveen],2026-03,82.6,2.3,80.1,8
 Transfers,XGBoost,2025-05,84.9,,75.0,1
-Transfers,XGBoost,2025-06,77.4,15.9,109.4,3
-Transfers,XGBoost,2025-07,82.1,1.6,64.1,3
-Transfers,XGBoost,2025-08,77.5,6.1,80.7,3
-Transfers,XGBoost,2025-09,80.2,6.4,61.4,2
-Transfers,XGBoost,2025-10,58.5,17.0,150.2,3
-Transfers,XGBoost,2025-11,80.2,1.9,92.2,3
-Transfers,XGBoost,2025-12,75.8,8.5,98.2,3
-Transfers,XGBoost,2026-01,78.3,3.9,104.7,3
-Transfers,XGBoost,2026-02,82.7,1.6,61.8,3
-Transfers,XGBoost,2026-03,79.0,0.4,102.1,2
+Transfers,XGBoost,2025-06,78.7,7.4,99.7,10
+Transfers,XGBoost,2025-07,71.9,15.9,108.1,10
+Transfers,XGBoost,2025-08,77.0,9.8,85.7,10
+Transfers,XGBoost,2025-09,80.5,4.2,70.0,9
+Transfers,XGBoost,2025-10,70.9,9.4,100.3,9
+Transfers,XGBoost,2025-11,80.2,4.1,101.4,10
+Transfers,XGBoost,2025-12,74.8,7.7,105.2,10
+Transfers,XGBoost,2026-01,80.3,5.3,95.6,10
+Transfers,XGBoost,2026-02,81.3,2.4,69.0,10
+Transfers,XGBoost,2026-03,82.3,2.0,74.8,8

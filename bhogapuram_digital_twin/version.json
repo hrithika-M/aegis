@@ -1,6 +1,6 @@
 {
   "simulator_version": "0.4.0",
-  "built_at_utc": "2026-07-16T02:23:10Z",
+  "built_at_utc": "2026-07-16T07:08:16Z",
   "inputs": {
     "VTZ_schedule_S26.xlsx": {
       "sha256_16": "f5253cd584335ca1",
@@ -87,6 +87,26 @@
     "analytics/pod_cod_flights.csv": {
       "sha256_16": "f2e6147bd19518aa",
       "rows": 56
+    },
+    "analytics/twin_daywise_accuracy.csv": {
+      "sha256_16": "de1d28eeb39ac6da",
+      "rows": 3960
+    },
+    "analytics/twin_weekwise_accuracy.csv": {
+      "sha256_16": "897352c80b76ec2a",
+      "rows": 576
+    },
+    "analytics/twin_weekwise_winners.csv": {
+      "sha256_16": "a7f6743e5b8b5e90",
+      "rows": 96
+    },
+    "analytics/twin_monthly_accuracy.csv": {
+      "sha256_16": "39c5122cedb12eee",
+      "rows": 144
+    },
+    "analytics/twin_monthly_winners.csv": {
+      "sha256_16": "4be944f998b18332",
+      "rows": 24
     }
   },
   "assumptions": {

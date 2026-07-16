@@ -59,7 +59,10 @@ def main():
                'analytics/confidence_intervals.csv', 'analytics/synthetic_validation.csv',
                'analytics/model_selection_twin.csv', 'analytics/scenarios.csv',
                'analytics/events.csv', 'master/Resource_Master.csv',
-               'analytics/pod_cod.csv', 'analytics/pod_cod_flights.csv']
+               'analytics/pod_cod.csv', 'analytics/pod_cod_flights.csv',
+               'analytics/twin_daywise_accuracy.csv', 'analytics/twin_weekwise_accuracy.csv',
+               'analytics/twin_weekwise_winners.csv', 'analytics/twin_monthly_accuracy.csv',
+               'analytics/twin_monthly_winners.csv']
 
     kpis = {}
     kp = os.path.join(ROOT, 'analytics', 'kpis.csv')
