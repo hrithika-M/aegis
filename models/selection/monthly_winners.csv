@@ -1,0 +1,65 @@
+touchpoint,year_month,winner,winner_accuracy,runner_up,runner_up_accuracy,gap
+CheckIn,2025-05,LightGBM,90.9,HistGradientBoosting,90.7,0.2
+CheckIn,2025-06,Bagging(trees),90.5,HistGradientBoosting,90.5,0.0
+CheckIn,2025-07,XGBoost,91.5,LightGBM,91.4,0.1
+CheckIn,2025-08,HistGradientBoosting,85.2,LightGBM,84.9,0.3
+CheckIn,2025-09,XGBoost,91.1,RandomForest [Naveen],91.1,0.0
+CheckIn,2025-10,Naive-seasonal-7d,86.9,RandomForest [Naveen],85.9,1.0
+CheckIn,2025-11,LightGBM,81.7,HistGradientBoosting,81.6,0.1
+CheckIn,2025-12,LightGBM,90.2,XGBoost,89.6,0.6
+CheckIn,2026-01,RandomForest [Naveen],87.9,Bagging(trees),87.8,0.1
+CheckIn,2026-02,LightGBM,90.8,HistGradientBoosting,90.7,0.1
+CheckIn,2026-03,LightGBM,90.2,HistGradientBoosting,90.1,0.1
+Emigration,2025-05,Naive-seasonal-7d,79.8,RandomForest [Naveen],75.8,4.0
+Emigration,2025-06,LightGBM,83.1,RandomForest [Naveen],82.9,0.2
+Emigration,2025-07,HistGradientBoosting,82.7,RandomForest [Naveen],82.0,0.7
+Emigration,2025-08,LightGBM,84.4,HistGradientBoosting,83.4,1.0
+Emigration,2025-09,LightGBM,84.7,HistGradientBoosting,84.5,0.2
+Emigration,2025-10,Bagging(trees),75.9,ExtraTrees,75.9,0.0
+Emigration,2025-11,RandomForest [Naveen],85.1,Bagging(trees),85.0,0.1
+Emigration,2025-12,Bagging(trees),79.5,RandomForest [Naveen],79.5,0.0
+Emigration,2026-01,Naive-seasonal-7d,82.0,XGBoost,81.3,0.7
+Emigration,2026-02,XGBoost,83.8,LightGBM,83.4,0.4
+Emigration,2026-03,LightGBM,72.4,XGBoost,72.3,0.1
+Entry,2025-05,Naive-seasonal-7d,92.5,RandomForest [Naveen],92.3,0.2
+Entry,2025-06,RandomForest [Naveen],85.9,Bagging(trees),85.8,0.1
+Entry,2025-07,LightGBM,93.9,XGBoost,93.9,0.0
+Entry,2025-08,Naive-seasonal-7d,76.8,RandomForest [Naveen],72.8,4.0
+Entry,2025-09,HistGradientBoosting,91.5,Bagging(trees),91.4,0.1
+Entry,2025-10,HistGradientBoosting,87.9,LightGBM,87.6,0.3
+Entry,2025-11,XGBoost,93.0,LightGBM,92.8,0.2
+Entry,2025-12,LightGBM,91.8,HistGradientBoosting,91.5,0.3
+Entry,2026-01,Naive-seasonal-7d,88.3,RandomForest [Naveen],86.2,2.1
+Immigration,2025-05,RandomForest [Naveen],68.1,Bagging(trees),68.0,0.1
+Immigration,2025-06,HistGradientBoosting,71.3,XGBoost,69.5,1.8
+Immigration,2025-07,LightGBM,68.2,HistGradientBoosting,67.1,1.1
+Immigration,2025-08,RandomForest [Naveen],63.6,XGBoost,63.1,0.5
+Immigration,2025-09,LightGBM,70.6,HistGradientBoosting,70.0,0.6
+Immigration,2025-10,XGBoost,62.0,ExtraTrees,61.6,0.4
+Immigration,2025-11,XGBoost,74.0,ExtraTrees,73.8,0.2
+Immigration,2025-12,XGBoost,73.5,LightGBM,72.3,1.2
+Immigration,2026-01,RandomForest [Naveen],68.7,Bagging(trees),68.6,0.1
+Immigration,2026-02,XGBoost,70.7,RandomForest [Naveen],70.2,0.5
+Immigration,2026-03,ExtraTrees,58.6,RandomForest [Naveen],57.8,0.8
+PESC,2025-05,RandomForest [Naveen],85.5,Bagging(trees),85.4,0.1
+PESC,2025-06,XGBoost,93.6,RandomForest [Naveen],93.3,0.3
+PESC,2025-07,LightGBM,93.1,HistGradientBoosting,93.0,0.1
+PESC,2025-08,LightGBM,89.8,HistGradientBoosting,89.7,0.1
+PESC,2025-09,XGBoost,92.2,LightGBM,91.7,0.5
+PESC,2025-10,LightGBM,86.3,XGBoost,86.3,0.0
+PESC,2025-11,XGBoost,93.9,RandomForest [Naveen],93.9,0.0
+PESC,2025-12,LightGBM,91.0,HistGradientBoosting,90.8,0.2
+PESC,2026-01,ExtraTrees,90.7,Naive-seasonal-7d,90.5,0.2
+PESC,2026-02,Bagging(trees),93.2,RandomForest [Naveen],93.2,0.0
+PESC,2026-03,Bagging(trees),91.9,RandomForest [Naveen],91.9,0.0
+Transfers,2025-05,Bagging(trees),85.1,XGBoost,84.9,0.2
+Transfers,2025-06,Bagging(trees),78.4,HistGradientBoosting,78.4,0.0
+Transfers,2025-07,LightGBM,84.3,HistGradientBoosting,84.1,0.2
+Transfers,2025-08,Bagging(trees),78.7,LightGBM,78.5,0.2
+Transfers,2025-09,LightGBM,84.8,HistGradientBoosting,84.2,0.6
+Transfers,2025-10,Bagging(trees),59.0,RandomForest [Naveen],58.6,0.4
+Transfers,2025-11,HistGradientBoosting,82.2,LightGBM,81.6,0.6
+Transfers,2025-12,XGBoost,75.8,LightGBM,74.1,1.7
+Transfers,2026-01,LightGBM,79.3,XGBoost,78.3,1.0
+Transfers,2026-02,RandomForest [Naveen],85.6,Bagging(trees),84.9,0.7
+Transfers,2026-03,HistGradientBoosting,79.4,XGBoost,79.0,0.4
