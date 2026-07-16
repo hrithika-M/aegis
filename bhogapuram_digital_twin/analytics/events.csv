@@ -1,5 +1,8 @@
-event,delay_min,window,peak_occupancy,delta_vs_baseline,extra_dwell_pax_min
-none (baseline),0,00-24h,663,0,0
-"morning fog (45m, 06-09h)",45,06-09h,744,81,25376
-"evening storm (60m, 18-21h)",60,18-21h,879,216,50721
-"ground stop (90m, all day)",90,00-24h,1116,453,346693
+event,delay_min,window,side,peak_occupancy,delta_vs_baseline,extra_dwell_pax_min,arriving_pax_delayed,peak_belt_demand
+none (baseline),0,00-24h,both,1136,0,0,0,116
+minor delay 15 min (all day),15,00-24h,both,1223,87,58443,3882,116
+"morning fog (45m, 06-09h)",45,06-09h,both,1136,0,25376,713,116
+"evening storm (60m, 18-21h)",60,18-21h,both,1193,57,50721,1186,116
+"runway edge-lighting damaged (40m, 19-24h)",40,19-24h,both,1366,231,62722,1284,116
+"wildlife strike on taxiway (30m, 14-16h, arrivals)",30,14-16h,arr,1136,0,0,632,116
+"ground stop (90m, all day)",90,00-24h,both,1481,346,338280,3882,116

@@ -61,7 +61,7 @@
     // bookloads prediction
     const lf = Math.round(f.total/f.cap*100);
     document.getElementById('f-pred').innerHTML = [
-      ['Total Boarded PAX',fmt(f.total),''],
+      ['Expected Boarding PAX',fmt(f.total),''],
       ['Local PAX',fmt(f.local),'var(--teal)'],
       ['Transfer PAX',fmt(f.transfer),'var(--violet)'],
       ['Load Factor',lf+'%','var(--blue2)'],

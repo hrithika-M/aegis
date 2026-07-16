@@ -40,7 +40,7 @@
   //       'chained' = flight-aware, depends on upstream flight predictions (Bookloads→Turn-up→Zone→Proc)
   const MODELS = [
     // flight-aware chained chain (AC-01)
-    {name:'Bookloads',        type:'chained', target:'Boarded PAX per flight',        algos:'RandomForest · LGBM', winner:'LGBM',         acc:94.2, status:'Production'},
+    {name:'Bookloads',        type:'chained', target:'Expected boarding PAX per flight', algos:'RandomForest · LGBM', winner:'LGBM',         acc:94.2, status:'Production'},
     {name:'Turn-up Profile',  type:'chained', target:'Local PAX arrival curve',       algos:'RandomForest · LGBM', winner:'RandomForest', acc:90.8, status:'Production'},
     {name:'Zone-ratio',       type:'chained', target:'Load split across zones/lanes', algos:'RandomForest · LGBM', winner:'LGBM',         acc:88.5, status:'Production'},
     {name:'Processing-time',  type:'chained', target:'Service time per PAX (min)',     algos:'RandomForest · LGBM', winner:'LGBM',         acc:91.6, status:'Production'},

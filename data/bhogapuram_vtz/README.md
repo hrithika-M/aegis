@@ -87,6 +87,17 @@ Granularity ceiling: **monthly is the finest real count obtainable per airport.*
 Daily and hourly are *modelled* (real totals × real shape); only national daily is
 real at the day level.
 
+## Data-source expectations (Bhogapuram meeting, Jul-2026)
+- **CUPPS, CUSS and E-Boarding feeds will NOT be available** ("highly impossible") —
+  the platform must not plan around them. Passenger-level actuals will come from
+  whatever sensor/ops feeds exist post-opening plus the shared drops below.
+- **SITA will provide an AODB-like feed** — the expected live flight-data source.
+  The twin's `load_touchpoint_hourly()` swap-point and Aegis connectors are the
+  landing sites for it once the spec arrives.
+- **Data drops arrive ≥20 days in advance** (schedules etc.). Every drop is ingested
+  into the pattern store (`../../bhogapuram_digital_twin/patterns/`) — fingerprinted,
+  patterns extracted, accumulated — so analysis never restarts from zero.
+
 ## Note
 Different airport from the core POD work (which is GMR **Hyderabad / HYD**). Kept
 in its own folder. Seat capacities in the schedule are web-verified per aircraft

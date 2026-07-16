@@ -58,7 +58,8 @@ def main():
                'analytics/kpis.csv', 'analytics/peak_hours.csv',
                'analytics/confidence_intervals.csv', 'analytics/synthetic_validation.csv',
                'analytics/model_selection_twin.csv', 'analytics/scenarios.csv',
-               'analytics/events.csv']
+               'analytics/events.csv', 'master/Resource_Master.csv',
+               'analytics/pod_cod.csv', 'analytics/pod_cod_flights.csv']
 
     kpis = {}
     kp = os.path.join(ROOT, 'analytics', 'kpis.csv')
@@ -121,7 +122,13 @@ def main():
             {'file': 'analytics/scenarios.csv', 'source': 'passenger_5min + scenario levers',
              'method': 'deterministic bucket queue, busiest day', 'confidence': M},
             {'file': 'analytics/events.csv', 'source': 'Flight_Master + disruption events',
-             'method': 'delay propagation -> occupancy delta, design day', 'confidence': M},
+             'method': 'delay propagation -> occupancy/belt delta, design day (dep+arr)', 'confidence': M},
+            {'file': 'master/Resource_Master.csv', 'source': 'MASTER DATA RESOURCES.xlsx',
+             'method': 'real airport inventory, CIC ranges expanded', 'confidence': H},
+            {'file': 'analytics/pod_cod.csv', 'source': 'passenger_5min (COD date)',
+             'method': 'hourly plan; staff = counters*1.2 + lanes*4 (assumed ratios)', 'confidence': L},
+            {'file': 'analytics/pod_cod_flights.csv', 'source': 'passenger_estimates (COD date)',
+             'method': 'per-flight expected pax', 'confidence': M},
         ],
     }
     with open(os.path.join(ROOT, 'provenance.json'), 'w', encoding='utf-8') as f:

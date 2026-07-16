@@ -53,6 +53,10 @@ def twin_data():
     vp = os.path.join(TWIN, 'version.json')
     if os.path.exists(vp):
         ver = json.load(open(vp, encoding='utf-8'))
+    resources = _csv('master/Resource_Master.csv')
+    res = {'STAND': [], 'GATE': [], 'BELT': [], 'CHECKIN': []}
+    for r in resources:
+        res.setdefault(r['resource_type'], []).append(r)
     return {
         'kpis': _csv('analytics/kpis.csv'),
         'peak_hours': _csv('analytics/peak_hours.csv'),
@@ -62,6 +66,8 @@ def twin_data():
         'champions': champ,
         'validation': _csv('analytics/synthetic_validation.csv'),
         'version': ver.get('simulator_version', '0.4.0'),
+        'resources': res,
+        'pod': _csv('analytics/pod_cod.csv'),
     }
 
 
@@ -100,7 +106,8 @@ def page_extras(page):
     if page == 'simulation':
         return {'ci': _csv('analytics/confidence_intervals.csv'),
                 'scenarios': _csv('analytics/scenarios.csv'),
-                'events': _csv('analytics/events.csv')}
+                'events': _csv('analytics/events.csv'),
+                'peak_hours': _csv('analytics/peak_hours.csv')}
     return {}
 
 

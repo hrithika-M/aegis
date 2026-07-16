@@ -1,6 +1,6 @@
 {
   "simulator_version": "0.4.0",
-  "built_at_utc": "2026-07-15T16:05:38Z",
+  "built_at_utc": "2026-07-16T02:23:10Z",
   "inputs": {
     "VTZ_schedule_S26.xlsx": {
       "sha256_16": "f5253cd584335ca1",
@@ -73,8 +73,20 @@
       "rows": 16
     },
     "analytics/events.csv": {
-      "sha256_16": "3240e3766fa89a69",
-      "rows": 4
+      "sha256_16": "21b66df8c1503bb4",
+      "rows": 7
+    },
+    "master/Resource_Master.csv": {
+      "sha256_16": "452b57714d6ec424",
+      "rows": 74
+    },
+    "analytics/pod_cod.csv": {
+      "sha256_16": "f30ee8982f3d6592",
+      "rows": 19
+    },
+    "analytics/pod_cod_flights.csv": {
+      "sha256_16": "f2e6147bd19518aa",
+      "rows": 56
     }
   },
   "assumptions": {

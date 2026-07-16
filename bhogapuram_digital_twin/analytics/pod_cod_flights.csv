@@ -1,0 +1,57 @@
+movement,time,airline,route,aircraft,seats,expected_pax,load_factor
+ARR,07:40,IndiGo,Delhi,A320neo,186,146,0.784
+ARR,07:50,IndiGo,Chennai,A320ceo,186,159,0.853
+DEP,08:20,IndiGo,Delhi,A320neo,186,139,0.745
+ARR,08:20,Air India Express,Hyderabad,B737-800,189,147,0.777
+ARR,08:20,IndiGo,AUH,A320neo,186,146,0.785
+ARR,08:25,IndiGo,Hyderabad,A320neo,186,134,0.722
+DEP,08:30,IndiGo,Chennai,A320ceo,186,155,0.832
+DEP,08:50,Air India Express,Hyderabad,B737-800,189,143,0.756
+DEP,08:55,IndiGo,Hyderabad,A320neo,186,117,0.631
+ARR,09:25,Alliance Air,Jeypore,Cessna 208B,9,5,0.534
+DEP,09:40,Alliance Air,Jeypore,Cessna 208B,9,5,0.549
+DEP,09:50,IndiGo,AUH,A320neo,186,150,0.807
+ARR,10:05,IndiGo,Hyderabad,A320ceo,186,149,0.799
+ARR,10:30,IndiGo,Vijayawada,ATR 72-600,78,44,0.57
+DEP,10:40,IndiGo,Hyderabad,A320ceo,186,125,0.675
+DEP,11:00,IndiGo,Vijayawada,ATR 72-600,78,55,0.704
+ARR,11:35,IndiGo,Chennai,A320neo,186,148,0.796
+DEP,12:15,IndiGo,Chennai,A320neo,186,134,0.722
+ARR,12:20,IndiGo,Hyderabad,A320neo,186,134,0.721
+DEP,13:00,IndiGo,Hyderabad,A320neo,186,134,0.719
+ARR,13:25,IndiGo,Tirupati,ATR 72-600,78,60,0.774
+DEP,13:50,IndiGo,Tirupati,ATR 72-600,78,66,0.841
+ARR,14:10,IndiGo,Bengaluru,A321neo,232,223,0.959
+ARR,14:25,IndiGo,Hyderabad,A321neo,232,181,0.78
+DEP,14:55,IndiGo,Bengaluru,A321neo,232,205,0.885
+DEP,15:05,IndiGo,Mumbai,A321neo,232,155,0.669
+ARR,15:45,IndiGo,Hyderabad,A321neo,232,161,0.692
+ARR,15:55,Air India Express,Hyderabad,B737-800,189,144,0.76
+ARR,16:05,Air India,Delhi,A321neo,182,147,0.808
+DEP,16:25,IndiGo,Hyderabad,A321neo,232,190,0.821
+DEP,16:35,Air India Express,Hyderabad,B737-800,189,92,0.488
+DEP,16:45,Air India,Delhi,A321neo,182,161,0.882
+ARR,17:55,IndiGo,Chennai,A321neo,232,144,0.621
+ARR,18:20,IndiGo,UNK,ATR 72-600,78,47,0.606
+ARR,18:30,Air India Express,Bengaluru,B737-800,189,155,0.822
+DEP,18:35,IndiGo,Chennai,A321neo,232,196,0.843
+ARR,18:40,IndiGo,Hyderabad,A321neo,232,177,0.763
+DEP,18:50,IndiGo,Bhubaneswar,ATR 72-600,78,69,0.886
+DEP,19:00,Air India Express,Vijayawada,B737-800,189,88,0.465
+ARR,19:10,IndiGo,Kolkata,A321neo,232,172,0.743
+DEP,19:20,IndiGo,Hyderabad,A321neo,232,189,0.815
+DEP,19:50,IndiGo,Kolkata,A321neo,232,144,0.622
+ARR,20:00,IndiGo,NMI,A321neo,232,179,0.771
+ARR,20:30,IndiGo,Bengaluru,A321neo,232,202,0.87
+DEP,20:40,IndiGo,Hyderabad,A321neo,232,136,0.586
+ARR,20:40,IndiGo,Hyderabad,A320neo,186,152,0.815
+ARR,20:50,Air India,Delhi,A320ceo,180,121,0.67
+DEP,21:10,IndiGo,Bengaluru,A321neo,232,227,0.98
+DEP,21:20,IndiGo,Hyderabad,A320neo,186,107,0.576
+DEP,21:30,Air India,Delhi,A320ceo,180,128,0.713
+ARR,21:40,Air India Express,Vijayawada,B737-800,189,97,0.513
+ARR,22:05,IndiGo,Delhi,A321neo,232,183,0.791
+DEP,22:10,Air India Express,Bengaluru,B737-800,189,165,0.875
+ARR,22:15,Scoot,SIN,A320neo,186,159,0.854
+DEP,22:45,IndiGo,Delhi,A321neo,232,157,0.676
+DEP,23:00,Scoot,SIN,A320neo,186,157,0.842

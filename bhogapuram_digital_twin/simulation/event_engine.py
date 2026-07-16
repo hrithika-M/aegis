@@ -1,23 +1,26 @@
 # -*- coding: utf-8 -*-
-"""Event engine — disruption propagation.
+"""Event engine — disruption propagation (departures AND arrivals).
 
-Scenarios test static staffing; events test dynamic shocks. A weather window delays
-the departures inside it; those passengers have already shown up, so they DWELL
-longer -> terminal occupancy climbs and later banks compress. This measures the
-congestion that cascades from a disruption.
+Scenarios test static staffing; events test dynamic shocks. Departure delays make
+passengers who already showed up DWELL longer (occupancy climbs); arrival delays
+shift baggage-belt demand later and pile up meeters/greeters-side congestion.
 
-Model (design day, departures):
-  passengers enter over the show-up window before the ORIGINAL departure and leave at
-  boarding. Under an event, departures inside [start,end] get pushed by `delay_min`,
-  so their passengers' exit shifts later -> extra dwell -> higher peak occupancy.
+Meeting-requested events (Bhogapuram, Jul-2026) included alongside the generic set:
+  - "15 mins delay"            minor ATC/rotation slip, all day
+  - "runway edge-lighting damaged (lightning)"  night arrivals+departures delayed —
+      ASSUMPTION: damaged edge-line section -> increased spacing/inspection, avg
+      40-min delay for movements 19:00-24:00 (flagged for validation with ops)
+  - "wildlife strike on taxiway"  taxiway inspection/closure after a strike —
+      ASSUMPTION: 30-min avg delay for ARRIVALS in a 2-hour window (14:00-16:00),
+      single-taxiway ops while runway is inspected (flagged for validation)
 
-Events are a config list — add rows freely.
+Outputs one row per event with the OUTCOME quantified: peak occupancy delta,
+extra dwell, arriving pax delayed, and peak belt-demand shift.
 
 Run:  python event_engine.py  ->  analytics/events.csv
 """
 import csv, os
 from collections import defaultdict
-import numpy as np
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
@@ -26,20 +29,25 @@ ROUTEPROF = os.path.join(ROOT, '..', 'data', 'bhogapuram_vtz', 'vtz_route_profil
 OUT = os.path.join(ROOT, 'analytics', 'events.csv')
 
 STEP, SLOTS = 5, 24 * 12
-DESIGN_DOW = 3
-ENTER = (-150, -40, -85)          # terminal-entry show-up window (min before STD)
-EXIT = -10                        # leave landside at boarding
+DESIGN_DOW = 3                      # Wednesday
+ENTER = (-150, -40, -85)            # dep show-up window (min before STD)
+DEP_EXIT = -10                      # dep pax leave landside at boarding
+BELT = (5, 35, 18)                  # arr belt demand window (min after STA)
+ARR_EXIT = 45                       # arr pax clear the terminal
 DEFAULT_MU = 0.80
 CODE2CITY = {'HYD': 'Hyderabad', 'DEL': 'Delhi', 'BLR': 'Bengaluru', 'MAA': 'Chennai',
              'BOM': 'Mumbai', 'CCU': 'Kolkata', 'VGA': 'Vijayawada', 'TIR': 'Tirupati',
              'KJB': 'Kurnool', 'PYB': 'Jeypore', 'BBI': 'Bhubaneswar'}
 
-# event: (name, delay_min, window_start_hour, window_end_hour)
+# event: (name, delay_min, window_start_h, window_end_h, side: 'dep'|'arr'|'both')
 EVENTS = [
-    ('none (baseline)',            0,  0, 24),
-    ('morning fog (45m, 06-09h)', 45,  6,  9),
-    ('evening storm (60m, 18-21h)', 60, 18, 21),
-    ('ground stop (90m, all day)', 90,  0, 24),
+    ('none (baseline)',                       0,  0, 24, 'both'),
+    ('minor delay 15 min (all day)',         15,  0, 24, 'both'),
+    ('morning fog (45m, 06-09h)',            45,  6,  9, 'both'),
+    ('evening storm (60m, 18-21h)',          60, 18, 21, 'both'),
+    ('runway edge-lighting damaged (40m, 19-24h)', 40, 19, 24, 'both'),
+    ('wildlife strike on taxiway (30m, 14-16h, arrivals)', 30, 14, 16, 'arr'),
+    ('ground stop (90m, all day)',           90,  0, 24, 'both'),
 ]
 
 
@@ -62,30 +70,51 @@ def tri(x, a, b, c):
     return (x - a) / (c - a) if x <= c else (b - x) / (b - c)
 
 
-def load_departures():
+def spread(arr, base_min, P, win):
+    a, b, c = win
+    lo, hi = int(round((base_min + a) / STEP)), int(round((base_min + b) / STEP))
+    ws = [(s, tri(s * STEP - base_min, a, b, c)) for s in range(lo, hi + 1)]
+    tot = sum(w for _, w in ws)
+    if tot <= 0:
+        return
+    for s, w in ws:
+        if 0 <= s < SLOTS:
+            arr[s] += P * w / tot
+
+
+def load_legs():
     mus = route_mu()
-    deps = []
+    deps, arrs = [], []
     for r in csv.DictReader(open(FM, encoding='utf-8')):
-        if str(DESIGN_DOW) in r['frequency']:
-            hh, mm = map(int, r['departure_time'].split(':'))
-            std = hh * 60 + mm
-            mu = mus.get(CODE2CITY.get(r['destination'], ''), DEFAULT_MU)
-            deps.append((std, int(r['seat_capacity']) * mu))
-    return deps
+        if str(DESIGN_DOW) not in r['frequency']:
+            continue
+        seats = int(r['seat_capacity'])
+        dh, dm = map(int, r['departure_time'].split(':'))
+        ah, am = map(int, r['arrival_time'].split(':'))
+        deps.append((dh * 60 + dm, seats * mus.get(CODE2CITY.get(r['destination'], ''), DEFAULT_MU)))
+        arrs.append((ah * 60 + am, seats * mus.get(CODE2CITY.get(r['origin'], ''), DEFAULT_MU)))
+    return deps, arrs
 
 
-def occupancy(deps, delay, w0, w1):
-    en = [0.0] * SLOTS; ex = [0.0] * SLOTS
+def simulate(deps, arrs, delay, w0, w1, side):
+    """Return occupancy curve, belt curve, arriving pax delayed."""
+    en = [0.0] * SLOTS; ex = [0.0] * SLOTS; belt = [0.0] * SLOTS
+    delayed_arr_pax = 0.0
     for std, P in deps:
-        new_std = std + (delay if w0 * 60 <= std < w1 * 60 else 0)
-        a, b, c = ENTER
-        lo, hi = int(round((std + a) / STEP)), int(round((std + b) / STEP))   # entry on ORIGINAL schedule
-        ws = [(s, tri(s * STEP - std, a, b, c)) for s in range(lo, hi + 1)]
-        tot = sum(w for _, w in ws)
-        for s, w in ws:
-            if 0 <= s < SLOTS and tot > 0:
-                en[s] += P * w / tot
-        xe = int(round((new_std + EXIT) / STEP))                              # exit on NEW (delayed) schedule
+        d = delay if (side in ('dep', 'both') and w0 * 60 <= std < w1 * 60) else 0
+        spread(en, std, P, ENTER)                     # show-up follows ORIGINAL schedule
+        xe = int(round((std + d + DEP_EXIT) / STEP))  # exit at the DELAYED boarding
+        if 0 <= xe < SLOTS:
+            ex[xe] += P
+    for sta, P in arrs:
+        d = delay if (side in ('arr', 'both') and w0 * 60 <= sta < w1 * 60) else 0
+        if d:
+            delayed_arr_pax += P
+        s0 = int(round((sta + d) / STEP))             # arrivals land late
+        if 0 <= s0 < SLOTS:
+            en[s0] += P
+        spread(belt, sta + d, P, BELT)
+        xe = int(round((sta + d + ARR_EXIT) / STEP))
         if 0 <= xe < SLOTS:
             ex[xe] += P
     occ = [0.0] * SLOTS
@@ -93,32 +122,37 @@ def occupancy(deps, delay, w0, w1):
     for i in range(SLOTS):
         run += en[i] - ex[i]
         occ[i] = max(0.0, run)
-    return occ
+    return occ, belt, delayed_arr_pax
 
 
 def main():
-    deps = load_departures()
-    base_occ = occupancy(deps, 0, 0, 24)
-    base_peak = max(base_occ)
+    deps, arrs = load_legs()
+    base_occ, base_belt, _ = simulate(deps, arrs, 0, 0, 24, 'both')
+    bpk, bbelt = max(base_occ), max(base_belt)
     rows = []
-    print("=" * 78)
-    print("EVENT ENGINE — disruption congestion on the design day (departures)")
-    print("=" * 78)
-    print(f"  {'Event':<30}{'peak occ':>10}{'vs base':>10}{'extra dwell (pax-min)':>22}")
-    for name, delay, w0, w1 in EVENTS:
-        occ = occupancy(deps, delay, w0, w1)
-        peak = max(occ)
-        extra_dwell = (sum(occ) - sum(base_occ)) * STEP        # pax-minutes of extra presence
-        rows.append([name, delay, f"{w0:02d}-{w1:02d}h", round(peak),
-                     round(peak - base_peak), round(extra_dwell)])
-        print(f"  {name:<30}{round(peak):>10}{round(peak - base_peak):>+10}{round(extra_dwell):>22,}")
+    print("=" * 96)
+    print("EVENT ENGINE — disruption propagation on the design day (departures + arrivals)")
+    print("=" * 96)
+    print(f"  {'Event':<48}{'peak occ':>9}{'vs base':>9}{'arr pax delayed':>17}{'peak belt':>11}")
+    for name, delay, w0, w1, side in EVENTS:
+        occ, belt, dpax = simulate(deps, arrs, delay, w0, w1, side)
+        peak, pbelt = max(occ), max(belt)
+        extra = (sum(occ) - sum(base_occ)) * STEP
+        rows.append([name, delay, f"{w0:02d}-{w1:02d}h", side, round(peak),
+                     round(peak - bpk), round(extra), round(dpax), round(pbelt)])
+        print(f"  {name:<48}{round(peak):>9}{round(peak - bpk):>+9}{round(dpax):>17,}{round(pbelt):>11}")
     with open(OUT, 'w', newline='', encoding='utf-8') as f:
         w = csv.writer(f)
-        w.writerow(['event', 'delay_min', 'window', 'peak_occupancy', 'delta_vs_baseline', 'extra_dwell_pax_min'])
+        w.writerow(['event', 'delay_min', 'window', 'side', 'peak_occupancy',
+                    'delta_vs_baseline', 'extra_dwell_pax_min', 'arriving_pax_delayed',
+                    'peak_belt_demand'])
         w.writerows(rows)
-    print("-" * 78)
-    print(f"wrote {os.path.relpath(OUT, ROOT)}")
-    print("Higher peak occupancy + extra dwell = crowding the terminal/seating must absorb.")
+    print("-" * 96)
+    print(f"wrote {os.path.relpath(OUT, ROOT)}   (baseline peak belt demand: {round(bbelt)})")
+    print("OUTCOME reading: peak occupancy = crowding the terminal must absorb; arriving pax")
+    print("delayed + belt shift = arrivals-hall congestion & belt scheduling impact.")
+    print("NOTE: runway-lighting (40m) and wildlife-strike (30m) delay magnitudes are")
+    print("ASSUMPTIONS pending validation with Bhogapuram ops (see QUESTIONNAIRE.md).")
 
 
 if __name__ == '__main__':

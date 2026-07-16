@@ -65,6 +65,42 @@
   </div>
 </div>
 
+<!-- real airport resources (MASTER DATA RESOURCES.xlsx) -->
+{% if data.resources and data.resources.GATE %}
+<div class="panel" style="margin-top:16px">
+  <div class="panel-h"><h2><span class="pnum">6</span> Airport resources <span class="sub">real numbering · MASTER DATA RESOURCES</span></h2>
+    <span class="tag t-teal">REAL · MASTER DATA</span></div>
+  <div class="panel-b">
+    <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-bottom:14px">
+      <div class="kpi"><div class="kpi-lab">Parking stands</div><div class="kpi-val">{{ data.resources.STAND|length }}</div><div class="kpi-lab" style="margin-top:5px;opacity:.75">{{ data.resources.STAND[:4]|map(attribute='resource_id')|join(' · ') }} …</div></div>
+      <div class="kpi"><div class="kpi-lab">Boarding gates</div><div class="kpi-val">{{ data.resources.GATE|length }}</div><div class="kpi-lab" style="margin-top:5px;opacity:.75">{{ data.resources.GATE[:5]|map(attribute='resource_id')|join(' · ') }} …</div></div>
+      <div class="kpi"><div class="kpi-lab">Baggage belts</div><div class="kpi-val">{{ data.resources.BELT|length }}</div><div class="kpi-lab" style="margin-top:5px;opacity:.75">{{ data.resources.BELT|map(attribute='resource_id')|join(' · ') }}</div></div>
+      <div class="kpi"><div class="kpi-lab">Check-in positions</div><div class="kpi-val">{{ data.resources.CHECKIN|length }}</div><div class="kpi-lab" style="margin-top:5px;opacity:.75">A01–D10 · {{ data.resources.CHECKIN|selectattr('spec','equalto','SBD')|list|length }} SBD self-bag-drop</div></div>
+    </div>
+    <div style="font-size:12px;color:var(--mut)">Twin sizing in context: P95 needs <b>8 counters of {{ data.resources.CHECKIN|length }}</b> and <b>5 lanes</b> — the terminal has comfortable headroom on a normal day.</div>
+  </div>
+</div>
+{% endif %}
+
+<!-- POD on the day of COD -->
+{% if data.pod %}
+<div class="panel" style="margin-top:16px;border-left:3px solid var(--green)">
+  <div class="panel-h"><h2><span class="pnum">7</span> POD on COD <span class="sub">Plan of the Day · Commercial Operations Date 2026-07-08</span></h2>
+    <span class="tag t-green">DELIVERABLE</span></div>
+  <div class="panel-b">
+    <div style="overflow-x:auto"><table class="tw-tbl">
+      <tr><th>Hour</th><th>Check-in pax</th><th>Security pax</th><th>Belt pax</th><th>Counters</th><th>Lanes</th><th>Staff</th></tr>
+      {% for r in data.pod %}
+      <tr {% if loop.index0 == 2 %}style="background:rgba(5,150,105,.07)"{% endif %}>
+        <td>{{ r.hour }}</td><td>{{ r.checkin_pax }}</td><td>{{ r.security_pax }}</td>
+        <td>{{ r.belt_pax }}</td><td>{{ r.checkin_counters }}</td><td>{{ r.security_lanes }}</td><td><b>{{ r.total_staff }}</b></td></tr>
+      {% endfor %}
+    </table></div>
+    <div style="font-size:12px;color:var(--mut);margin-top:10px">Staff = counters × 1.2 + lanes × 4 (crewing-ratio <b>assumptions pending ops validation</b> — see QUESTIONNAIRE.md). Flight-by-flight detail: <span style="font-family:monospace">analytics/pod_cod_flights.csv</span>.</div>
+  </div>
+</div>
+{% endif %}
+
 {% endblock %}
 
 {% block scripts %}
