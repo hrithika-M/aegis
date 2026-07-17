@@ -1,0 +1,181 @@
+date,day_of_week,category,aircraft_group,direction,load_factor,pax
+2026-06-01,Monday,C,Narrow-body (A320/A321/B737),ARR,0.8098,3563
+2026-06-01,Monday,C,Narrow-body (A320/A321/B737),DEP,0.8768,3858
+2026-06-01,Monday,B,ATR-72,ARR,0.6795,159
+2026-06-01,Monday,B,ATR-72,DEP,0.9274,217
+2026-06-01,Monday,A,9-seater (India One),ARR,0.45,5
+2026-06-01,Monday,A,9-seater (India One),DEP,0.0,0
+2026-06-02,Tuesday,C,Narrow-body (A320/A321/B737),ARR,0.8056,2900
+2026-06-02,Tuesday,C,Narrow-body (A320/A321/B737),DEP,0.945,3402
+2026-06-02,Tuesday,B,ATR-72,ARR,0.6325,148
+2026-06-02,Tuesday,B,ATR-72,DEP,0.7479,175
+2026-06-02,Tuesday,A,9-seater (India One),ARR,0.0,0
+2026-06-02,Tuesday,A,9-seater (India One),DEP,0.18,2
+2026-06-03,Wednesday,C,Narrow-body (A320/A321/B737),ARR,0.81,3564
+2026-06-03,Wednesday,C,Narrow-body (A320/A321/B737),DEP,0.8598,3783
+2026-06-03,Wednesday,B,ATR-72,ARR,0.859,201
+2026-06-03,Wednesday,B,ATR-72,DEP,0.6667,156
+2026-06-03,Wednesday,A,9-seater (India One),ARR,0.36,4
+2026-06-03,Wednesday,A,9-seater (India One),DEP,0.72,8
+2026-06-04,Thursday,C,Narrow-body (A320/A321/B737),ARR,0.8288,3481
+2026-06-04,Thursday,C,Narrow-body (A320/A321/B737),DEP,0.8288,3481
+2026-06-04,Thursday,B,ATR-72,ARR,0.9017,211
+2026-06-04,Thursday,B,ATR-72,DEP,0.9017,211
+2026-06-04,Thursday,A,9-seater (India One),ARR,0.72,8
+2026-06-04,Thursday,A,9-seater (India One),DEP,0.72,8
+2026-06-05,Friday,C,Narrow-body (A320/A321/B737),ARR,0.8298,3651
+2026-06-05,Friday,C,Narrow-body (A320/A321/B737),DEP,0.858,3775
+2026-06-05,Friday,B,ATR-72,ARR,0.8504,199
+2026-06-05,Friday,B,ATR-72,DEP,0.7479,175
+2026-06-05,Friday,A,9-seater (India One),ARR,0.27,3
+2026-06-05,Friday,A,9-seater (India One),DEP,0.09,1
+2026-06-06,Saturday,C,Narrow-body (A320/A321/B737),ARR,0.8717,3661
+2026-06-06,Saturday,C,Narrow-body (A320/A321/B737),DEP,0.9176,3854
+2026-06-06,Saturday,B,ATR-72,ARR,0.7436,174
+2026-06-06,Saturday,B,ATR-72,DEP,0.7863,184
+2026-06-06,Saturday,A,9-seater (India One),ARR,0.81,9
+2026-06-06,Saturday,A,9-seater (India One),DEP,0.27,3
+2026-06-07,Sunday,C,Narrow-body (A320/A321/B737),ARR,0.8712,3659
+2026-06-07,Sunday,C,Narrow-body (A320/A321/B737),DEP,0.9079,3813
+2026-06-07,Sunday,B,ATR-72,ARR,0.6282,147
+2026-06-07,Sunday,B,ATR-72,DEP,0.7137,167
+2026-06-07,Sunday,A,9-seater (India One),ARR,0.45,5
+2026-06-07,Sunday,A,9-seater (India One),DEP,0.63,7
+2026-06-08,Monday,C,Narrow-body (A320/A321/B737),ARR,0.8643,3630
+2026-06-08,Monday,C,Narrow-body (A320/A321/B737),DEP,0.7325,3516
+2026-06-08,Monday,B,ATR-72,ARR,0.7991,187
+2026-06-08,Monday,B,ATR-72,DEP,0.7179,168
+2026-06-08,Monday,A,9-seater (India One),ARR,0.0,0
+2026-06-08,Monday,A,9-seater (India One),DEP,0.27,3
+2026-06-09,Tuesday,C,Narrow-body (A320/A321/B737),ARR,0.8648,3459
+2026-06-09,Tuesday,C,Narrow-body (A320/A321/B737),DEP,0.7755,3102
+2026-06-09,Tuesday,B,ATR-72,ARR,0.6239,146
+2026-06-09,Tuesday,B,ATR-72,DEP,0.8162,191
+2026-06-09,Tuesday,A,9-seater (India One),ARR,0.18,2
+2026-06-09,Tuesday,A,9-seater (India One),DEP,0.18,2
+2026-06-10,Wednesday,C,Narrow-body (A320/A321/B737),ARR,0.8709,3832
+2026-06-10,Wednesday,C,Narrow-body (A320/A321/B737),DEP,0.8495,3738
+2026-06-10,Wednesday,B,ATR-72,ARR,0.8376,196
+2026-06-10,Wednesday,B,ATR-72,DEP,0.7308,171
+2026-06-10,Wednesday,A,9-seater (India One),ARR,0.81,9
+2026-06-10,Wednesday,A,9-seater (India One),DEP,0.54,6
+2026-06-11,Thursday,C,Narrow-body (A320/A321/B737),ARR,0.869,3476
+2026-06-11,Thursday,C,Narrow-body (A320/A321/B737),DEP,0.823,3292
+2026-06-11,Thursday,B,ATR-72,ARR,0.9444,221
+2026-06-11,Thursday,B,ATR-72,DEP,0.859,201
+2026-06-11,Thursday,A,9-seater (India One),ARR,0.72,8
+2026-06-11,Thursday,A,9-seater (India One),DEP,0.18,2
+2026-06-12,Friday,C,Narrow-body (A320/A321/B737),ARR,0.8652,3807
+2026-06-12,Friday,C,Narrow-body (A320/A321/B737),DEP,0.8198,3607
+2026-06-12,Friday,B,ATR-72,ARR,0.7521,176
+2026-06-12,Friday,B,ATR-72,DEP,0.7949,186
+2026-06-12,Friday,A,9-seater (India One),ARR,0.36,4
+2026-06-12,Friday,A,9-seater (India One),DEP,0.09,1
+2026-06-13,Saturday,C,Narrow-body (A320/A321/B737),ARR,0.8355,3509
+2026-06-13,Saturday,C,Narrow-body (A320/A321/B737),DEP,0.7993,3357
+2026-06-13,Saturday,B,ATR-72,ARR,0.8974,210
+2026-06-13,Saturday,B,ATR-72,DEP,0.7692,180
+2026-06-13,Saturday,A,9-seater (India One),ARR,0.81,9
+2026-06-13,Saturday,A,9-seater (India One),DEP,0.0,0
+2026-06-14,Sunday,C,Narrow-body (A320/A321/B737),ARR,0.8379,3519
+2026-06-14,Sunday,C,Narrow-body (A320/A321/B737),DEP,0.8238,3460
+2026-06-14,Sunday,B,ATR-72,ARR,0.5705,89
+2026-06-14,Sunday,B,ATR-72,DEP,0.7372,115
+2026-06-14,Sunday,A,9-seater (India One),ARR,0.45,5
+2026-06-14,Sunday,A,9-seater (India One),DEP,0.09,1
+2026-06-15,Monday,C,Narrow-body (A320/A321/B737),ARR,0.8633,3626
+2026-06-15,Monday,C,Narrow-body (A320/A321/B737),DEP,0.706,2965
+2026-06-15,Monday,B,ATR-72,ARR,0.5513,86
+2026-06-15,Monday,B,ATR-72,DEP,0.9295,145
+2026-06-15,Monday,A,9-seater (India One),ARR,0.27,3
+2026-06-15,Monday,A,9-seater (India One),DEP,0.0,0
+2026-06-16,Tuesday,C,Narrow-body (A320/A321/B737),ARR,0.8355,3342
+2026-06-16,Tuesday,C,Narrow-body (A320/A321/B737),DEP,0.6795,2718
+2026-06-16,Tuesday,B,ATR-72,ARR,0.7137,167
+2026-06-16,Tuesday,B,ATR-72,DEP,0.8162,191
+2026-06-16,Tuesday,A,9-seater (India One),ARR,0.36,4
+2026-06-16,Tuesday,A,9-seater (India One),DEP,0.81,9
+2026-06-17,Wednesday,C,Narrow-body (A320/A321/B737),ARR,0.8479,3561
+2026-06-17,Wednesday,C,Narrow-body (A320/A321/B737),DEP,0.7467,3136
+2026-06-17,Wednesday,B,ATR-72,ARR,0.7885,123
+2026-06-17,Wednesday,B,ATR-72,DEP,0.9808,153
+2026-06-17,Wednesday,A,9-seater (India One),ARR,0.09,1
+2026-06-17,Wednesday,A,9-seater (India One),DEP,0.27,3
+2026-06-18,Thursday,C,Narrow-body (A320/A321/B737),ARR,0.8722,3489
+2026-06-18,Thursday,C,Narrow-body (A320/A321/B737),DEP,0.7295,2918
+2026-06-18,Thursday,B,ATR-72,ARR,0.8376,196
+2026-06-18,Thursday,B,ATR-72,DEP,0.735,172
+2026-06-18,Thursday,A,9-seater (India One),ARR,0.36,4
+2026-06-18,Thursday,A,9-seater (India One),DEP,0.09,1
+2026-06-19,Friday,C,Narrow-body (A320/A321/B737),ARR,0.8389,3691
+2026-06-19,Friday,C,Narrow-body (A320/A321/B737),DEP,0.7512,3155
+2026-06-19,Friday,B,ATR-72,ARR,0.7372,115
+2026-06-19,Friday,B,ATR-72,DEP,0.4872,76
+2026-06-19,Friday,A,9-seater (India One),ARR,0.09,1
+2026-06-19,Friday,A,9-seater (India One),DEP,0.54,6
+2026-06-20,Saturday,C,Narrow-body (A320/A321/B737),ARR,0.8945,3757
+2026-06-20,Saturday,C,Narrow-body (A320/A321/B737),DEP,0.7969,3347
+2026-06-20,Saturday,B,ATR-72,ARR,0.8291,194
+2026-06-20,Saturday,B,ATR-72,DEP,0.7393,173
+2026-06-20,Saturday,A,9-seater (India One),ARR,0.18,2
+2026-06-20,Saturday,A,9-seater (India One),DEP,0.27,3
+2026-06-21,Sunday,C,Narrow-body (A320/A321/B737),ARR,0.8819,3704
+2026-06-21,Sunday,C,Narrow-body (A320/A321/B737),DEP,0.8468,3387
+2026-06-21,Sunday,B,ATR-72,ARR,0.6795,106
+2026-06-21,Sunday,B,ATR-72,DEP,0.7756,121
+2026-06-21,Sunday,A,9-seater (India One),ARR,0.81,9
+2026-06-21,Sunday,A,9-seater (India One),DEP,0.63,7
+2026-06-22,Monday,C,Narrow-body (A320/A321/B737),ARR,0.8498,3739
+2026-06-22,Monday,C,Narrow-body (A320/A321/B737),DEP,0.7352,3235
+2026-06-22,Monday,B,ATR-72,ARR,0.8205,128
+2026-06-22,Monday,B,ATR-72,DEP,0.6282,147
+2026-06-22,Monday,A,9-seater (India One),ARR,0.72,8
+2026-06-22,Monday,A,9-seater (India One),DEP,0.54,6
+2026-06-23,Tuesday,C,Narrow-body (A320/A321/B737),ARR,0.8782,3513
+2026-06-23,Tuesday,C,Narrow-body (A320/A321/B737),DEP,0.7913,3165
+2026-06-23,Tuesday,B,ATR-72,ARR,0.953,223
+2026-06-23,Tuesday,B,ATR-72,DEP,0.8205,192
+2026-06-23,Tuesday,A,9-seater (India One),ARR,0.18,2
+2026-06-23,Tuesday,A,9-seater (India One),DEP,0.09,1
+2026-06-24,Wednesday,C,Narrow-body (A320/A321/B737),ARR,0.9021,3789
+2026-06-24,Wednesday,C,Narrow-body (A320/A321/B737),DEP,0.8802,3697
+2026-06-24,Wednesday,B,ATR-72,ARR,0.8462,132
+2026-06-24,Wednesday,B,ATR-72,DEP,0.8846,138
+2026-06-24,Wednesday,A,9-seater (India One),ARR,0.54,6
+2026-06-24,Wednesday,A,9-seater (India One),DEP,0.45,5
+2026-06-25,Thursday,C,Narrow-body (A320/A321/B737),ARR,0.8945,3578
+2026-06-25,Thursday,C,Narrow-body (A320/A321/B737),DEP,0.854,3416
+2026-06-25,Thursday,B,ATR-72,ARR,0.8675,203
+2026-06-25,Thursday,B,ATR-72,DEP,0.8419,197
+2026-06-25,Thursday,A,9-seater (India One),ARR,0.0,0
+2026-06-25,Thursday,A,9-seater (India One),DEP,0.0,0
+2026-06-26,Friday,C,Narrow-body (A320/A321/B737),ARR,0.8877,3906
+2026-06-26,Friday,C,Narrow-body (A320/A321/B737),DEP,0.8518,3748
+2026-06-26,Friday,B,ATR-72,ARR,0.9744,152
+2026-06-26,Friday,B,ATR-72,DEP,0.8013,125
+2026-06-26,Friday,A,9-seater (India One),ARR,0.0,0
+2026-06-26,Friday,A,9-seater (India One),DEP,0.0,0
+2026-06-27,Saturday,C,Narrow-body (A320/A321/B737),ARR,0.8193,3441
+2026-06-27,Saturday,C,Narrow-body (A320/A321/B737),DEP,0.8714,3660
+2026-06-27,Saturday,B,ATR-72,ARR,0.8803,206
+2026-06-27,Saturday,B,ATR-72,DEP,0.765,179
+2026-06-27,Saturday,A,9-seater (India One),ARR,0.45,5
+2026-06-27,Saturday,A,9-seater (India One),DEP,0.45,5
+2026-06-28,Sunday,C,Narrow-body (A320/A321/B737),ARR,0.8445,3547
+2026-06-28,Sunday,C,Narrow-body (A320/A321/B737),DEP,0.9219,3872
+2026-06-28,Sunday,B,ATR-72,ARR,0.7436,116
+2026-06-28,Sunday,B,ATR-72,DEP,0.7436,116
+2026-06-28,Sunday,A,9-seater (India One),ARR,0.18,2
+2026-06-28,Sunday,A,9-seater (India One),DEP,0.45,5
+2026-06-29,Monday,C,Narrow-body (A320/A321/B737),ARR,0.8252,3631
+2026-06-29,Monday,C,Narrow-body (A320/A321/B737),DEP,0.8518,3748
+2026-06-29,Monday,B,ATR-72,ARR,0.5085,119
+2026-06-29,Monday,B,ATR-72,DEP,0.6282,147
+2026-06-29,Monday,A,9-seater (India One),ARR,0.54,6
+2026-06-29,Monday,A,9-seater (India One),DEP,0.27,3
+2026-06-30,Tuesday,C,Narrow-body (A320/A321/B737),ARR,0.829,3316
+2026-06-30,Tuesday,C,Narrow-body (A320/A321/B737),DEP,0.8063,3225
+2026-06-30,Tuesday,B,ATR-72,ARR,0.8718,204
+2026-06-30,Tuesday,B,ATR-72,DEP,0.7863,184
+2026-06-30,Tuesday,A,9-seater (India One),ARR,0.0,0
+2026-06-30,Tuesday,A,9-seater (India One),DEP,0.54,6
