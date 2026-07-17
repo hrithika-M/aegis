@@ -34,7 +34,12 @@ OUT = os.path.join(HERE, 'finalised_entry_dataset.xlsx')
 
 STEP = 5
 SLOTS = 24 * 60 // STEP
-LANE_PER_30MIN = 60
+LANE_PER_HR = 120                    # pax/hr per scanning lane  -- TO CONFIRM WITH AVRA
+LANE_PER_30MIN = LANE_PER_HR // 2    # 60 pax per 30-min per lane
+# Physical Entry = 3 gates, each with an A and B lane = 6 scanning lanes.
+# Opening rule: balance across gates (one lane per gate, then the second lanes).
+LANE_ORDER = ['01-A', '02-A', '03-A', '01-B', '02-B', '03-B']
+N_LANES = len(LANE_ORDER)            # 6
 BUCKET_RANGE = {'<60': (30, 60), '60-90': (60, 90), '90-120': (90, 120),
                 '120-150': (120, 150), '150-180': (150, 180), '>180': (180, 240)}
 CATLABEL = {'C': 'C - Narrow-body', 'B': 'B - ATR-72', 'A': 'A - 9-seater'}
@@ -141,6 +146,8 @@ def main():
     # ---- Sheet: Entry Demand 5-min (operating slots only) ----
     sd = out.create_sheet('Entry Demand 5-min')
     sd.append(['Date', 'Day', 'Time', 'Entry Demand (5-min)', 'Entry Demand (30-min)', 'Lanes Required'])
+    gp = []          # 30-min gate plan rows
+    gsum = []        # per-day gate summary
     daily = []
     for d in sorted(demand):
         dem = demand[d]; dem30 = [sum(dem[i:i + 6]) for i in range(SLOTS)]
@@ -153,6 +160,23 @@ def main():
         pk = max(range(SLOTS), key=lambda i: dem30[i])
         daily.append([d, daymeta[d], round(sum(dem)), round(dem30[pk]), lanes[pk],
                       f"{(pk*STEP)//60:02d}:{(pk*STEP)%60:02d}"])
+        # gate allocation at 30-min resolution (gates are not reconfigured every 5 min)
+        peak_block = 0; peak_need = 0; peak_gates = 0; peak_perlane = 0.0; peak_t = ''
+        for i in range(0, SLOTS, 6):
+            block = sum(dem[i:i + 6])                 # pax entering in this 30-min block
+            if block <= 0.05:
+                continue
+            need = min(math.ceil(block / LANE_PER_30MIN), N_LANES)
+            lanes_open = LANE_ORDER[:need]
+            gates_open = sorted({l[:2] for l in lanes_open})
+            per_lane = round(block / need, 1) if need else 0
+            t = f"{(i*STEP)//60:02d}:{(i*STEP)%60:02d}"
+            gp.append([d, daymeta[d], t, round(block), need, len(gates_open),
+                       ', '.join(lanes_open), per_lane])
+            if block > peak_block:
+                peak_block = block; peak_need = need; peak_gates = len(gates_open)
+                peak_perlane = per_lane; peak_t = t
+        gsum.append([d, daymeta[d], peak_need, peak_gates, peak_perlane, peak_t])
     style_header(sd, 6)
     for i, w in enumerate([11, 10, 8, 20, 21, 15], 1):
         sd.column_dimensions[get_column_letter(i)].width = w
@@ -165,6 +189,25 @@ def main():
     style_header(ss, 6)
     for i, w in enumerate([11, 10, 17, 19, 20, 11], 1):
         ss.column_dimensions[get_column_letter(i)].width = w
+
+    # ---- Sheet: Gate Plan (30-min) — which of the 6 gate-lanes to open ----
+    gpz = out.create_sheet('Gate Plan (30-min)')
+    gpz.append(['Date', 'Day', 'Time', 'Demand (30-min pax)', 'Lanes Needed (of 6)',
+                'Gates Open (of 3)', 'Open Lanes', 'Pax per Lane'])
+    for row in gp:
+        gpz.append(row)
+    style_header(gpz, 8)
+    for i, w in enumerate([11, 10, 8, 20, 20, 18, 26, 14], 1):
+        gpz.column_dimensions[get_column_letter(i)].width = w
+
+    # ---- Sheet: Gate Summary (daily) ----
+    gs = out.create_sheet('Gate Summary')
+    gs.append(['Date', 'Day', 'Peak Lanes (of 6)', 'Peak Gates (of 3)', 'Peak Pax per Lane', 'Peak Time'])
+    for row in gsum:
+        gs.append(row)
+    style_header(gs, 6)
+    for i, w in enumerate([11, 10, 18, 18, 18, 11], 1):
+        gs.column_dimensions[get_column_letter(i)].width = w
 
     # ---- Sheet: Read Me (put first) ----
     rm = out.create_sheet('Read Me', 0)
@@ -180,20 +223,31 @@ def main():
         ('   Load Factor = REAL June actuals by aircraft category and day-of-week', ''),
         ('Entry time     = STD - offset;  offset from the MEASURED HYD e-boarding show-up profile', 'mono'),
         ('Demand (30-min)= forward 30-minute sum of 5-minute entry demand', 'mono'),
-        ('Lanes Required = ceil(Demand(30-min) / 60)   [ATRS 120 pax/hr/lane = 60 per 30 min]', 'mono'),
+        ('Lanes Needed   = ceil(Demand(30-min) / 60)   [120 pax/hr/lane = 60 per 30 min]', 'mono'),
+        ('', ''),
+        ('Gate layout (per Avra)', 'h'),
+        ('3 entry gates (01, 02, 03), each with an A and B lane = 6 scanning lanes:', ''),
+        ('   01-A  01-B   02-A  02-B   03-A  03-B', 'mono'),
+        ('Opening rule: BALANCE across gates - open one lane per gate first (01-A, 02-A,', ''),
+        ('03-A), then the B lanes (01-B, 02-B, 03-B). Shortest queues / walking distance.', ''),
+        ('Each lane = 120 pax/hr (TO CONFIRM). Total entry capacity = 6 x 120 = 720 pax/hr.', ''),
         ('', ''),
         ('Sheets', 'h'),
         ('Entry by Flight    - one row per departing flight (5,820) with its entry passengers', ''),
         ('Entry Demand 5-min - terminal-entry demand per 5-min slot, 30-min projection, lanes', ''),
         ('Daily Summary      - per-day totals and peak lane requirement', ''),
+        ('Gate Plan (30-min) - which of the 6 gate-lanes to open each 30 min, and their load', ''),
+        ('Gate Summary       - per-day peak lanes, peak gates open, peak load per lane', ''),
         ('', ''),
         ('Headline', 'h'),
-        (f'{len(flights):,} departing flights  ·  {sum(r[13] for r in flights):,} season entry passengers  ·  peak {max(r[4] for r in daily)} lanes', 'b'),
+        (f'{len(flights):,} departing flights  ·  {sum(r[13] for r in flights):,} season entry passengers', 'b'),
+        (f'Peak {max(r[2] for r in gsum)} of 6 lanes across {max(r[3] for r in gsum)} of 3 gates  ·  6 lanes give comfortable headroom', 'b'),
         ('', ''),
         ('To confirm with Avra', 'h'),
+        ('- lane throughput: assumed 120 pax/hr/lane (ATRS 180 trays/hr, 1.5 trays/pax) - CONFIRM', ''),
+        ('- gate opening rule: balance across gates (vs fill gate-by-gate) - confirm preference', ''),
         ('- e-boarding show-up is from 2 days only (good overall, not day-of-week splits)', ''),
         ('- load factor uses the clean June sheet (the July-labelled sheet is a calculated copy)', ''),
-        ('- throughput assumption: 120 pax/hr/lane (ATRS 180 trays/hr, 1.5 trays/pax)', ''),
     ]
     for i, (txt, kind) in enumerate(lines, 1):
         cell = rm.cell(i, 1, txt)
@@ -208,8 +262,11 @@ def main():
     tot = sum(r[13] for r in flights)
     print(f"wrote {os.path.basename(OUT)}")
     print(f"  Entry by Flight rows: {len(flights):,}")
-    print(f"  Entry Demand 5-min rows: {sd.max_row-1:,}")
-    print(f"  season entry passengers: {tot:,}   peak lanes: {max(r[4] for r in daily)}")
+    print(f"  Entry Demand 5-min rows: {sd.max_row-1:,}   Gate Plan rows: {len(gp):,}")
+    print(f"  season entry passengers: {tot:,}")
+    print(f"  peak lanes: {max(r[2] for r in gsum)} of {N_LANES}   peak gates open: {max(r[3] for r in gsum)} of 3")
+    busy = max(gsum, key=lambda r: r[2])
+    print(f"  busiest day {busy[0]} ({busy[1]}): {busy[2]} lanes / {busy[3]} gates at {busy[5]}, {busy[4]} pax per lane")
 
 
 if __name__ == '__main__':
