@@ -6,7 +6,7 @@ reviewed before moving on.
 
 ## The plan (8 steps)
 1. **Isolate the clean June data** — of the two sheets in `JUN LOADS FOR AIRLINE`,
-   use only the trusted **June** actuals (the other, labelled July, is calculated).
+   use the **June** actuals. (Avra later confirmed both sheets are June — the July label was wrong.)
 2. **Avra-style analysis on the June data** — per touchpoint, starting with **Entry**.
 3. Same analysis on the **HYD e-boarding (EWS)** data for Entry.
 4. Same analysis on the **digital-twin** data for Entry.
@@ -27,7 +27,7 @@ reviewed before moving on.
 | 6 | Finalise Entry dataset (build done; Avra confirm pending) | ✅ built |
 
 ## Folders
-- `inputs/` — the source workbook (June+July; we use June only).
+- `inputs/` — the source workbooks (June loads — both sheets confirmed June; VTZ schedule).
 - `step1_june_data/` — `extract_june.py` → `june_load_daily.csv` (tidy, 180 rows).
 - `step2_june_analysis/` — `analyze_june.py` → `june_dashboard.png`.
 - `step3_ews_eboarding/` — `analyze_ews_entry.py` → `entry_showup_profile.csv`,

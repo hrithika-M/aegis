@@ -68,7 +68,7 @@ All of these are **simple, auditable formulas** on data we already have — no M
 ## Data caveats to raise with Avra (for the questionnaire)
 - E-boarding file is only **2 days** (12–13 Apr) → good for the overall show-up %, but
   **not** enough for day-of-week show-up splits. Ask for a full month.
-- June load sheet has the July-labelled copy ambiguity — using June only (confirmed).
+- June load sheet: **confirmed by Avra** — both sheets are June (the July label was wrong); using June actuals.
 - Confirm the throughput assumption (ATRS 180 trays/hr, 1.5 trays/pax ⇒ 120 pax/hr/lane).
 
 ## Status

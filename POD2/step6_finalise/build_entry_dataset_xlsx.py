@@ -283,7 +283,9 @@ def main():
         ('- lane throughput: assumed 120 pax/hr/lane (ATRS 180 trays/hr, 1.5 trays/pax) - CONFIRM', ''),
         ('- gate opening rule: balance across gates (vs fill gate-by-gate) - confirm preference', ''),
         ('- e-boarding show-up is from 2 days only (good overall, not day-of-week splits)', ''),
-        ('- load factor uses the clean June sheet (the July-labelled sheet is a calculated copy)', ''),
+        ('', ''),
+        ('Confirmed by Avra', 'h'),
+        ('- load data is JUNE (both sheets are June; the July label was wrong) - using June actuals', ''),
     ]
     for i, (txt, kind) in enumerate(lines, 1):
         cell = rm.cell(i, 1, txt)
