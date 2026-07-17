@@ -1,0 +1,8 @@
+lane_rate_pax_hr,pax_per_30min_per_lane,season_peak_lanes_needed,gates_open_at_peak,days_needing_5_6_lanes,exceeds_6_lanes
+60,30.0,8,3,0,YES - short of gates
+80,40.0,6,3,210,no
+90,45.0,6,3,210,no
+100,50.0,5,3,210,no
+120,60.0,4,3,0,no
+150,75.0,4,3,0,no
+180,90.0,3,3,0,no

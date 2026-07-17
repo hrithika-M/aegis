@@ -209,6 +209,41 @@ def main():
     for i, w in enumerate([11, 10, 18, 18, 18, 11], 1):
         gs.column_dimensions[get_column_letter(i)].width = w
 
+    # ---- Sheet: Lane Rate Sensitivity (how gate needs change with throughput) ----
+    peaks = [row[3] for row in daily]                 # per-day peak 30-min demand (pax)
+    lr = out.create_sheet('Lane Rate Sensitivity')
+    lr.append(['Lane rate (pax/hr)', 'Pax/30min/lane', 'Season peak lanes needed',
+               'Gates open at peak (of 3)', 'Days needing 5-6 lanes', 'Exceeds 6 lanes?'])
+    sens = []
+    for rate in [60, 80, 90, 100, 120, 150, 180]:
+        per30 = rate / 2
+        need = [math.ceil(p / per30) for p in peaks]
+        speak = max(need)
+        gates = min(speak, 3)
+        days56 = sum(1 for n in need if 5 <= n <= 6)
+        over = 'YES - short of gates' if speak > N_LANES else 'no'
+        lanes_txt = f"{speak}" if speak <= N_LANES else f"{speak}  (only 6 exist)"
+        row = [rate, per30, lanes_txt, gates, days56, over]
+        sens.append([rate, per30, speak, gates, days56, over])
+        lr.append(row)
+        if rate == LANE_PER_HR:                        # highlight the working default
+            for c in range(1, 7):
+                lr.cell(lr.max_row, c).fill = PatternFill('solid', fgColor='FFF2CC')
+                lr.cell(lr.max_row, c).font = Font(bold=True)
+    style_header(lr, 6)
+    for i, w in enumerate([18, 16, 24, 24, 22, 20], 1):
+        lr.column_dimensions[get_column_letter(i)].width = w
+    note = lr.cell(lr.max_row + 2, 1,
+                   f"Working default = {LANE_PER_HR} pax/hr/lane (highlighted). Physical capacity = 6 lanes. "
+                   f"Confirm the real rate with Avra.")
+    note.font = Font(italic=True, color='6B7B8A')
+    # standalone CSV too
+    with open(os.path.join(HERE, 'lane_rate_sensitivity.csv'), 'w', newline='', encoding='utf-8') as f:
+        wtr = csv.writer(f)
+        wtr.writerow(['lane_rate_pax_hr', 'pax_per_30min_per_lane', 'season_peak_lanes_needed',
+                      'gates_open_at_peak', 'days_needing_5_6_lanes', 'exceeds_6_lanes'])
+        wtr.writerows(sens)
+
     # ---- Sheet: Read Me (put first) ----
     rm = out.create_sheet('Read Me', 0)
     lines = [
@@ -238,6 +273,7 @@ def main():
         ('Daily Summary      - per-day totals and peak lane requirement', ''),
         ('Gate Plan (30-min) - which of the 6 gate-lanes to open each 30 min, and their load', ''),
         ('Gate Summary       - per-day peak lanes, peak gates open, peak load per lane', ''),
+        ('Lane Rate Sensitivity - peak lanes/gates needed at 60..180 pax/hr/lane (pick a rate)', ''),
         ('', ''),
         ('Headline', 'h'),
         (f'{len(flights):,} departing flights  ·  {sum(r[13] for r in flights):,} season entry passengers', 'b'),
