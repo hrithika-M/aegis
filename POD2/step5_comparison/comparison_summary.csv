@@ -1,0 +1,11 @@
+dimension,key,june_real,twin,match?
+aircraft_mix_%,C,95.3,95.5,Y
+aircraft_mix_%,B,4.6,4.4,Y
+aircraft_mix_%,A,0.1,0.1,Y
+loadfactor_narrowbody_%,avg,82.1,77.8,Y
+showup_%,<60,4.32,6.06,Y
+showup_%,60-90,23.23,39.39,N
+showup_%,90-120,31.99,39.86,N
+showup_%,120-150,20.53,14.69,N
+showup_%,150-180,9.46,0.0,N
+showup_%,>180,10.46,0.0,N

@@ -23,8 +23,8 @@ reviewed before moving on.
 | 2 | Avra-style analysis on June data (Entry) | ✅ done |
 | 3 | Entry show-up profile from HYD e-boarding (EWS) | ✅ done |
 | 4 | Same (Entry) on digital-twin data | ✅ done |
-| 5 | Cross-dataset pattern comparison + candidate formula columns | ⏳ next |
-| 6 | Finalise dataset + confirm with Avra | pending |
+| 5 | Cross-dataset pattern comparison + candidate formula columns | ✅ done |
+| 6 | Finalise dataset + confirm with Avra | ⏳ next |
 
 ## Folders
 - `inputs/` — the source workbook (June+July; we use June only).
@@ -37,6 +37,23 @@ reviewed before moving on.
   `twin_entry_hourly.csv`, `twin_entry_dashboard.png`. Reconstructs the twin's Entry
   minutes-early distribution from its `DEP_ENTER` show-up window, bucketed the **same
   way as Step 3** for a like-for-like comparison.
+- `step5_comparison/` — `compare_datasets.py` → `comparison_dashboard.png`,
+  `comparison_summary.csv`, and **`COMPARISON.md`** (what matches, the two
+  recalibrations, and the formula-column plan for Step 6).
+
+## Step 5 result — the twin matches on fleet, misses on two behaviours
+| Layer | Real | Twin | Verdict |
+|---|---|---|---|
+| Aircraft mix (C/B/A) | 95.3 / 4.6 / 0.1 | 95.5 / 4.4 / 0.1 | ✅ matches |
+| Load factor (level) | 82.1% | 77.8% | ⚠️ ~4 pt low |
+| Load factor (day-of-week) | Mon 78 → Sun 88% | flat ~78% | ⚠️ misses weekly shape |
+| Show-up profile | 20% arrive >150 min early | 0% past 150 | ⚠️ mis-calibrated |
+
+Two recalibrations to fold into Step 6: (1) drive Entry from the **measured** e-boarding
+show-up buckets instead of the triangular `DEP_ENTER`; (2) lift load factor to ~82% with
+June's day-of-week curve. See `step5_comparison/COMPARISON.md` for the full write-up and
+the Avra-style formula columns (`passengers = seats × LF`, `minutes_early`, 30-min
+projection, `lanes_required`, queue/wait).
 
 ## Step 4 result — the twin's Entry window is mis-calibrated vs reality
 Same buckets, three datasets (share of Entry passengers):
