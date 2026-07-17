@@ -24,7 +24,7 @@ reviewed before moving on.
 | 3 | Entry show-up profile from HYD e-boarding (EWS) | ✅ done |
 | 4 | Same (Entry) on digital-twin data | ✅ done |
 | 5 | Cross-dataset pattern comparison + candidate formula columns | ✅ done |
-| 6 | Finalise dataset + confirm with Avra | ⏳ next |
+| 6 | Finalise Entry dataset (build done; Avra confirm pending) | ✅ built |
 
 ## Folders
 - `inputs/` — the source workbook (June+July; we use June only).
@@ -40,6 +40,18 @@ reviewed before moving on.
 - `step5_comparison/` — `compare_datasets.py` → `comparison_dashboard.png`,
   `comparison_summary.csv`, and **`COMPARISON.md`** (what matches, the two
   recalibrations, and the formula-column plan for Step 6).
+- `step6_finalise/` — `build_entry_pod.py` → `finalised_entry_daily_summary.csv`,
+  `finalised_entry_sample_day.csv`. The finalised Entry POD: pure calculation
+  (no ML) with both recalibrations applied (real LF-by-day-of-week + measured show-up
+  buckets) and Avra's formula columns (entry demand, 30-min projection, lanes required).
+
+## Step 6 result — finalised Entry dataset (Bhogapuram / VTZ)
+`passengers = seat_capacity × LF[category, day_of_week]` (real June LF) → distributed to
+terminal entry by the **measured** e-boarding show-up buckets → `entry_demand_5min` →
+`entry_demand_30min` (Avra's 30-min projection) → `lanes_required = ceil(demand_30min/60)`.
+- 5,820 departures, **873,509 season entry pax** (real ~82% LF vs the twin's flat ~78%).
+- **Peak = 4 entry lanes**; busiest day 30-min demand 229 pax.
+- Avra sign-off is the gate before any modelling (Entry-only until then).
 
 ## Step 5 result — the twin matches on fleet, misses on two behaviours
 Comparison is strictly June loads ↔ HYD e-boarding ↔ twin. (Avra's dashboard is a
