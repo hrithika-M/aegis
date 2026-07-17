@@ -22,8 +22,8 @@ reviewed before moving on.
 | 1 | Isolate clean June data | ✅ done |
 | 2 | Avra-style analysis on June data (Entry) | ✅ done |
 | 3 | Entry show-up profile from HYD e-boarding (EWS) | ✅ done |
-| 4 | Same (Entry) on digital-twin data | ⏳ next |
-| 5 | Cross-dataset pattern comparison + candidate formula columns | pending |
+| 4 | Same (Entry) on digital-twin data | ✅ done |
+| 5 | Cross-dataset pattern comparison + candidate formula columns | ⏳ next |
 | 6 | Finalise dataset + confirm with Avra | pending |
 
 ## Folders
@@ -33,6 +33,29 @@ reviewed before moving on.
 - `step3_ews_eboarding/` — `analyze_ews_entry.py` → `entry_showup_profile.csv`,
   `entry_hourly.csv`, `ews_entry_dashboard.png`. **Raw e-boarding file is NOT
   committed** (passenger PII); only aggregated outputs are.
+- `step4_twin_entry/` — `analyze_twin_entry.py` → `twin_entry_showup_profile.csv`,
+  `twin_entry_hourly.csv`, `twin_entry_dashboard.png`. Reconstructs the twin's Entry
+  minutes-early distribution from its `DEP_ENTER` show-up window, bucketed the **same
+  way as Step 3** for a like-for-like comparison.
+
+## Step 4 result — the twin's Entry window is mis-calibrated vs reality
+Same buckets, three datasets (share of Entry passengers):
+| minutes early | Twin (generated) | Real e-boarding | Avra |
+|---|---|---|---|
+| <60 | 6.1% | 4.3% | 4.65% |
+| 60–90 | **39.4%** | 23.2% | 25.59% |
+| 90–120 | 39.9% | 32.0% | 32.99% |
+| 120–150 | 14.7% | 20.5% | 20.04% |
+| 150–180 | **0.0%** | 9.5% | 8.63% |
+| >180 | **0.0%** | 10.5% | 8.11% |
+
+The twin's `DEP_ENTER = (-150, -40, -85)` window **caps at 150 min and peaks at 85**,
+so it puts **0%** in the 150–180 and >180 buckets — but ~20% of real passengers show
+up that early. The twin over-concentrates in 60–120 (79% vs real 55%). **Fix for
+Step 5/6:** recalibrate `DEP_ENTER` to the real profile — widen the tail past 180 min
+and shift the peak earlier (real peak bucket is 90–120). The hourly *shape* differs too
+(twin peaks 19:00 on season totals vs real 08:00) because the twin is a full S26 season
+while the e-boarding is 2 April days — compare shapes, not absolute counts.
 
 ## Step 3 result — our profile matches Avra's
 Entry show-up % from the real e-boarding data (our 2-day sample vs Avra's full-month dashboard):
