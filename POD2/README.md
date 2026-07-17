@@ -42,12 +42,15 @@ reviewed before moving on.
   recalibrations, and the formula-column plan for Step 6).
 
 ## Step 5 result — the twin matches on fleet, misses on two behaviours
-| Layer | Real | Twin | Verdict |
+Comparison is strictly June loads ↔ HYD e-boarding ↔ twin. (Avra's dashboard is a
+*style template only*, not a dataset — not compared against.) **June has no scan times,
+so it cannot join the Entry show-up comparison — that one is two-way, HYD ↔ twin.**
+| Dimension | Compared | Result | Verdict |
 |---|---|---|---|
-| Aircraft mix (C/B/A) | 95.3 / 4.6 / 0.1 | 95.5 / 4.4 / 0.1 | ✅ matches |
-| Load factor (level) | 82.1% | 77.8% | ⚠️ ~4 pt low |
-| Load factor (day-of-week) | Mon 78 → Sun 88% | flat ~78% | ⚠️ misses weekly shape |
-| Show-up profile | 20% arrive >150 min early | 0% past 150 | ⚠️ mis-calibrated |
+| Aircraft mix (C/B/A) | June ↔ twin | 95.3/4.6/0.1 vs 95.5/4.4/0.1 | ✅ matches |
+| Load factor (level) | June ↔ twin | 82.1% vs 77.8% | ⚠️ ~4 pt low |
+| Load factor (day-of-week) | June ↔ twin | Mon 78→Sun 88% vs flat ~78% | ⚠️ misses weekly shape |
+| Show-up profile | HYD ↔ twin *(June: no data)* | 20% >150 min vs 0% past 150 | ⚠️ mis-calibrated |
 
 Two recalibrations to fold into Step 6: (1) drive Entry from the **measured** e-boarding
 show-up buckets instead of the triangular `DEP_ENTER`; (2) lift load factor to ~82% with

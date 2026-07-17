@@ -1,17 +1,38 @@
 # POD2 · Step 5 — Cross-dataset comparison (Entry) & the formula-column plan
 
-We put the three datasets side by side on the **same** dimensions (see
-`comparison_dashboard.png`, numbers in `comparison_summary.csv`). Avra's construct is
-three layers; each dataset owns one, and the twin is meant to reproduce two of them.
+The comparison is strictly between the three POD datasets: **June loads ↔ HYD
+e-boarding ↔ digital twin** (see `comparison_dashboard.png`, numbers in
+`comparison_summary.csv`).
+
+> **Note:** Avra's dashboard is only a **style template** for how the analysis should
+> *look* — it is not a POD dataset, so it is **not** used as a comparison series
+> anywhere here.
+
+## First, which dataset can even speak to each Entry dimension?
+Not every dataset has the columns for every dimension. For **Entry** specifically:
+
+| Dimension | June loads | HYD e-boarding | Digital twin |
+|---|---|---|---|
+| Passenger volume | ✅ real (daily) | ⚠️ real, 2 days only | ✅ modelled |
+| Load factor | ✅ real | ❌ no seat/LF field | ✅ modelled |
+| Aircraft mix | ✅ real | ~ per-flight | ✅ modelled |
+| **Entry show-up profile** (minutes early) | ❌ **none** | ✅ real | ✅ modelled |
+| **Entry hourly demand** | ❌ **none** | ✅ real | ✅ modelled |
+
+**June loads has no terminal-entry scans, no per-passenger rows and no time-of-day** —
+only daily `load_factor` + `pax` by aircraft category. So June **cannot** participate in
+the Entry show-up/timing comparison at all; its only role at Entry is as the upstream
+*volume + load-factor input*. The **Entry show-up comparison is therefore two-way:
+HYD e-boarding (real) vs digital twin (modelled).**
 
 ## What matches, what doesn't
 
-| Layer | Real source | Twin | Verdict |
+| Dimension | Datasets compared | Result | Verdict |
 |---|---|---|---|
-| **Aircraft mix** | June: C 95.3% / B 4.6% / A 0.1% | C 95.5% / B 4.4% / A 0.1% | ✅ **Matches** (within 0.2 pt) |
-| **Load factor (level)** | June narrow-body **82.1%** | **77.8%** | ⚠️ Twin ~4 pt low |
-| **Load factor (day-of-week)** | June rises into the weekend (Mon 78 → **Sun 88%**) | flat ~78% all week | ⚠️ Twin misses the weekly shape |
-| **Show-up profile** | e-boarding, long tail (20% arrive >150 min early) | triangular, **0%** past 150 min | ⚠️ Twin mis-calibrated |
+| **Aircraft mix** | June ↔ Twin | C 95.3 vs 95.5, B 4.6 vs 4.4, A 0.1 vs 0.1 | ✅ **Matches** (≤0.2 pt) |
+| **Load factor (level)** | June ↔ Twin | 82.1% vs **77.8%** | ⚠️ Twin ~4 pt low |
+| **Load factor (day-of-week)** | June ↔ Twin | June Mon 78 → **Sun 88%** vs twin flat ~78% | ⚠️ Twin misses the weekly shape |
+| **Show-up profile** | HYD ↔ Twin *(June absent — no data)* | HYD tail 20% >150 min vs twin **0%** past 150 | ⚠️ Twin mis-calibrated |
 
 **Takeaway:** the twin gets the *fleet/volume* structure right, but two behavioural
 layers — how full flights are through the week, and how early people show up — are

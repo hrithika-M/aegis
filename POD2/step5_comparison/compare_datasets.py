@@ -45,7 +45,10 @@ def read_profile(path):
 
 real_prof = read_profile(os.path.join(ROOT, 'step3_ews_eboarding', 'entry_showup_profile.csv'))
 twin_prof = read_profile(os.path.join(ROOT, 'step4_twin_entry', 'twin_entry_showup_profile.csv'))
-avra_prof = {'<60': 4.65, '60-90': 25.59, '90-120': 32.99, '120-150': 20.04, '150-180': 8.63, '>180': 8.11}
+# NOTE: Avra's dashboard is only a STYLE template for how analysis should look - it is
+# NOT a POD dataset, so it is deliberately NOT a comparison series here. The real Entry
+# show-up comparison is two-way: HYD e-boarding (real) vs digital twin (modelled).
+# June loads has no scan times, so it cannot participate in the show-up comparison at all.
 
 
 def june_layers():
@@ -106,14 +109,14 @@ def main():
     ax[1].plot(DOW, [tdow.get(d, 0) for d in DOW], marker='s', color=AMBER, label=f'Twin  avg {tlfC:.0f}%')
     ax[1].set_title('Narrow-body load factor by day-of-week', fontweight='bold', color=DK)
     ax[1].set_ylabel('Load factor (%)'); ax[1].set_ylim(60, 95)
-    ax[1].set_xticklabels([d[:3] for d in DOW]); ax[1].legend(frameon=False)
+    ax[1].set_xticks(range(len(DOW))); ax[1].set_xticklabels([d[:3] for d in DOW]); ax[1].legend(frameon=False)
 
-    # panel 3: show-up profile (real e-boarding vs twin vs Avra)
-    xb = range(len(BUCKETS)); w2 = 0.27
-    ax[2].bar([i - w2 for i in xb], [real_prof[b] for b in BUCKETS], w2, label='Real e-boarding', color=BLUE)
-    ax[2].bar([i for i in xb], [twin_prof[b] for b in BUCKETS], w2, label='Twin', color=AMBER)
-    ax[2].bar([i + w2 for i in xb], [avra_prof[b] for b in BUCKETS], w2, label="Avra's dashboard", color=GREY)
-    ax[2].set_title('Entry show-up profile (minutes early)', fontweight='bold', color=DK)
+    # panel 3: show-up profile - two-way, HYD e-boarding (real) vs twin.
+    # June loads is absent here on purpose: it has no scan times to build a show-up %.
+    xb = range(len(BUCKETS)); w2 = 0.38
+    ax[2].bar([i - w2/2 for i in xb], [real_prof[b] for b in BUCKETS], w2, label='HYD e-boarding (real)', color=BLUE)
+    ax[2].bar([i + w2/2 for i in xb], [twin_prof[b] for b in BUCKETS], w2, label='Digital twin', color=AMBER)
+    ax[2].set_title('Entry show-up profile (minutes early)\nJune loads: no data for this', fontweight='bold', color=DK)
     ax[2].set_xticks(list(xb)); ax[2].set_xticklabels(BUCKETS, rotation=30); ax[2].set_ylabel('% of pax')
     ax[2].legend(frameon=False)
 
