@@ -21,8 +21,8 @@ reviewed before moving on.
 |---|---|---|
 | 1 | Isolate clean June data | ✅ done |
 | 2 | Avra-style analysis on June data (Entry) | ✅ done |
-| 3 | Same on HYD e-boarding (EWS) | ⏳ next |
-| 4 | Same on digital-twin data | pending |
+| 3 | Entry show-up profile from HYD e-boarding (EWS) | ✅ done |
+| 4 | Same (Entry) on digital-twin data | ⏳ next |
 | 5 | Cross-dataset pattern comparison + candidate formula columns | pending |
 | 6 | Finalise dataset + confirm with Avra | pending |
 
@@ -30,6 +30,23 @@ reviewed before moving on.
 - `inputs/` — the source workbook (June+July; we use June only).
 - `step1_june_data/` — `extract_june.py` → `june_load_daily.csv` (tidy, 180 rows).
 - `step2_june_analysis/` — `analyze_june.py` → `june_dashboard.png`.
+- `step3_ews_eboarding/` — `analyze_ews_entry.py` → `entry_showup_profile.csv`,
+  `entry_hourly.csv`, `ews_entry_dashboard.png`. **Raw e-boarding file is NOT
+  committed** (passenger PII); only aggregated outputs are.
+
+## Step 3 result — our profile matches Avra's
+Entry show-up % from the real e-boarding data (our 2-day sample vs Avra's full-month dashboard):
+| minutes early | Ours (12–13 Apr) | Avra (full April) |
+|---|---|---|
+| 90–120 | 32.0% | 32.99% |
+| 60–90 | 23.2% | 25.59% |
+| 120–150 | 20.5% | 20.04% |
+| 150–180 | 9.5% | 8.63% |
+| >180 | 10.5% | 8.11% |
+| <60 | 4.3% | 4.65% |
+
+Same method, same shape — validates the construct. Data caveat: the file we have is
+only **2 days** (12–13 Apr, 20,079 valid entry records), not the full month Avra used.
 
 ## What the June data can and can't show
 The June loads sheet has **daily passenger volume and load factor** per aircraft
