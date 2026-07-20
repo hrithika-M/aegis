@@ -34,8 +34,11 @@ OUT = os.path.join(HERE, 'finalised_entry_dataset.xlsx')
 
 STEP = 5
 SLOTS = 24 * 60 // STEP
-LANE_PER_HR = 120                    # pax/hr per scanning lane  -- TO CONFIRM WITH AVRA
-LANE_PER_30MIN = LANE_PER_HR // 2    # 60 pax per 30-min per lane
+LANE_PER_HR = 120                    # PROVISIONAL placeholder, pax/hr per lane.
+# NOTE: Avra confirmed 120 (from ATRS 180 trays/hr, 1.5 trays/pax) is the SECURITY rate,
+# NOT Entry. Entry is a boarding-pass scan (faster). The real Entry rate is pending from
+# Avra - update this ONE constant when given and the whole plan re-runs.
+LANE_PER_30MIN = LANE_PER_HR // 2    # pax per 30-min per lane
 # Physical Entry = 3 gates, each with an A and B lane = 6 scanning lanes.
 # Opening rule: balance across gates (one lane per gate, then the second lanes).
 LANE_ORDER = ['01-A', '02-A', '03-A', '01-B', '02-B', '03-B']
@@ -148,6 +151,7 @@ def main():
     sd.append(['Date', 'Day', 'Time', 'Entry Demand (5-min)', 'Entry Demand (30-min)', 'Lanes Required'])
     gp = []          # 30-min gate plan rows
     gsum = []        # per-day gate summary
+    h60 = []         # 60-min (hourly) rows for benchmark & capacity-usage comparison
     daily = []
     for d in sorted(demand):
         dem = demand[d]; dem30 = [sum(dem[i:i + 6]) for i in range(SLOTS)]
@@ -157,6 +161,14 @@ def main():
                 continue
             t = f"{(i*STEP)//60:02d}:{(i*STEP)%60:02d}"
             sd.append([d, daymeta[d], t, round(dem[i], 1), round(dem30[i], 1), lanes[i]])
+        # 60-min (hourly) view: demand per hour + capacity usage vs all 6 lanes
+        for h in range(24):
+            d60 = sum(dem[h * 12:(h + 1) * 12])       # pax entering in the clock hour
+            if d60 <= 0.05:
+                continue
+            lanes_h = min(math.ceil(d60 / LANE_PER_HR), N_LANES)
+            cap_used = round(100 * d60 / (N_LANES * LANE_PER_HR), 1)
+            h60.append([d, daymeta[d], f"{h:02d}:00-{(h+1)%24:02d}:00", round(d60), lanes_h, cap_used])
         pk = max(range(SLOTS), key=lambda i: dem30[i])
         daily.append([d, daymeta[d], round(sum(dem)), round(dem30[pk]), lanes[pk],
                       f"{(pk*STEP)//60:02d}:{(pk*STEP)%60:02d}"])
@@ -180,6 +192,16 @@ def main():
     style_header(sd, 6)
     for i, w in enumerate([11, 10, 8, 20, 21, 15], 1):
         sd.column_dimensions[get_column_letter(i)].width = w
+
+    # ---- Sheet: Entry Demand 60-min (hourly, for benchmark & capacity usage) ----
+    sh60 = out.create_sheet('Entry Demand 60-min')
+    sh60.append(['Date', 'Day', 'Hour', 'Entry Demand (pax/hr)', 'Lanes Needed (of 6)',
+                 'Capacity Used %  (6 lanes, provisional rate)'])
+    for row in h60:
+        sh60.append(row)
+    style_header(sh60, 6)
+    for i, w in enumerate([11, 10, 14, 20, 20, 36], 1):
+        sh60.column_dimensions[get_column_letter(i)].width = w
 
     # ---- Sheet: Daily Summary ----
     ss = out.create_sheet('Daily Summary')
@@ -258,18 +280,21 @@ def main():
         ('   Load Factor = REAL June actuals by aircraft category and day-of-week', ''),
         ('Entry time     = STD - offset;  offset from the MEASURED HYD e-boarding show-up profile', 'mono'),
         ('Demand (30-min)= forward 30-minute sum of 5-minute entry demand', 'mono'),
-        ('Lanes Needed   = ceil(Demand(30-min) / 60)   [120 pax/hr/lane = 60 per 30 min]', 'mono'),
+        ('Lanes Needed   = ceil(Demand / lane rate)   lane rate = pax/hr per lane (PROVISIONAL)', 'mono'),
+        ('Capacity Used %= hourly demand / (6 lanes x lane rate)   [benchmark comparison]', 'mono'),
         ('', ''),
         ('Gate layout (per Avra)', 'h'),
         ('3 entry gates (01, 02, 03), each with an A and B lane = 6 scanning lanes:', ''),
         ('   01-A  01-B   02-A  02-B   03-A  03-B', 'mono'),
         ('Opening rule: BALANCE across gates - open one lane per gate first (01-A, 02-A,', ''),
         ('03-A), then the B lanes (01-B, 02-B, 03-B). Shortest queues / walking distance.', ''),
-        ('Each lane = 120 pax/hr (TO CONFIRM). Total entry capacity = 6 x 120 = 720 pax/hr.', ''),
+        ('Lane rate is PROVISIONAL - Avra confirmed 120/hr (ATRS) is the SECURITY rate, not', ''),
+        ('Entry. Entry rate pending; 6 lanes give 6 x rate pax/hr total once the rate is set.', ''),
         ('', ''),
         ('Sheets', 'h'),
         ('Entry by Flight    - one row per departing flight (5,820) with its entry passengers', ''),
         ('Entry Demand 5-min - terminal-entry demand per 5-min slot, 30-min projection, lanes', ''),
+        ('Entry Demand 60-min- hourly demand + capacity usage %, to compare vs the benchmark', ''),
         ('Daily Summary      - per-day totals and peak lane requirement', ''),
         ('Gate Plan (30-min) - which of the 6 gate-lanes to open each 30 min, and their load', ''),
         ('Gate Summary       - per-day peak lanes, peak gates open, peak load per lane', ''),
@@ -280,7 +305,8 @@ def main():
         (f'Peak {max(r[2] for r in gsum)} of 6 lanes across {max(r[3] for r in gsum)} of 3 gates  ·  6 lanes give comfortable headroom', 'b'),
         ('', ''),
         ('To confirm with Avra', 'h'),
-        ('- lane throughput: assumed 120 pax/hr/lane (ATRS 180 trays/hr, 1.5 trays/pax) - CONFIRM', ''),
+        ('- ENTRY lane rate: PENDING. 120/hr (ATRS trays) is the Security rate, not Entry -', ''),
+        ('  Avra to give the Entry processing rate; the plan updates from one constant', ''),
         ('- gate opening rule: balance across gates (vs fill gate-by-gate) - confirm preference', ''),
         ('- e-boarding show-up is from 2 days only (good overall, not day-of-week splits)', ''),
         ('', ''),
